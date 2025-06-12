@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, CaseSensitive as University, Mail, Hash, LogIn, UserPlus } from 'lucide-react';
+import { User, CaseSensitive as University, Mail, Hash, LogIn, UserPlus, Shield, Terminal } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const RegisterPage: React.FC = () => {
@@ -60,21 +60,21 @@ const RegisterPage: React.FC = () => {
     } = {};
     
     if (!isLoginMode && !name.trim()) {
-      newErrors.name = 'Full name is required';
+      newErrors.name = 'Identity required for system access';
     }
     
     if (!email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'Communication protocol required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = 'Invalid communication format';
     }
     
     if (!isLoginMode && !university) {
-      newErrors.university = 'University is required';
+      newErrors.university = 'Institution affiliation required';
     }
     
     if (!studentNumber.trim()) {
-      newErrors.studentNumber = 'Student number is required';
+      newErrors.studentNumber = 'Access code required';
     }
     
     setErrors(newErrors);
@@ -106,7 +106,7 @@ const RegisterPage: React.FC = () => {
         if (error instanceof Error) {
           setErrors({ general: error.message });
         } else {
-          setErrors({ general: isLoginMode ? 'Login failed. Please try again.' : 'Registration failed. Please try again.' });
+          setErrors({ general: isLoginMode ? 'Access denied. Verify credentials.' : 'Registration failed. System error.' });
         }
       } finally {
         setIsSubmitting(false);
@@ -125,173 +125,187 @@ const RegisterPage: React.FC = () => {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-cyber-grid opacity-20"></div>
+        <div className="text-center relative z-10">
+          <div className="w-16 h-16 border-4 border-cyan-400/30 border-t-cyan-400 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-cyan-400 font-orbitron">INITIALIZING SYSTEM...</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="min-h-screen bg-gray-100 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="bg-black p-6 text-white">
-            <h1 className="text-2xl font-bold flex items-center">
-              {isLoginMode ? (
-                <>
-                  <LogIn className="mr-2" /> Student Login
-                </>
-              ) : (
-                <>
-                  <UserPlus className="mr-2" /> Student Registration
-                </>
-              )}
-            </h1>
-            <p className="text-gray-300">
-              {isLoginMode 
-                ? 'Login to access the Varsity Code Cup' 
-                : 'Register for the Varsity Code Cup'
-              }
-            </p>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="p-6">
-            {errors.general && (
-              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                {errors.general}
+    <div className="min-h-screen bg-black py-12 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 bg-matrix animate-matrix opacity-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-black to-red-900/20"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-2xl mx-auto">
+          <div className="cyber-card rounded-xl overflow-hidden">
+            <div className="bg-gradient-to-r from-cyan-900/50 to-red-900/50 p-8 border-b border-cyan-400/30">
+              <div className="flex items-center justify-center mb-4">
+                <div className="p-3 bg-cyan-400/10 rounded-full border border-cyan-400/30 mr-4">
+                  {isLoginMode ? (
+                    <LogIn className="text-cyan-400" size={32} />
+                  ) : (
+                    <UserPlus className="text-cyan-400" size={32} />
+                  )}
+                </div>
+                <div>
+                  <h1 className="text-3xl font-orbitron font-bold text-cyan-400 text-glow-cyan">
+                    {isLoginMode ? 'SYSTEM ACCESS' : 'USER REGISTRATION'}
+                  </h1>
+                  <p className="text-gray-300 font-rajdhani">
+                    {isLoginMode 
+                      ? 'Authenticate to enter the digital arena' 
+                      : 'Initialize your profile for competition entry'
+                    }
+                  </p>
+                </div>
               </div>
-            )}
+            </div>
+            
+            <form onSubmit={handleSubmit} className="p-8">
+              {errors.general && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg font-rajdhani">
+                  <div className="flex items-center">
+                    <Shield size={18} className="mr-2" />
+                    {errors.general}
+                  </div>
+                </div>
+              )}
 
-            {!isLoginMode && (
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
-                  Full Name
+              {!isLoginMode && (
+                <div className="mb-6">
+                  <label htmlFor="name" className="block text-cyan-400 font-orbitron font-bold mb-3 text-sm">
+                    IDENTITY MATRIX
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-400/60">
+                      <User size={20} />
+                    </span>
+                    <input
+                      type="text"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className={`cyber-input w-full pl-12 pr-4 py-3 rounded-lg font-rajdhani ${
+                        errors.name ? 'border-red-500/50' : ''
+                      }`}
+                      placeholder="Enter your full designation"
+                    />
+                  </div>
+                  {errors.name && <p className="text-red-400 text-sm mt-2 font-rajdhani">{errors.name}</p>}
+                </div>
+              )}
+              
+              <div className="mb-6">
+                <label htmlFor="email" className="block text-cyan-400 font-orbitron font-bold mb-3 text-sm">
+                  COMMUNICATION PROTOCOL
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                    <User size={18} />
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-400/60">
+                    <Mail size={20} />
+                  </span>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`cyber-input w-full pl-12 pr-4 py-3 rounded-lg font-rajdhani ${
+                      errors.email ? 'border-red-500/50' : ''
+                    }`}
+                    placeholder="Enter communication address"
+                  />
+                </div>
+                {errors.email && <p className="text-red-400 text-sm mt-2 font-rajdhani">{errors.email}</p>}
+              </div>
+              
+              {!isLoginMode && (
+                <div className="mb-6">
+                  <label htmlFor="university" className="block text-cyan-400 font-orbitron font-bold mb-3 text-sm">
+                    INSTITUTION NETWORK
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-400/60">
+                      <University size={20} />
+                    </span>
+                    <select
+                      id="university"
+                      value={university}
+                      onChange={(e) => setUniversity(e.target.value)}
+                      className={`cyber-input w-full pl-12 pr-4 py-3 rounded-lg appearance-none font-rajdhani ${
+                        errors.university ? 'border-red-500/50' : ''
+                      }`}
+                    >
+                      <option value="">Select your institution</option>
+                      {universities.map((uni) => (
+                        <option key={uni} value={uni} className="bg-black text-cyan-400">
+                          {uni}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {errors.university && <p className="text-red-400 text-sm mt-2 font-rajdhani">{errors.university}</p>}
+                </div>
+              )}
+              
+              <div className="mb-8">
+                <label htmlFor="studentNumber" className="block text-cyan-400 font-orbitron font-bold mb-3 text-sm">
+                  ACCESS CODE
+                </label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-400/60">
+                    <Hash size={20} />
                   </span>
                   <input
                     type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                      errors.name ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-black'
+                    id="studentNumber"
+                    value={studentNumber}
+                    onChange={(e) => setStudentNumber(e.target.value)}
+                    className={`cyber-input w-full pl-12 pr-4 py-3 rounded-lg font-rajdhani ${
+                      errors.studentNumber ? 'border-red-500/50' : ''
                     }`}
-                    placeholder="Enter your full name"
+                    placeholder="Enter your access identifier"
                   />
                 </div>
-                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                {errors.studentNumber && <p className="text-red-400 text-sm mt-2 font-rajdhani">{errors.studentNumber}</p>}
               </div>
-            )}
-            
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                  <Mail size={18} />
-                </span>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                    errors.email ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-black'
+              
+              <div className="mb-6">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`cyber-button w-full py-4 rounded-lg font-orbitron font-bold text-lg transition-all duration-300 ${
+                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
-                  placeholder="Enter your email address"
-                />
+                >
+                  <div className="flex items-center justify-center">
+                    <Terminal size={20} className="mr-2" />
+                    {isSubmitting 
+                      ? (isLoginMode ? 'AUTHENTICATING...' : 'REGISTERING...') 
+                      : (isLoginMode ? 'AUTHENTICATE' : 'INITIALIZE')
+                    }
+                  </div>
+                </button>
               </div>
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-            </div>
-            
-            {!isLoginMode && (
-              <div className="mb-4">
-                <label htmlFor="university" className="block text-gray-700 font-medium mb-2">
-                  University
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                    <University size={18} />
-                  </span>
-                  <select
-                    id="university"
-                    value={university}
-                    onChange={(e) => setUniversity(e.target.value)}
-                    className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 appearance-none bg-white ${
-                      errors.university ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-black'
-                    }`}
-                  >
-                    <option value="">Select your university</option>
-                    {universities.map((uni) => (
-                      <option key={uni} value={uni}>
-                        {uni}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {errors.university && <p className="text-red-500 text-sm mt-1">{errors.university}</p>}
-              </div>
-            )}
-            
-            <div className="mb-4">
-              <label htmlFor="studentNumber" className="block text-gray-700 font-medium mb-2">
-                Student Number
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                  <Hash size={18} />
-                </span>
-                <input
-                  type="text"
-                  id="studentNumber"
-                  value={studentNumber}
-                  onChange={(e) => setStudentNumber(e.target.value)}
-                  className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                    errors.studentNumber ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-black'
-                  }`}
-                  placeholder="Enter your student number"
-                />
-              </div>
-              {errors.studentNumber && <p className="text-red-500 text-sm mt-1">{errors.studentNumber}</p>}
-            </div>
-            
-            <div className="mt-6">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-2 px-4 rounded-lg font-medium transition ${
-                  isSubmitting
-                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                    : 'bg-black text-white hover:bg-gray-900'
-                }`}
-              >
-                {isSubmitting 
-                  ? (isLoginMode ? 'Logging in...' : 'Registering...') 
-                  : (isLoginMode ? 'Login' : 'Register')
-                }
-              </button>
-            </div>
 
-            <div className="mt-4 text-center">
-              <button
-                type="button"
-                onClick={toggleMode}
-                className="text-black hover:text-gray-700 underline"
-              >
-                {isLoginMode 
-                  ? "Don't have an account? Register here" 
-                  : "Already have an account? Login here"
-                }
-              </button>
-            </div>
-          </form>
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={toggleMode}
+                  className="text-cyan-400 hover:text-cyan-300 font-rajdhani font-medium transition-colors duration-300 border-b border-cyan-400/30 hover:border-cyan-300/50"
+                >
+                  {isLoginMode 
+                    ? "Need system access? Initialize new profile" 
+                    : "Already registered? Access existing profile"
+                  }
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
