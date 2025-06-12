@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Code2, Trophy, Users, ArrowRight, Calendar, University, Award, Zap, Terminal, Cpu } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import logo from './pic.png';
 
 const LandingPage: React.FC = () => {
   const { currentUser, challenge } = useApp();
@@ -47,7 +46,7 @@ const LandingPage: React.FC = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl animate-pulse-slow"></div>
             <img 
-              src={logo}
+              src="/pic.png"
               alt="Varsity Code Cup Logo" 
               className="w-40 h-40 object-cover rounded-full border-2 border-cyan-400/50 relative z-10"
             />
