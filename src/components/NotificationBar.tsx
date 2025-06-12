@@ -15,7 +15,7 @@ const NotificationBar: React.FC = () => {
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
       return <AlertTriangle size={18} className="text-red-400" />;
     } else {
-      return <Info size={18} className="text-cyan-400" />;
+      return <Info size={18} className="text-blue-400" />;
     }
   };
   
@@ -25,26 +25,26 @@ const NotificationBar: React.FC = () => {
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
       return 'border-red-400/50 bg-red-400/10';
     } else {
-      return 'border-cyan-400/50 bg-cyan-400/10';
+      return 'border-blue-400/50 bg-blue-400/10';
     }
   };
   
   return (
-    <div className="fixed bottom-4 right-4 z-50 max-w-md w-full">
+    <div className="fixed bottom-6 right-6 z-50 max-w-md w-full">
       {notifications.map((notification, index) => (
         <div 
           key={index}
-          className={`cyber-card rounded-lg shadow-lg mb-3 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)}`}
+          className={`glass-card rounded-2xl shadow-2xl mb-4 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)}`}
         >
           <div className="mr-3 flex-shrink-0 mt-0.5">
             {getNotificationIcon(notification)}
           </div>
-          <div className="flex-grow text-white font-rajdhani">{notification}</div>
+          <div className="flex-grow text-white font-medium">{notification}</div>
           <button 
             onClick={() => dismissNotification(index)}
-            className="ml-3 text-gray-400 hover:text-white flex-shrink-0 transition-colors duration-200"
+            className="ml-3 text-gray-400 hover:text-white flex-shrink-0 transition-colors duration-200 p-1 hover:bg-white/10 rounded-lg"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
       ))}

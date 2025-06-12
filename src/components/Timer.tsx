@@ -28,28 +28,30 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
     } else if (timeRemaining <= 1000 * 60 * 30) { // Less than 30 minutes
       return 'text-yellow-400';
     } else {
-      return 'text-cyan-400';
+      return 'text-blue-400';
     }
   };
   
-  const getGlowClass = () => {
+  const getBgColor = () => {
     if (timeRemaining <= 1000 * 60 * 10) {
-      return 'text-glow-red';
+      return 'bg-red-500/20 border-red-500/30';
     } else if (timeRemaining <= 1000 * 60 * 30) {
-      return 'text-glow';
+      return 'bg-yellow-500/20 border-yellow-500/30';
     } else {
-      return 'text-glow-cyan';
+      return 'bg-blue-500/20 border-blue-500/30';
     }
   };
   
   return (
-    <div className="flex items-center space-x-3 bg-black/50 border border-cyan-400/30 rounded-lg px-4 py-2">
-      <div className="flex items-center">
-        <Zap size={20} className={`${getTimerColor()} animate-pulse`} />
-        <Clock size={20} className={`${getTimerColor()} ml-1`} />
-      </div>
-      <div className={`font-orbitron text-xl font-bold ${getTimerColor()} ${getGlowClass()}`}>
-        {hours}:{minutes}:{seconds}
+    <div className={`glass-card rounded-2xl px-6 py-4 border ${getBgColor()}`}>
+      <div className="flex items-center space-x-3">
+        <div className="flex items-center">
+          <Clock size={20} className={`${getTimerColor()}`} />
+          <Zap size={20} className={`${getTimerColor()} ml-1 ${timeRemaining <= 1000 * 60 * 10 ? 'animate-pulse' : ''}`} />
+        </div>
+        <div className={`font-mono text-xl font-bold ${getTimerColor()}`}>
+          {hours}:{minutes}:{seconds}
+        </div>
       </div>
     </div>
   );
