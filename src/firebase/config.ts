@@ -3,13 +3,14 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "demo-api-key",
-  authDomain: "demo-project.firebaseapp.com",
-  databaseURL: "https://demo-project-default-rtdb.firebaseio.com",
-  projectId: "demo-project",
-  storageBucket: "demo-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
+  apiKey: "AIzaSyBfAxHQirlmSbR1gGQD8SoLKoCxRdQCwxY",
+  authDomain: "facebook12-33711.firebaseapp.com",
+  databaseURL: "https://facebook12-33711-default-rtdb.firebaseio.com",
+  projectId: "facebook12-33711",
+  storageBucket: "facebook12-33711.appspot.com",
+  messagingSenderId: "1020382277222",
+  appId: "1:1020382277222:web:3a553c46a76d5b337007a7",
+  measurementId: "G-9D31WLWP06"
 };
 
 const app = initializeApp(firebaseConfig);
