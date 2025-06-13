@@ -5,7 +5,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'newbie',
     name: 'Newbie',
     description: 'Solved your first coding problem',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'milestone',
     rarity: 'common',
     condition: (participant, submissions) => {
@@ -28,7 +28,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'problem-solver',
     name: 'Problem Solver',
     description: 'Solved 3 problems',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'milestone',
     rarity: 'common',
     condition: (participant, submissions) => {
@@ -52,7 +52,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'code-master',
     name: 'Code Master',
     description: 'Solved all problems in the competition',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'achievement',
     rarity: 'epic',
     condition: (participant, submissions) => {
@@ -75,7 +75,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'speed-demon',
     name: 'Speed Demon',
     description: 'Solved a problem in under 10 minutes',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'achievement',
     rarity: 'rare',
     condition: (participant, submissions) => {
@@ -104,7 +104,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'persistent',
     name: 'Persistent',
     description: 'Made 10 or more submissions',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'achievement',
     rarity: 'common',
     condition: (participant, submissions) => {
@@ -122,7 +122,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'perfectionist',
     name: 'Perfectionist',
     description: 'Solved a problem on first attempt',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'achievement',
     rarity: 'rare',
     condition: (participant, submissions) => {
@@ -152,7 +152,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'polyglot',
     name: 'Polyglot',
     description: 'Used 3 different programming languages',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'achievement',
     rarity: 'rare',
     condition: (participant, submissions) => {
@@ -173,7 +173,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'early-bird',
     name: 'Early Bird',
     description: 'First submission within 5 minutes of competition start',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'special',
     rarity: 'rare',
     condition: (participant, submissions) => {
@@ -200,7 +200,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'champion',
     name: 'Champion',
     description: 'Achieved top 3 ranking',
-    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
+    icon: '/pic.png',
     category: 'special',
     rarity: 'legendary',
     condition: (participant, submissions) => {

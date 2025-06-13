@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Star, Calendar, Award } from 'lucide-react';
+import { X, Star, Calendar, Award, Download } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { getRarityColor, getRarityTextColor } from '../data/badges';
 
@@ -13,6 +13,77 @@ const BadgeModal: React.FC = () => {
     if (e.target === e.currentTarget) {
       closeBadgeModal();
     }
+  };
+
+  // Download badge as image
+  const downloadBadge = () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = 400;
+    canvas.height = 400;
+
+    // Create gradient background based on rarity
+    const gradient = ctx.createRadialGradient(200, 200, 0, 200, 200, 200);
+    switch (selectedBadge.rarity) {
+      case 'rare':
+        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
+        break;
+      case 'epic':
+        gradient.addColorStop(0, 'rgba(168, 85, 247, 0.3)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
+        break;
+      case 'legendary':
+        gradient.addColorStop(0, 'rgba(251, 191, 36, 0.3)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
+        break;
+      default:
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
+    }
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 400, 400);
+
+    // Add border
+    ctx.strokeStyle = selectedBadge.rarity === 'rare' ? '#3b82f6' :
+                     selectedBadge.rarity === 'epic' ? '#a855f7' :
+                     selectedBadge.rarity === 'legendary' ? '#fbbf24' : '#ffffff';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(20, 20, 360, 360);
+
+    // Load and draw the badge icon
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      // Draw badge icon
+      ctx.drawImage(img, 100, 80, 200, 200);
+
+      // Add text
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 32px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(selectedBadge.name, 200, 320);
+
+      ctx.font = '18px Arial';
+      ctx.fillStyle = '#cccccc';
+      ctx.fillText(selectedBadge.description, 200, 350);
+
+      ctx.font = '16px Arial';
+      ctx.fillStyle = selectedBadge.rarity === 'rare' ? '#3b82f6' :
+                     selectedBadge.rarity === 'epic' ? '#a855f7' :
+                     selectedBadge.rarity === 'legendary' ? '#fbbf24' : '#ffffff';
+      ctx.fillText(selectedBadge.rarity.toUpperCase(), 200, 375);
+
+      // Download the image
+      const link = document.createElement('a');
+      link.download = `${selectedBadge.name.replace(/\s+/g, '_')}_Badge.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+    };
+    img.src = selectedBadge.icon;
   };
 
   return (
@@ -43,7 +114,7 @@ const BadgeModal: React.FC = () => {
             <img
               src={selectedBadge.icon}
               alt={selectedBadge.name}
-              className="w-32 h-32 object-contain filter brightness-0 invert mx-auto relative z-10"
+              className="w-32 h-32 object-contain mx-auto relative z-10"
             />
           </div>
           
@@ -90,7 +161,7 @@ const BadgeModal: React.FC = () => {
           </div>
 
           {/* Achievement Message */}
-          <div className="modern-card p-4 bg-white/5 border-l-4 border-white">
+          <div className="modern-card p-4 bg-white/5 border-l-4 border-white mb-6">
             <h3 className="text-white font-bold mb-2">🏆 Achievement Unlocked!</h3>
             <p className="text-white/80 text-sm">
               You've earned the <span className={`font-bold ${getRarityTextColor(selectedBadge.rarity)}`}>{selectedBadge.name}</span> badge 
@@ -98,13 +169,23 @@ const BadgeModal: React.FC = () => {
             </p>
           </div>
 
-          {/* Close Button */}
-          <button
-            onClick={closeBadgeModal}
-            className="modern-button mt-6 px-8 py-3 text-lg font-semibold hover-lift"
-          >
-            Awesome!
-          </button>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={downloadBadge}
+              className="modern-button-secondary px-6 py-3 text-sm font-semibold hover-lift flex items-center justify-center"
+            >
+              <Download size={16} className="mr-2" />
+              Download Badge
+            </button>
+            
+            <button
+              onClick={closeBadgeModal}
+              className="modern-button px-6 py-3 text-sm font-semibold hover-lift"
+            >
+              Awesome!
+            </button>
+          </div>
         </div>
       </div>
     </div>

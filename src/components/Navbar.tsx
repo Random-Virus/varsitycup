@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
                 <div className="absolute inset-0 bg-white/5 opacity-30 group-hover:opacity-50 transition-opacity duration-300 rounded"></div>
                 <div className="relative z-10 p-2 bg-black/50 border border-white/10 rounded backdrop-blur-sm">
                   <img 
-                    src="/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png" 
+                    src="/pic.png" 
                     alt="Varsity Code Cup" 
                     className="w-4 h-4 object-contain"
                   />
