@@ -13,7 +13,7 @@ import {
   getParticipantByStudentNumber
 } from '../firebase/database';
 import { Participant, Challenge, Submission, Badge } from '../types';
-import { mockChallenge, cryptographyChallenge, validateSubmission } from '../data/mockData';
+import { mockChallenge, cryptographyChallenge, dataStructuresChallenge, validateSubmission } from '../data/mockData';
 import { checkForNewBadges, BADGE_DEFINITIONS } from '../data/badges';
 
 interface AppContextType {
@@ -21,6 +21,7 @@ interface AppContextType {
   participants: Participant[];
   challenge: Challenge;
   cryptographyChallenge: Challenge;
+  dataStructuresChallenge: Challenge;
   submissions: Submission[];
   registerParticipant: (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'createdAt' | 'badges'>) => Promise<void>;
   loginParticipant: (email: string, studentNumber: string) => Promise<void>;
@@ -45,6 +46,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [challenge] = useState<Challenge>(mockChallenge);
   const [cryptoChallenge] = useState<Challenge>(cryptographyChallenge);
+  const [dataStructuresChall] = useState<Challenge>(dataStructuresChallenge);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [notifications, setNotifications] = useState<string[]>([]);
@@ -318,8 +320,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       // Update participant score if submission is accepted
       if (submission.status === 'Accepted') {
-        // Find problem in either regular or cryptography challenges
-        const allProblems = [...challenge.problems, ...cryptoChallenge.problems];
+        // Find problem in any of the challenge sets
+        const allProblems = [...challenge.problems, ...cryptoChallenge.problems, ...dataStructuresChall.problems];
         const problem = allProblems.find(p => p.id === problemId);
         
         if (problem) {
@@ -359,7 +361,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           }
         }
       } else {
-        const allProblems = [...challenge.problems, ...cryptoChallenge.problems];
+        const allProblems = [...challenge.problems, ...cryptoChallenge.problems, ...dataStructuresChall.problems];
         const problem = allProblems.find(p => p.id === problemId);
         addNotification(`Your submission for "${problem?.title}" was not accepted.`);
       }
@@ -393,6 +395,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         participants,
         challenge,
         cryptographyChallenge: cryptoChallenge,
+        dataStructuresChallenge: dataStructuresChall,
         submissions,
         registerParticipant,
         loginParticipant,

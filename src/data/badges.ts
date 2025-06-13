@@ -63,10 +63,10 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
       
       console.log('  - Unique solved problems:', solvedProblems.size);
-      console.log('  - Total problems in competition:', 8); // 4 programming + 4 cryptography
+      console.log('  - Total problems in competition:', 12); // 4 programming + 4 cryptography + 4 data structures
       
-      const meetsCondition = solvedProblems.size >= 8;
-      console.log('  - Meets condition (>=8):', meetsCondition);
+      const meetsCondition = solvedProblems.size >= 12;
+      console.log('  - Meets condition (>=12):', meetsCondition);
       
       return meetsCondition;
     }
@@ -123,6 +123,34 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       
       const meetsCondition = solvedCryptographyProblems.size >= 4;
       console.log('  - Meets condition (>=4 cryptography problems):', meetsCondition);
+      
+      return meetsCondition;
+    }
+  },
+  {
+    id: 'data-structures-master',
+    name: 'Data Structures Master',
+    description: 'Solved all data structures challenges',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking DATA STRUCTURES MASTER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const dataStructuresProblems = ['stack-simulator', 'custom-linked-list', 'priority-queue-battles', 'lru-cache-implementation'];
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedDataStructuresProblems = new Set(
+        acceptedSubmissions
+          .filter(s => dataStructuresProblems.includes(s.problemId))
+          .map(s => s.problemId)
+      );
+      
+      console.log('  - Data structures problems solved:', solvedDataStructuresProblems.size);
+      console.log('  - Data structures problem IDs solved:', Array.from(solvedDataStructuresProblems));
+      
+      const meetsCondition = solvedDataStructuresProblems.size >= 4;
+      console.log('  - Meets condition (>=4 data structures problems):', meetsCondition);
       
       return meetsCondition;
     }
@@ -201,6 +229,82 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       
       console.log('  - Hash collision finder solved:', hashSolved);
       return hashSolved;
+    }
+  },
+  {
+    id: 'stack-master',
+    name: 'Stack Master',
+    description: 'Implemented browser navigation with stacks',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking STACK MASTER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const stackSolved = submissions.some(s => 
+        s.problemId === 'stack-simulator' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Stack simulator solved:', stackSolved);
+      return stackSolved;
+    }
+  },
+  {
+    id: 'linked-list-architect',
+    name: 'Linked List Architect',
+    description: 'Built a custom doubly linked list from scratch',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking LINKED LIST ARCHITECT badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const linkedListSolved = submissions.some(s => 
+        s.problemId === 'custom-linked-list' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Custom linked list solved:', linkedListSolved);
+      return linkedListSolved;
+    }
+  },
+  {
+    id: 'priority-commander',
+    name: 'Priority Commander',
+    description: 'Mastered priority queue customer management',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking PRIORITY COMMANDER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const priorityQueueSolved = submissions.some(s => 
+        s.problemId === 'priority-queue-battles' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Priority queue battles solved:', priorityQueueSolved);
+      return priorityQueueSolved;
+    }
+  },
+  {
+    id: 'cache-wizard',
+    name: 'Cache Wizard',
+    description: 'Implemented an efficient LRU cache system',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking CACHE WIZARD badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const lruCacheSolved = submissions.some(s => 
+        s.problemId === 'lru-cache-implementation' && s.status === 'Accepted'
+      );
+      
+      console.log('  - LRU cache implementation solved:', lruCacheSolved);
+      return lruCacheSolved;
     }
   },
   {
@@ -340,9 +444,9 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       console.log('  - Participant:', participant.name);
       console.log('  - Score:', participant.score);
       
-      // Updated threshold for expanded challenge set
-      const meetsCondition = participant.score >= 500; // Increased from 300
-      console.log('  - Meets condition (>=500 points):', meetsCondition);
+      // Updated threshold for expanded challenge set (12 problems total)
+      const meetsCondition = participant.score >= 800; // Increased from 500
+      console.log('  - Meets condition (>=800 points):', meetsCondition);
       
       return meetsCondition;
     }

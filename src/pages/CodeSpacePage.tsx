@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Play, Clock, Target, Code2, Send, CheckCircle, XCircle, AlertCircle, Terminal, Zap, Award, Shield, Lock } from 'lucide-react';
+import { ArrowLeft, Play, Clock, Target, Code2, Send, CheckCircle, XCircle, AlertCircle, Terminal, Zap, Award, Shield, Lock, Database, Layers } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
 const CodeSpacePage: React.FC = () => {
   const { problemId } = useParams();
   const navigate = useNavigate();
-  const { currentUser, challenge, cryptographyChallenge, submissions, submitSolution, timeRemaining } = useApp();
+  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, submissions, submitSolution, timeRemaining } = useApp();
   
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('javascript');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Find problem in either challenge set
-  const allProblems = [...challenge.problems, ...cryptographyChallenge.problems];
+  // Find problem in any challenge set
+  const allProblems = [...challenge.problems, ...cryptographyChallenge.problems, ...dataStructuresChallenge.problems];
   const problem = allProblems.find(p => p.id === problemId);
   const isCryptographyProblem = cryptographyChallenge.problems.some(p => p.id === problemId);
+  const isDataStructuresProblem = dataStructuresChallenge.problems.some(p => p.id === problemId);
   
   const problemSubmissions = submissions.filter(s => s.problemId === problemId);
   const isSolved = problemSubmissions.some(s => s.status === 'Accepted');
@@ -131,7 +132,7 @@ int main() {
       case 'Compilation Error':
         return <XCircle className="text-white" size={12} />;
       default:
-        return <AlertTriangle className="text-white" size={12} />;
+        return <AlertCircle className="text-white" size={12} />;
     }
   };
 
@@ -148,6 +149,14 @@ int main() {
     }
   };
 
+  const getChallengeType = () => {
+    if (isCryptographyProblem) return { name: 'Cryptography Challenge', color: 'purple', icon: Shield };
+    if (isDataStructuresProblem) return { name: 'Data Structures Challenge', color: 'green', icon: Database };
+    return { name: 'Programming Challenge', color: 'white', icon: Code2 };
+  };
+
+  const challengeType = getChallengeType();
+
   return (
     <div className="min-h-screen bg-black modern-grid">
       <div className="container mx-auto px-3 py-3">
@@ -163,11 +172,11 @@ int main() {
             </button>
             <div>
               <h1 className="text-lg font-bold modern-gradient-text flex items-center">
-                {isCryptographyProblem && <Shield className="mr-2" size={16} />}
+                <challengeType.icon className="mr-2" size={16} />
                 CODE SPACE
               </h1>
               <p className="text-white/60 text-xs">
-                {isCryptographyProblem ? 'Cryptography Challenge' : 'Programming Challenge'} • Solve • Test • Submit
+                {challengeType.name} • Solve • Test • Submit
               </p>
             </div>
           </div>
@@ -181,6 +190,7 @@ int main() {
               <div>
                 <h2 className="text-lg font-bold text-white mb-1 flex items-center">
                   {isCryptographyProblem && <Lock className="mr-2 text-purple-400" size={16} />}
+                  {isDataStructuresProblem && <Layers className="mr-2 text-green-400" size={16} />}
                   {problem.title}
                   {isSolved && <Award className="ml-2 text-white" size={16} />}
                 </h2>
@@ -188,6 +198,8 @@ int main() {
                   <span className={`px-2 py-1 rounded text-xs font-semibold ${
                     isCryptographyProblem 
                       ? 'bg-purple-400/20 text-purple-300 border border-purple-400/30'
+                      : isDataStructuresProblem
+                      ? 'bg-green-400/20 text-green-300 border border-green-400/30'
                       : 'bg-white/20 text-white border border-white/30'
                   }`}>
                     {problem.difficulty}
@@ -196,6 +208,11 @@ int main() {
                   {isCryptographyProblem && (
                     <span className="px-2 py-1 rounded text-xs font-semibold bg-purple-400/10 text-purple-300 border border-purple-400/20">
                       CRYPTOGRAPHY
+                    </span>
+                  )}
+                  {isDataStructuresProblem && (
+                    <span className="px-2 py-1 rounded text-xs font-semibold bg-green-400/10 text-green-300 border border-green-400/20">
+                      DATA STRUCTURES
                     </span>
                   )}
                 </div>
@@ -264,6 +281,11 @@ int main() {
                 {isCryptographyProblem && (
                   <span className="ml-2 px-2 py-1 rounded text-xs font-semibold bg-purple-400/10 text-purple-300 border border-purple-400/20">
                     SECURITY
+                  </span>
+                )}
+                {isDataStructuresProblem && (
+                  <span className="ml-2 px-2 py-1 rounded text-xs font-semibold bg-green-400/10 text-green-300 border border-green-400/20">
+                    DATA STRUCTURES
                   </span>
                 )}
               </h3>
@@ -373,7 +395,7 @@ int main() {
             </div>
 
             {/* Cryptography Challenges */}
-            <div>
+            <div className="mb-3">
               <h4 className="text-xs font-semibold text-white/80 mb-2 flex items-center">
                 <Shield className="mr-1" size={10} />
                 Cryptography Challenges
@@ -394,6 +416,36 @@ int main() {
                         }`}
                       >
                         <Lock className="inline mr-1" size={8} />
+                        {otherProblem.title}
+                        {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
+                      </Link>
+                    );
+                  })}
+              </div>
+            </div>
+
+            {/* Data Structures Challenges */}
+            <div>
+              <h4 className="text-xs font-semibold text-white/80 mb-2 flex items-center">
+                <Database className="mr-1" size={10} />
+                Data Structures Challenges
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {dataStructuresChallenge.problems
+                  .filter(p => p.id !== problemId)
+                  .map((otherProblem) => {
+                    const otherSolved = submissions.some(s => s.problemId === otherProblem.id && s.status === 'Accepted');
+                    return (
+                      <Link
+                        key={otherProblem.id}
+                        to={`/code/${otherProblem.id}`}
+                        className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 border ${
+                          otherSolved 
+                            ? 'bg-green-400/20 text-green-300 border-green-400/30 hover:bg-green-400/25' 
+                            : 'bg-green-400/10 text-green-300 border-green-400/20 hover:bg-green-400/15'
+                        }`}
+                      >
+                        <Layers className="inline mr-1" size={8} />
                         {otherProblem.title}
                         {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
                       </Link>

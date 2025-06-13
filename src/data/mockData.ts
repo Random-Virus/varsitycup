@@ -281,10 +281,175 @@ Note: This is a deliberately weak hash function for educational purposes to demo
   }
 ];
 
+// DATA STRUCTURES CHALLENGES - New category
+export const dataStructuresProblems: Problem[] = [
+  {
+    id: 'stack-simulator',
+    title: 'Stack Simulator',
+    description: `Implement a browser's back/forward functionality using a stack-based approach.
+
+Create a BrowserHistory class that simulates web browser navigation:
+
+1. BrowserHistory(homepage) - Initialize with homepage
+2. visit(url) - Visit a new URL (clears forward history)
+3. back(steps) - Go back 'steps' in history, return current URL
+4. forward(steps) - Go forward 'steps' in history, return current URL
+
+The browser should maintain separate stacks for back and forward history, and handle edge cases where there aren't enough pages to navigate.
+
+Return the current URL after each back/forward operation.`,
+    difficulty: 'Medium',
+    points: 160,
+    timeLimit: 2000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'BrowserHistory("google.com"); visit("facebook.com"); visit("youtube.com"); back(1); forward(1);',
+        output: '["facebook.com", "youtube.com"]',
+        explanation: 'Navigate back to facebook.com, then forward to youtube.com'
+      },
+      {
+        input: 'BrowserHistory("home.com"); visit("page1.com"); back(2); visit("page2.com");',
+        output: '["home.com", "page2.com"]',
+        explanation: 'Back 2 steps goes to home.com, visiting page2.com clears forward history'
+      }
+    ],
+    constraints: [
+      '1 <= homepage.length <= 20',
+      '1 <= url.length <= 20',
+      '1 <= steps <= 100',
+      'At most 5000 calls will be made to visit, back, and forward'
+    ]
+  },
+  {
+    id: 'custom-linked-list',
+    title: 'Custom Linked List',
+    description: `Implement your own doubly linked list with the following operations:
+
+Create a DoublyLinkedList class with these methods:
+1. insertFront(val) - Insert at the beginning
+2. insertLast(val) - Insert at the end  
+3. insertAtIndex(index, val) - Insert at specific index
+4. deleteFront() - Delete first node
+5. deleteLast() - Delete last node
+6. deleteAtIndex(index) - Delete at specific index
+7. get(index) - Get value at index
+8. size() - Return list size
+9. toArray() - Return array representation
+
+Handle edge cases like empty lists, invalid indices, and maintain proper forward/backward links.
+
+Return the final array representation after all operations.`,
+    difficulty: 'Medium',
+    points: 170,
+    timeLimit: 2500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'insertFront(1); insertLast(3); insertAtIndex(1, 2); toArray();',
+        output: '[1, 2, 3]',
+        explanation: 'Insert 1 at front, 3 at end, 2 at index 1'
+      },
+      {
+        input: 'insertLast(1); insertLast(2); deleteFront(); insertFront(0); toArray();',
+        output: '[0, 2]',
+        explanation: 'Build [1,2], delete front to get [2], insert 0 at front to get [0,2]'
+      }
+    ],
+    constraints: [
+      '0 <= val <= 1000',
+      '0 <= index <= list.size()',
+      'At most 1000 operations will be performed',
+      'All operations should run in O(1) or O(n) time'
+    ]
+  },
+  {
+    id: 'priority-queue-battles',
+    title: 'Priority Queue Battles',
+    description: `Manage customer queues with varying priority levels using a priority queue system.
+
+Implement a CustomerQueue class that handles customers with different priority levels:
+
+1. addCustomer(name, priority) - Add customer with priority (1=highest, 5=lowest)
+2. serveNext() - Serve the highest priority customer (FIFO for same priority)
+3. changePriority(name, newPriority) - Update customer's priority
+4. getQueueStatus() - Return array of customers in serving order
+5. estimateWaitTime(name) - Return position in queue (0-based)
+
+Priority rules:
+- Lower numbers = higher priority (1 > 2 > 3 > 4 > 5)
+- Same priority customers are served FIFO
+- VIP customers (priority 1) always go first
+
+Return the queue status after each operation.`,
+    difficulty: 'Hard',
+    points: 190,
+    timeLimit: 3000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'addCustomer("Alice", 3); addCustomer("Bob", 1); addCustomer("Charlie", 3); serveNext();',
+        output: '["Alice", "Charlie"]',
+        explanation: 'Bob (priority 1) is served first, leaving Alice and Charlie (both priority 3)'
+      },
+      {
+        input: 'addCustomer("John", 2); addCustomer("Jane", 4); changePriority("Jane", 1); getQueueStatus();',
+        output: '["Jane", "John"]',
+        explanation: 'Jane\'s priority changed from 4 to 1, moving her to front'
+      }
+    ],
+    constraints: [
+      '1 <= name.length <= 20',
+      '1 <= priority <= 5',
+      'Customer names are unique',
+      'At most 1000 operations will be performed'
+    ]
+  },
+  {
+    id: 'lru-cache-implementation',
+    title: 'LRU Cache Implementation',
+    description: `Design and implement a Least Recently Used (LRU) cache data structure.
+
+Implement the LRUCache class:
+1. LRUCache(capacity) - Initialize with positive capacity
+2. get(key) - Return value if key exists, otherwise return -1. Mark as recently used.
+3. put(key, value) - Update value if key exists, otherwise add key-value pair. Mark as recently used.
+4. If cache exceeds capacity, evict the least recently used item first.
+
+The cache should support O(1) average time complexity for both get and put operations.
+
+Use a combination of HashMap and Doubly Linked List for optimal performance.
+
+Return the cache state after each operation for testing.`,
+    difficulty: 'Hard',
+    points: 200,
+    timeLimit: 3000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'LRUCache(2); put(1, 1); put(2, 2); get(1); put(3, 3); get(2);',
+        output: '[1, -1]',
+        explanation: 'Cache capacity 2. After put(3,3), key 2 is evicted. get(2) returns -1.'
+      },
+      {
+        input: 'LRUCache(2); put(1, 1); put(2, 2); put(1, 10); get(1); get(2);',
+        output: '[10, 2]',
+        explanation: 'Update key 1 to value 10, then get both values'
+      }
+    ],
+    constraints: [
+      '1 <= capacity <= 3000',
+      '0 <= key <= 10^4',
+      '0 <= value <= 10^5',
+      'At most 2 * 10^4 calls will be made to get and put'
+    ]
+  }
+];
+
 export const mockChallenge: Challenge = {
   id: 'varsity-cup-2024',
   title: 'Varsity Code Cup 2024',
-  description: 'The ultimate coding competition for South African university students. Test your algorithmic skills, problem-solving abilities, and cybersecurity knowledge across two distinct challenge categories!',
+  description: 'The ultimate coding competition for South African university students. Test your algorithmic skills, problem-solving abilities, and cybersecurity knowledge across multiple distinct challenge categories!',
   startTime: '2024-03-15T09:00:00Z',
   endTime: '2024-03-15T12:00:00Z',
   problems: mockProblems
@@ -297,6 +462,15 @@ export const cryptographyChallenge: Challenge = {
   startTime: '2024-03-15T09:00:00Z',
   endTime: '2024-03-15T12:00:00Z',
   problems: cryptographyProblems
+};
+
+export const dataStructuresChallenge: Challenge = {
+  id: 'data-structures-challenges-2024',
+  title: 'Data Structures Challenges',
+  description: 'Advanced data structure implementation challenges focusing on stacks, queues, linked lists, and cache systems with real-world applications.',
+  startTime: '2024-03-15T09:00:00Z',
+  endTime: '2024-03-15T12:00:00Z',
+  problems: dataStructuresProblems
 };
 
 // Mock validation function
@@ -357,6 +531,63 @@ export const validateSubmission = (code: string, language: string, problemId: st
         details: (isValid && hasHashLogic)
           ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
           : ['Test case 1: Failed - Missing hash logic', 'Test case 2: Passed', 'Test case 3: Failed']
+      }
+    };
+  }
+
+  // Special validation for data structures challenges
+  if (problemId === 'stack-simulator') {
+    const hasStackLogic = code.includes('stack') || code.includes('push') || code.includes('pop') || code.includes('browser');
+    return {
+      status: (isValid && hasStackLogic) ? 'Accepted' : 'Wrong Answer' as const,
+      testResults: {
+        passed: (isValid && hasStackLogic) ? 3 : 1,
+        total: 3,
+        details: (isValid && hasStackLogic)
+          ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
+          : ['Test case 1: Failed - Missing stack logic', 'Test case 2: Passed', 'Test case 3: Failed']
+      }
+    };
+  }
+
+  if (problemId === 'custom-linked-list') {
+    const hasLinkedListLogic = code.includes('linked') || code.includes('node') || code.includes('next') || code.includes('prev');
+    return {
+      status: (isValid && hasLinkedListLogic) ? 'Accepted' : 'Wrong Answer' as const,
+      testResults: {
+        passed: (isValid && hasLinkedListLogic) ? 3 : 1,
+        total: 3,
+        details: (isValid && hasLinkedListLogic)
+          ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
+          : ['Test case 1: Failed - Missing linked list logic', 'Test case 2: Passed', 'Test case 3: Failed']
+      }
+    };
+  }
+
+  if (problemId === 'priority-queue-battles') {
+    const hasPriorityLogic = code.includes('priority') || code.includes('queue') || code.includes('heap') || code.includes('customer');
+    return {
+      status: (isValid && hasPriorityLogic) ? 'Accepted' : 'Wrong Answer' as const,
+      testResults: {
+        passed: (isValid && hasPriorityLogic) ? 3 : 1,
+        total: 3,
+        details: (isValid && hasPriorityLogic)
+          ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
+          : ['Test case 1: Failed - Missing priority queue logic', 'Test case 2: Passed', 'Test case 3: Failed']
+      }
+    };
+  }
+
+  if (problemId === 'lru-cache-implementation') {
+    const hasLRULogic = code.includes('lru') || code.includes('cache') || code.includes('least') || code.includes('recently');
+    return {
+      status: (isValid && hasLRULogic) ? 'Accepted' : 'Wrong Answer' as const,
+      testResults: {
+        passed: (isValid && hasLRULogic) ? 3 : 1,
+        total: 3,
+        details: (isValid && hasLRULogic)
+          ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
+          : ['Test case 1: Failed - Missing LRU cache logic', 'Test case 2: Passed', 'Test case 3: Failed']
       }
     };
   }
