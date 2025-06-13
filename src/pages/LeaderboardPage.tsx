@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Trophy, Medal, Award, User, University, Target, Crown, Star, Zap } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import BadgeDisplay from '../components/BadgeDisplay';
 
 const LeaderboardPage: React.FC = () => {
   const { participants, currentUser } = useApp();
@@ -80,8 +81,8 @@ const LeaderboardPage: React.FC = () => {
           <div className="modern-card p-3 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-xs font-medium mb-1">Highest Score</p>
-                <p className="text-lg font-bold text-white">{participants.length > 0 ? Math.max(...participants.map(p => p.score)) : 0}</p>
+                <p className="text-white/60 text-xs font-medium mb-1">Badges Earned</p>
+                <p className="text-lg font-bold text-white">{participants.reduce((sum, p) => sum + (p.badges?.length || 0), 0)}</p>
               </div>
               <div className="p-2 bg-white/10 rounded">
                 <Star className="text-white" size={16} />
@@ -106,7 +107,8 @@ const LeaderboardPage: React.FC = () => {
                 <h3 className="font-bold text-white text-sm mb-1">{participants[1].name}</h3>
                 <p className="text-white/60 text-xs mb-1">{participants[1].university}</p>
                 <p className="text-lg font-bold text-white">{participants[1].score}</p>
-                <p className="text-white/60 text-xs">points</p>
+                <p className="text-white/60 text-xs mb-2">points</p>
+                <BadgeDisplay badges={participants[1].badges || []} size="small" showTooltip={false} />
               </Link>
 
               {/* First Place */}
@@ -120,7 +122,8 @@ const LeaderboardPage: React.FC = () => {
                 <h3 className="font-bold text-white text-base mb-1">{participants[0].name}</h3>
                 <p className="text-white/60 text-xs mb-1">{participants[0].university}</p>
                 <p className="text-xl font-bold text-white">{participants[0].score}</p>
-                <p className="text-white/60 text-xs">points</p>
+                <p className="text-white/60 text-xs mb-2">points</p>
+                <BadgeDisplay badges={participants[0].badges || []} size="small" showTooltip={false} />
               </Link>
 
               {/* Third Place */}
@@ -134,7 +137,8 @@ const LeaderboardPage: React.FC = () => {
                 <h3 className="font-bold text-white text-sm mb-1">{participants[2].name}</h3>
                 <p className="text-white/60 text-xs mb-1">{participants[2].university}</p>
                 <p className="text-lg font-bold text-white">{participants[2].score}</p>
-                <p className="text-white/60 text-xs">points</p>
+                <p className="text-white/60 text-xs mb-2">points</p>
+                <BadgeDisplay badges={participants[2].badges || []} size="small" showTooltip={false} />
               </Link>
             </div>
           </div>
@@ -156,7 +160,7 @@ const LeaderboardPage: React.FC = () => {
                   <th className="text-left py-2 px-2 font-semibold text-white text-xs">Institution</th>
                   <th className="text-left py-2 px-2 font-semibold text-white text-xs">Score</th>
                   <th className="text-left py-2 px-2 font-semibold text-white text-xs">Solved</th>
-                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Penalty</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Badges</th>
                 </tr>
               </thead>
               <tbody>
@@ -218,9 +222,18 @@ const LeaderboardPage: React.FC = () => {
                         </span>
                       </td>
                       <td className="py-2 px-2">
-                        <span className="text-white font-mono text-xs">
-                          {participant.penaltyTime}m
-                        </span>
+                        <div className="flex items-center space-x-1">
+                          <BadgeDisplay 
+                            badges={(participant.badges || []).slice(0, 3)} 
+                            size="small" 
+                            showTooltip={false}
+                          />
+                          {(participant.badges?.length || 0) > 3 && (
+                            <span className="text-white/60 text-xs">
+                              +{(participant.badges?.length || 0) - 3}
+                            </span>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );

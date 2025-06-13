@@ -8,6 +8,7 @@ export interface Participant {
   solvedProblems: number;
   penaltyTime: number;
   createdAt: string;
+  badges: Badge[];
 }
 
 export interface Problem {
@@ -55,4 +56,24 @@ export interface TestResult {
   expectedOutput: string;
   actualOutput: string;
   passed: boolean;
+}
+
+export interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: 'achievement' | 'milestone' | 'special';
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  earnedAt: string;
+}
+
+export interface BadgeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: 'achievement' | 'milestone' | 'special';
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  condition: (participant: Participant, submissions: Submission[]) => boolean;
 }

@@ -12,15 +12,16 @@ import {
   getParticipantByEmail,
   getParticipantByStudentNumber
 } from '../firebase/database';
-import { Participant, Challenge, Submission } from '../types';
+import { Participant, Challenge, Submission, Badge } from '../types';
 import { mockChallenge, validateSubmission } from '../data/mockData';
+import { checkForNewBadges, BADGE_DEFINITIONS } from '../data/badges';
 
 interface AppContextType {
   currentUser: Participant | null;
   participants: Participant[];
   challenge: Challenge;
   submissions: Submission[];
-  registerParticipant: (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt'>) => Promise<void>;
+  registerParticipant: (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt' | 'badges'>) => Promise<void>;
   loginParticipant: (email: string, studentNumber: string) => Promise<void>;
   logoutParticipant: () => void;
   submitSolution: (problemId: string, code: string, language: string) => Promise<Submission>;
@@ -100,6 +101,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (currentUser) {
       const unsubscribe = subscribeToSubmissions(currentUser.id, (updatedSubmissions) => {
         setSubmissions(updatedSubmissions);
+        
+        // Check for new badges after submissions update
+        checkAndAwardBadges(currentUser, updatedSubmissions);
       });
 
       return () => unsubscribe();
@@ -121,8 +125,34 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return () => clearInterval(interval);
   }, [challenge]);
 
+  // Check and award new badges
+  const checkAndAwardBadges = async (participant: Participant, userSubmissions: Submission[]) => {
+    const newBadges = checkForNewBadges(participant, userSubmissions);
+    
+    if (newBadges.length > 0) {
+      const updatedBadges: Badge[] = [
+        ...participant.badges,
+        ...newBadges.map(badge => ({
+          ...badge,
+          earnedAt: new Date().toISOString()
+        }))
+      ];
+      
+      try {
+        await updateParticipant(participant.id, { badges: updatedBadges });
+        
+        // Show notifications for new badges
+        newBadges.forEach(badge => {
+          addNotification(`🏆 Badge Earned: ${badge.name} - ${badge.description}`);
+        });
+      } catch (error) {
+        console.error('Error updating badges:', error);
+      }
+    }
+  };
+
   // Register a new participant
-  const registerParticipant = async (participantData: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt'>) => {
+  const registerParticipant = async (participantData: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt' | 'badges'>) => {
     try {
       // Check if email already exists
       const existingEmailParticipant = await getParticipantByEmail(participantData.email);

@@ -21,12 +21,13 @@ export const DB_PATHS = {
 };
 
 // Participant operations
-export const createParticipant = async (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt'>) => {
+export const createParticipant = async (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt' | 'badges'>) => {
   const newParticipant = {
     ...participant,
     score: 0,
     solvedProblems: 0,
     penaltyTime: 0,
+    badges: [],
     createdAt: new Date().toISOString()
   };
   
@@ -45,6 +46,7 @@ export const getParticipants = async (): Promise<Participant[]> => {
     const data = snapshot.val();
     return Object.keys(data).map(key => ({
       id: key,
+      badges: [], // Ensure badges array exists
       ...data[key]
     } as Participant)).sort((a, b) => {
       // Sort by score descending, then by penalty time ascending
@@ -63,7 +65,12 @@ export const getParticipant = async (id: string): Promise<Participant | null> =>
   const snapshot = await get(participantRef);
   
   if (snapshot.exists()) {
-    return { id, ...snapshot.val() } as Participant;
+    const data = snapshot.val();
+    return { 
+      id, 
+      badges: [], // Ensure badges array exists
+      ...data 
+    } as Participant;
   }
   
   return null;
@@ -81,7 +88,12 @@ export const getParticipantByEmail = async (email: string): Promise<Participant 
   if (snapshot.exists()) {
     const data = snapshot.val();
     const participantId = Object.keys(data)[0];
-    return { id: participantId, ...data[participantId] } as Participant;
+    const participantData = data[participantId];
+    return { 
+      id: participantId, 
+      badges: [], // Ensure badges array exists
+      ...participantData 
+    } as Participant;
   }
   
   return null;
@@ -99,7 +111,12 @@ export const getParticipantByStudentNumber = async (studentNumber: string): Prom
   if (snapshot.exists()) {
     const data = snapshot.val();
     const participantId = Object.keys(data)[0];
-    return { id: participantId, ...data[participantId] } as Participant;
+    const participantData = data[participantId];
+    return { 
+      id: participantId, 
+      badges: [], // Ensure badges array exists
+      ...participantData 
+    } as Participant;
   }
   
   return null;
@@ -161,6 +178,7 @@ export const subscribeToParticipants = (callback: (participants: Participant[]) 
       const data = snapshot.val();
       const participants = Object.keys(data).map(key => ({
         id: key,
+        badges: [], // Ensure badges array exists
         ...data[key]
       } as Participant)).sort((a, b) => {
         // Sort by score descending, then by penalty time ascending

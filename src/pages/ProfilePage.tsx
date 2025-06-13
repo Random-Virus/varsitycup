@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { User, University, Hash, Trophy, Target, Clock, Calendar, ArrowLeft, Award, Code2, Zap } from 'lucide-react';
+import { User, University, Hash, Trophy, Target, Clock, Calendar, ArrowLeft, Award, Code2, Zap, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import BadgeDisplay from '../components/BadgeDisplay';
 
 const ProfilePage: React.FC = () => {
   const { participantId } = useParams();
@@ -89,18 +90,14 @@ const ProfilePage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                {/* Only show email and student number for own profile or with masking */}
-                {(isOwnProfile || true) && (
-                  <>
-                    <div className="flex items-center space-x-2">
-                      <Hash className="text-white" size={12} />
-                      <div>
-                        <p className="text-white/60 text-xs">Student ID</p>
-                        <p className="text-white font-mono text-xs">{maskStudentNumber(profileParticipant.studentNumber)}</p>
-                      </div>
-                    </div>
-                  </>
-                )}
+                {/* Only show student number for own profile or with masking */}
+                <div className="flex items-center space-x-2">
+                  <Hash className="text-white" size={12} />
+                  <div>
+                    <p className="text-white/60 text-xs">Student ID</p>
+                    <p className="text-white font-mono text-xs">{maskStudentNumber(profileParticipant.studentNumber)}</p>
+                  </div>
+                </div>
 
                 <div className="flex items-center space-x-2">
                   <University className="text-white" size={12} />
@@ -121,7 +118,7 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Rank Card */}
-            <div className="modern-card p-3">
+            <div className="modern-card p-3 mb-3">
               <h3 className="text-sm font-bold text-white mb-2 flex items-center">
                 <Trophy className="mr-1" size={12} />
                 Current Ranking
@@ -130,6 +127,19 @@ const ProfilePage: React.FC = () => {
                 <div className="text-2xl font-bold text-white mb-1">#{participantRank}</div>
                 <p className="text-white/60 text-xs">out of {participants.length} participants</p>
               </div>
+            </div>
+
+            {/* Badges Section */}
+            <div className="modern-card p-3">
+              <h3 className="text-sm font-bold text-white mb-2 flex items-center">
+                <Star className="mr-1" size={12} />
+                Achievements ({profileParticipant.badges?.length || 0})
+              </h3>
+              <BadgeDisplay 
+                badges={profileParticipant.badges || []} 
+                size="medium" 
+                showTooltip={true}
+              />
             </div>
           </div>
 
@@ -152,12 +162,10 @@ const ProfilePage: React.FC = () => {
                 <p className="text-white/60 text-xs">Penalty Time</p>
               </div>
               
-              {isOwnProfile && (
-                <div className="modern-card p-2 text-center">
-                  <div className="text-lg font-bold text-white mb-1">{successRate}%</div>
-                  <p className="text-white/60 text-xs">Success Rate</p>
-                </div>
-              )}
+              <div className="modern-card p-2 text-center">
+                <div className="text-lg font-bold text-white mb-1">{profileParticipant.badges?.length || 0}</div>
+                <p className="text-white/60 text-xs">Badges Earned</p>
+              </div>
             </div>
 
             {/* Problem Progress */}
