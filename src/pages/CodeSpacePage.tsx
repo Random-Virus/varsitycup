@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Play, Clock, Target, Code2, Send, CheckCircle, XCircle, AlertCircle, Terminal, Zap, Award, Shield, Lock, Database, Layers, Bug } from 'lucide-react';
+import { ArrowLeft, Play, Clock, Target, Code2, Send, CheckCircle, XCircle, AlertCircle, Terminal, Zap, Award, Shield, Lock, Database, Layers, Bug, Heart } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
 const CodeSpacePage: React.FC = () => {
   const { problemId } = useParams();
   const navigate = useNavigate();
-  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, findErrorChallenge, submissions, submitSolution, timeRemaining } = useApp();
+  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, findErrorChallenge, socialImpactChallenge, submissions, submitSolution, timeRemaining } = useApp();
   
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('javascript');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Find problem in any challenge set
-  const allProblems = [...challenge.problems, ...cryptographyChallenge.problems, ...dataStructuresChallenge.problems, ...findErrorChallenge.problems];
+  const allProblems = [
+    ...challenge.problems, 
+    ...cryptographyChallenge.problems, 
+    ...dataStructuresChallenge.problems, 
+    ...findErrorChallenge.problems,
+    ...socialImpactChallenge.problems
+  ];
   const problem = allProblems.find(p => p.id === problemId);
   const isCryptographyProblem = cryptographyChallenge.problems.some(p => p.id === problemId);
   const isDataStructuresProblem = dataStructuresChallenge.problems.some(p => p.id === problemId);
   const isFindErrorProblem = findErrorChallenge.problems.some(p => p.id === problemId);
+  const isSocialImpactProblem = socialImpactChallenge.problems.some(p => p.id === problemId);
   
   const problemSubmissions = submissions.filter(s => s.problemId === problemId);
   const isSolved = problemSubmissions.some(s => s.status === 'Accepted');
@@ -154,6 +161,7 @@ int main() {
     if (isCryptographyProblem) return { name: 'Cryptography Challenge', color: 'purple', icon: Shield };
     if (isDataStructuresProblem) return { name: 'Data Structures Challenge', color: 'green', icon: Database };
     if (isFindErrorProblem) return { name: 'Find the Error Challenge', color: 'red', icon: Bug };
+    if (isSocialImpactProblem) return { name: 'Social Impact Challenge', color: 'orange', icon: Heart };
     return { name: 'Programming Challenge', color: 'white', icon: Code2 };
   };
 
@@ -194,6 +202,7 @@ int main() {
                   {isCryptographyProblem && <Lock className="mr-2 text-purple-400" size={16} />}
                   {isDataStructuresProblem && <Layers className="mr-2 text-green-400" size={16} />}
                   {isFindErrorProblem && <Bug className="mr-2 text-red-400" size={16} />}
+                  {isSocialImpactProblem && <Heart className="mr-2 text-orange-400" size={16} />}
                   {problem.title}
                   {isSolved && <Award className="ml-2 text-white" size={16} />}
                 </h2>
@@ -205,6 +214,8 @@ int main() {
                       ? 'bg-green-400/20 text-green-300 border border-green-400/30'
                       : isFindErrorProblem
                       ? 'bg-red-400/20 text-red-300 border border-red-400/30'
+                      : isSocialImpactProblem
+                      ? 'bg-orange-400/20 text-orange-300 border border-orange-400/30'
                       : 'bg-white/20 text-white border border-white/30'
                   }`}>
                     {problem.difficulty}
@@ -223,6 +234,11 @@ int main() {
                   {isFindErrorProblem && (
                     <span className="px-2 py-1 rounded text-xs font-semibold bg-red-400/10 text-red-300 border border-red-400/20">
                       DEBUG
+                    </span>
+                  )}
+                  {isSocialImpactProblem && (
+                    <span className="px-2 py-1 rounded text-xs font-semibold bg-orange-400/10 text-orange-300 border border-orange-400/20">
+                      SOCIAL IMPACT
                     </span>
                   )}
                 </div>
@@ -301,6 +317,11 @@ int main() {
                 {isFindErrorProblem && (
                   <span className="ml-2 px-2 py-1 rounded text-xs font-semibold bg-red-400/10 text-red-300 border border-red-400/20">
                     DEBUG
+                  </span>
+                )}
+                {isSocialImpactProblem && (
+                  <span className="ml-2 px-2 py-1 rounded text-xs font-semibold bg-orange-400/10 text-orange-300 border border-orange-400/20">
+                    SOCIAL IMPACT
                   </span>
                 )}
               </h3>
@@ -470,7 +491,7 @@ int main() {
             </div>
 
             {/* Find the Error Challenges */}
-            <div>
+            <div className="mb-3">
               <h4 className="text-xs font-semibold text-white/80 mb-2 flex items-center">
                 <Bug className="mr-1" size={10} />
                 Find the Error Challenges
@@ -491,6 +512,36 @@ int main() {
                         }`}
                       >
                         <Bug className="inline mr-1" size={8} />
+                        {otherProblem.title}
+                        {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
+                      </Link>
+                    );
+                  })}
+              </div>
+            </div>
+
+            {/* Social Impact Challenges */}
+            <div>
+              <h4 className="text-xs font-semibold text-white/80 mb-2 flex items-center">
+                <Heart className="mr-1" size={10} />
+                Eva Mamabolo Social Impact Challenges
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {socialImpactChallenge.problems
+                  .filter(p => p.id !== problemId)
+                  .map((otherProblem) => {
+                    const otherSolved = submissions.some(s => s.problemId === otherProblem.id && s.status === 'Accepted');
+                    return (
+                      <Link
+                        key={otherProblem.id}
+                        to={`/code/${otherProblem.id}`}
+                        className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 border ${
+                          otherSolved 
+                            ? 'bg-orange-400/20 text-orange-300 border-orange-400/30 hover:bg-orange-400/25' 
+                            : 'bg-orange-400/10 text-orange-300 border-orange-400/20 hover:bg-orange-400/15'
+                        }`}
+                      >
+                        <Heart className="inline mr-1" size={8} />
                         {otherProblem.title}
                         {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
                       </Link>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertTriangle, Play, Terminal, Zap, Target, Award, ArrowRight, Shield, Lock, Database, Layers, Bug } from 'lucide-react';
+import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertTriangle, Play, Terminal, Zap, Target, Award, ArrowRight, Shield, Lock, Database, Layers, Bug, Heart } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
 const DashboardPage: React.FC = () => {
-  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, findErrorChallenge, submissions, timeRemaining } = useApp();
-  const [activeTab, setActiveTab] = useState<'programming' | 'cryptography' | 'datastructures' | 'finderror'>('programming');
+  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, findErrorChallenge, socialImpactChallenge, submissions, timeRemaining } = useApp();
+  const [activeTab, setActiveTab] = useState<'programming' | 'cryptography' | 'datastructures' | 'finderror' | 'socialimpact'>('programming');
 
   if (!currentUser) {
     return (
@@ -81,6 +81,13 @@ const DashboardPage: React.FC = () => {
           icon: Bug,
           description: 'Debug and fix common programming errors'
         };
+      case 'socialimpact':
+        return {
+          challenge: socialImpactChallenge,
+          problems: socialImpactChallenge.problems,
+          icon: Heart,
+          description: 'Technology solutions for South African social challenges'
+        };
       default:
         return {
           challenge: challenge,
@@ -152,57 +159,70 @@ const DashboardPage: React.FC = () => {
 
         {/* Challenge Category Tabs */}
         <div className="mb-4">
-          <div className="flex space-x-1 bg-white/5 p-1 rounded-lg">
+          <div className="flex space-x-1 bg-white/5 p-1 rounded-lg overflow-x-auto">
             <button
               onClick={() => setActiveTab('programming')}
-              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+              className={`flex-shrink-0 flex items-center justify-center space-x-2 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-300 ${
                 activeTab === 'programming'
                   ? 'bg-white/20 text-white border border-white/30'
                   : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
             >
-              <Code2 size={16} />
+              <Code2 size={14} />
               <span>Programming</span>
               <span className="text-xs bg-white/20 px-2 py-1 rounded-full">{challenge.problems.length}</span>
             </button>
             
             <button
               onClick={() => setActiveTab('cryptography')}
-              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+              className={`flex-shrink-0 flex items-center justify-center space-x-2 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-300 ${
                 activeTab === 'cryptography'
                   ? 'bg-purple-400/20 text-purple-300 border border-purple-400/30'
                   : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
             >
-              <Shield size={16} />
+              <Shield size={14} />
               <span>Cryptography</span>
               <span className="text-xs bg-purple-400/20 px-2 py-1 rounded-full">{cryptographyChallenge.problems.length}</span>
             </button>
 
             <button
               onClick={() => setActiveTab('datastructures')}
-              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+              className={`flex-shrink-0 flex items-center justify-center space-x-2 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-300 ${
                 activeTab === 'datastructures'
                   ? 'bg-green-400/20 text-green-300 border border-green-400/30'
                   : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
             >
-              <Database size={16} />
+              <Database size={14} />
               <span>Data Structures</span>
               <span className="text-xs bg-green-400/20 px-2 py-1 rounded-full">{dataStructuresChallenge.problems.length}</span>
             </button>
 
             <button
               onClick={() => setActiveTab('finderror')}
-              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+              className={`flex-shrink-0 flex items-center justify-center space-x-2 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-300 ${
                 activeTab === 'finderror'
                   ? 'bg-red-400/20 text-red-300 border border-red-400/30'
                   : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
             >
-              <Bug size={16} />
+              <Bug size={14} />
               <span>Find the Error</span>
               <span className="text-xs bg-red-400/20 px-2 py-1 rounded-full">{findErrorChallenge.problems.length}</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('socialimpact')}
+              className={`flex-shrink-0 flex items-center justify-center space-x-2 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-300 ${
+                activeTab === 'socialimpact'
+                  ? 'bg-orange-400/20 text-orange-300 border border-orange-400/30'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Heart size={14} />
+              <span>Social Impact</span>
+              <span className="text-xs bg-orange-400/20 px-2 py-1 rounded-full">{socialImpactChallenge.problems.length}</span>
             </button>
           </div>
         </div>
@@ -247,6 +267,9 @@ const DashboardPage: React.FC = () => {
                       {activeTab === 'finderror' && (
                         <Bug className="text-red-400" size={12} />
                       )}
+                      {activeTab === 'socialimpact' && (
+                        <Heart className="text-orange-400" size={12} />
+                      )}
                       <h3 className="font-bold text-white text-sm group-hover:text-white transition-colors duration-300">
                         {problem.title}
                       </h3>
@@ -267,6 +290,8 @@ const DashboardPage: React.FC = () => {
                         ? 'bg-green-400/20 text-green-300 border border-green-400/30'
                         : activeTab === 'finderror'
                         ? 'bg-red-400/20 text-red-300 border border-red-400/30'
+                        : activeTab === 'socialimpact'
+                        ? 'bg-orange-400/20 text-orange-300 border border-orange-400/30'
                         : 'bg-white/20 text-white border border-white/30'
                     }`}>
                       {problem.difficulty}
@@ -313,11 +338,18 @@ const DashboardPage: React.FC = () => {
             </h3>
             <div className="space-y-2">
               {submissions.slice(0, 5).map((submission) => {
-                const allProblems = [...challenge.problems, ...cryptographyChallenge.problems, ...dataStructuresChallenge.problems, ...findErrorChallenge.problems];
+                const allProblems = [
+                  ...challenge.problems, 
+                  ...cryptographyChallenge.problems, 
+                  ...dataStructuresChallenge.problems, 
+                  ...findErrorChallenge.problems,
+                  ...socialImpactChallenge.problems
+                ];
                 const problem = allProblems.find(p => p.id === submission.problemId);
                 const isCrypto = cryptographyChallenge.problems.some(p => p.id === submission.problemId);
                 const isDataStructures = dataStructuresChallenge.problems.some(p => p.id === submission.problemId);
                 const isFindError = findErrorChallenge.problems.some(p => p.id === submission.problemId);
+                const isSocialImpact = socialImpactChallenge.problems.some(p => p.id === submission.problemId);
                 
                 return (
                   <div key={submission.id} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
@@ -326,6 +358,7 @@ const DashboardPage: React.FC = () => {
                       {isCrypto && <Shield className="text-purple-400" size={12} />}
                       {isDataStructures && <Database className="text-green-400" size={12} />}
                       {isFindError && <Bug className="text-red-400" size={12} />}
+                      {isSocialImpact && <Heart className="text-orange-400" size={12} />}
                       <Link 
                         to={`/code/${submission.problemId}`}
                         className="text-white hover:text-white/80 font-medium text-xs transition-colors duration-300"

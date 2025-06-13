@@ -33,7 +33,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     rarity: 'common',
     condition: (participant, submissions) => {
       console.log('🔍 Checking PROBLEM SOLVER badge condition:');
-      console.log('  - Participant:', participant.name);
+      console.log('  -Participant:', participant.name);
       
       const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
       const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
@@ -63,10 +63,10 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
       
       console.log('  - Unique solved problems:', solvedProblems.size);
-      console.log('  - Total problems in competition:', 20); // 4 programming + 4 cryptography + 4 data structures + 10 find error
+      console.log('  - Total problems in competition:', 28); // 4 programming + 4 cryptography + 4 data structures + 10 find error + 8 social impact
       
-      const meetsCondition = solvedProblems.size >= 20;
-      console.log('  - Meets condition (>=20):', meetsCondition);
+      const meetsCondition = solvedProblems.size >= 28;
+      console.log('  - Meets condition (>=28):', meetsCondition);
       
       return meetsCondition;
     }
@@ -185,6 +185,213 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       console.log('  - Meets condition (>=10 find error problems):', meetsCondition);
       
       return meetsCondition;
+    }
+  },
+  {
+    id: 'social-impact-champion',
+    name: 'Social Impact Champion',
+    description: 'Solved all Eva Mamabolo social impact challenges',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'legendary',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking SOCIAL IMPACT CHAMPION badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const socialImpactProblems = [
+        'load-shedding-alert-system', 'water-usage-tracker', 'public-clinic-queue-estimator', 'food-parcel-distribution-optimizer',
+        'minibus-taxi-route-mapper', 'illegal-dumping-reporting-tool', 'basic-first-aid-chatbot', 'rdp-housing-application-tracker'
+      ];
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedSocialImpactProblems = new Set(
+        acceptedSubmissions
+          .filter(s => socialImpactProblems.includes(s.problemId))
+          .map(s => s.problemId)
+      );
+      
+      console.log('  - Social impact problems solved:', solvedSocialImpactProblems.size);
+      console.log('  - Social impact problem IDs solved:', Array.from(solvedSocialImpactProblems));
+      
+      const meetsCondition = solvedSocialImpactProblems.size >= 8;
+      console.log('  - Meets condition (>=8 social impact problems):', meetsCondition);
+      
+      return meetsCondition;
+    }
+  },
+  {
+    id: 'community-builder',
+    name: 'Community Builder',
+    description: 'Solved your first social impact challenge',
+    icon: '/pic.png',
+    category: 'milestone',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking COMMUNITY BUILDER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const socialImpactProblems = [
+        'load-shedding-alert-system', 'water-usage-tracker', 'public-clinic-queue-estimator', 'food-parcel-distribution-optimizer',
+        'minibus-taxi-route-mapper', 'illegal-dumping-reporting-tool', 'basic-first-aid-chatbot', 'rdp-housing-application-tracker'
+      ];
+      
+      const hasSolvedSocialImpact = submissions.some(s => 
+        socialImpactProblems.includes(s.problemId) && s.status === 'Accepted'
+      );
+      
+      console.log('  - Has solved a social impact challenge:', hasSolvedSocialImpact);
+      return hasSolvedSocialImpact;
+    }
+  },
+  {
+    id: 'load-shedding-hero',
+    name: 'Load Shedding Hero',
+    description: 'Built a load shedding alert system',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking LOAD SHEDDING HERO badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const loadSheddingSolved = submissions.some(s => 
+        s.problemId === 'load-shedding-alert-system' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Load shedding alert system solved:', loadSheddingSolved);
+      return loadSheddingSolved;
+    }
+  },
+  {
+    id: 'water-guardian',
+    name: 'Water Guardian',
+    description: 'Created a water conservation tracking system',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking WATER GUARDIAN badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const waterTrackerSolved = submissions.some(s => 
+        s.problemId === 'water-usage-tracker' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Water usage tracker solved:', waterTrackerSolved);
+      return waterTrackerSolved;
+    }
+  },
+  {
+    id: 'healthcare-advocate',
+    name: 'Healthcare Advocate',
+    description: 'Improved healthcare access with queue optimization',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking HEALTHCARE ADVOCATE badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const clinicQueueSolved = submissions.some(s => 
+        s.problemId === 'public-clinic-queue-estimator' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Public clinic queue estimator solved:', clinicQueueSolved);
+      return clinicQueueSolved;
+    }
+  },
+  {
+    id: 'food-security-champion',
+    name: 'Food Security Champion',
+    description: 'Optimized food parcel distribution for communities',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking FOOD SECURITY CHAMPION badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const foodDistributionSolved = submissions.some(s => 
+        s.problemId === 'food-parcel-distribution-optimizer' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Food parcel distribution optimizer solved:', foodDistributionSolved);
+      return foodDistributionSolved;
+    }
+  },
+  {
+    id: 'transport-innovator',
+    name: 'Transport Innovator',
+    description: 'Revolutionized township transportation with route mapping',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking TRANSPORT INNOVATOR badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const taxiRouteSolved = submissions.some(s => 
+        s.problemId === 'minibus-taxi-route-mapper' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Minibus taxi route mapper solved:', taxiRouteSolved);
+      return taxiRouteSolved;
+    }
+  },
+  {
+    id: 'environmental-protector',
+    name: 'Environmental Protector',
+    description: 'Created an illegal dumping reporting system',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking ENVIRONMENTAL PROTECTOR badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const dumpingReportSolved = submissions.some(s => 
+        s.problemId === 'illegal-dumping-reporting-tool' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Illegal dumping reporting tool solved:', dumpingReportSolved);
+      return dumpingReportSolved;
+    }
+  },
+  {
+    id: 'life-saver',
+    name: 'Life Saver',
+    description: 'Built a first aid guidance system',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking LIFE SAVER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const firstAidSolved = submissions.some(s => 
+        s.problemId === 'basic-first-aid-chatbot' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Basic first aid chatbot solved:', firstAidSolved);
+      return firstAidSolved;
+    }
+  },
+  {
+    id: 'housing-advocate',
+    name: 'Housing Advocate',
+    description: 'Created an RDP housing application tracker',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking HOUSING ADVOCATE badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const rdpTrackerSolved = submissions.some(s => 
+        s.problemId === 'rdp-housing-application-tracker' && s.status === 'Accepted'
+      );
+      
+      console.log('  - RDP housing application tracker solved:', rdpTrackerSolved);
+      return rdpTrackerSolved;
     }
   },
   {
@@ -533,9 +740,9 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       console.log('  - Participant:', participant.name);
       console.log('  - Score:', participant.score);
       
-      // Updated threshold for expanded challenge set (20 problems total)
-      const meetsCondition = participant.score >= 1000; // Increased from 800
-      console.log('  - Meets condition (>=1000 points):', meetsCondition);
+      // Updated threshold for expanded challenge set (28 problems total)
+      const meetsCondition = participant.score >= 1500; // Increased from 1000
+      console.log('  - Meets condition (>=1500 points):', meetsCondition);
       
       return meetsCondition;
     }

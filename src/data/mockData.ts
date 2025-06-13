@@ -832,6 +832,372 @@ The function includes one extra character due to the unnecessary -1.
   }
 ];
 
+// EVA MAMABOLO SOCIAL IMPACT CHALLENGES - New category
+export const socialImpactProblems: Problem[] = [
+  {
+    id: 'load-shedding-alert-system',
+    title: 'Load Shedding Alert System',
+    description: `Design a load shedding alert system for South African communities to help residents prepare for power outages.
+
+Create a LoadSheddingAlert class that manages power outage schedules and notifications:
+
+1. addSchedule(area, stage, startTime, duration) - Add a load shedding schedule
+2. getActiveOutages(currentTime) - Return all active outages at given time
+3. getUpcomingOutages(area, hours) - Get outages in next X hours for specific area
+4. sendAlert(area, minutesBefore) - Generate alert message X minutes before outage
+5. calculateImpact(area, timeRange) - Calculate total outage hours in time range
+
+The system should help communities:
+- Plan activities around power availability
+- Prepare backup power solutions
+- Coordinate community support during outages
+
+Return appropriate data structures for each operation.`,
+    difficulty: 'Medium',
+    points: 180,
+    timeLimit: 2500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'addSchedule("Soweto", 2, "14:00", 2); getUpcomingOutages("Soweto", 4);',
+        output: '[{"area": "Soweto", "stage": 2, "startTime": "14:00", "duration": 2}]',
+        explanation: 'Returns upcoming outage for Soweto within next 4 hours'
+      },
+      {
+        input: 'sendAlert("Sandton", 30);',
+        output: '"ALERT: Load shedding Stage 2 starting in Sandton in 30 minutes. Duration: 2 hours. Prepare backup power."',
+        explanation: 'Generate alert message 30 minutes before outage'
+      }
+    ],
+    constraints: [
+      'Stage levels: 1-8 (higher = more severe)',
+      'Duration in hours (0.5 to 4.5)',
+      'Time format: HH:MM (24-hour)',
+      'Area names are strings',
+      'Support multiple concurrent outages'
+    ]
+  },
+  {
+    id: 'water-usage-tracker',
+    title: 'Water Usage Tracker',
+    description: `Develop a water usage tracking system to help South African households monitor and conserve water during drought periods.
+
+Implement a WaterTracker class with the following features:
+
+1. recordUsage(date, liters, category) - Record water usage by category (drinking, cooking, bathing, garden, etc.)
+2. getDailyUsage(date) - Get total usage for specific date
+3. getWeeklyAverage(startDate) - Calculate average daily usage for a week
+4. identifyWastage(threshold) - Find days exceeding usage threshold
+5. generateConservationTips(usage) - Suggest water-saving measures based on usage patterns
+6. calculateSavings(oldUsage, newUsage) - Calculate water and cost savings
+
+Help families:
+- Track consumption patterns
+- Identify conservation opportunities
+- Meet municipal water restrictions
+- Reduce water bills
+
+Return usage statistics and conservation recommendations.`,
+    difficulty: 'Medium',
+    points: 170,
+    timeLimit: 2000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'recordUsage("2024-03-15", 150, "bathing"); getDailyUsage("2024-03-15");',
+        output: '150',
+        explanation: 'Returns total water usage for the specified date'
+      },
+      {
+        input: 'generateConservationTips(300);',
+        output: '["Install low-flow showerheads", "Fix leaky taps", "Use greywater for garden", "Take shorter showers"]',
+        explanation: 'Provides conservation tips based on high usage'
+      }
+    ],
+    constraints: [
+      'Usage in liters (positive numbers)',
+      'Date format: YYYY-MM-DD',
+      'Categories: drinking, cooking, bathing, cleaning, garden, other',
+      'Threshold values in liters per day',
+      'Support historical data analysis'
+    ]
+  },
+  {
+    id: 'public-clinic-queue-estimator',
+    title: 'Public Clinic Queue Estimator',
+    description: `Create a queue estimation system for South African public clinics to help patients plan their visits and reduce waiting times.
+
+Build a ClinicQueue class that manages patient flow and wait time predictions:
+
+1. addPatient(patientId, priority, arrivalTime) - Add patient to queue with priority level
+2. estimateWaitTime(patientId) - Estimate waiting time for specific patient
+3. updateServiceTime(avgServiceTime) - Update average service time per patient
+4. getQueueStatus() - Return current queue length and estimated total wait
+5. processNextPatient() - Remove next patient from queue and update times
+6. optimizeScheduling(appointments) - Suggest optimal appointment slots
+
+Priority levels:
+- Emergency (1): Immediate attention
+- Urgent (2): Within 30 minutes
+- Routine (3): Normal queue order
+- Follow-up (4): Can be rescheduled
+
+Help improve healthcare access by providing realistic wait time estimates.`,
+    difficulty: 'Hard',
+    points: 200,
+    timeLimit: 3000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'addPatient("P001", 3, "09:00"); addPatient("P002", 1, "09:15"); estimateWaitTime("P001");',
+        output: '45',
+        explanation: 'Patient P001 waits 45 minutes as emergency patient P002 goes first'
+      },
+      {
+        input: 'optimizeScheduling([{"time": "10:00", "duration": 15}, {"time": "10:30", "duration": 20}]);',
+        output: '["10:00", "10:45"]',
+        explanation: 'Suggests optimal appointment times to minimize waiting'
+      }
+    ],
+    constraints: [
+      'Priority levels: 1-4 (1 = highest priority)',
+      'Time format: HH:MM',
+      'Service time in minutes',
+      'Queue capacity: up to 100 patients',
+      'Support real-time updates'
+    ]
+  },
+  {
+    id: 'food-parcel-distribution-optimizer',
+    title: 'Food Parcel Distribution Optimizer',
+    description: `Design an optimization system for food parcel distribution in South African communities to ensure fair and efficient allocation of resources.
+
+Create a FoodDistribution class that manages parcel allocation:
+
+1. registerFamily(familyId, size, income, location, needs) - Register family for assistance
+2. addSupplies(items, quantities, expiryDates) - Add available food supplies
+3. calculateNeed(familyId) - Calculate family's need score based on criteria
+4. optimizeDistribution(supplies, families) - Create optimal distribution plan
+5. trackDistribution(familyId, items) - Record what was distributed to whom
+6. generateReport(period) - Create distribution summary report
+
+Optimization criteria:
+- Family size and composition
+- Income level and employment status
+- Nutritional needs (children, elderly, medical conditions)
+- Geographic accessibility
+- Previous assistance received
+
+Ensure equitable distribution while minimizing waste and transportation costs.`,
+    difficulty: 'Hard',
+    points: 220,
+    timeLimit: 3500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'registerFamily("F001", 5, 2000, "Soweto", ["infant", "elderly"]); calculateNeed("F001");',
+        output: '85',
+        explanation: 'High need score due to large family size, low income, and vulnerable members'
+      },
+      {
+        input: 'optimizeDistribution([{"rice": 100, "beans": 50}], ["F001", "F002", "F003"]);',
+        output: '{"F001": {"rice": 40, "beans": 20}, "F002": {"rice": 35, "beans": 15}, "F003": {"rice": 25, "beans": 15}}',
+        explanation: 'Distributes supplies based on family need scores and available quantities'
+      }
+    ],
+    constraints: [
+      'Family size: 1-15 members',
+      'Income in South African Rand (ZAR)',
+      'Location as string (township/area name)',
+      'Needs array: medical conditions, age groups',
+      'Supplies with expiry dates and quantities'
+    ]
+  },
+  {
+    id: 'minibus-taxi-route-mapper',
+    title: 'Minibus Taxi Route Mapper',
+    description: `Develop a route optimization system for minibus taxis in South African townships to improve public transportation efficiency and passenger experience.
+
+Implement a TaxiRouteMapper class with these capabilities:
+
+1. addRoute(routeId, stops, distance, duration, fare) - Add taxi route with stops
+2. findOptimalRoute(start, destination) - Find best route between two points
+3. calculateFare(start, destination, routeId) - Calculate fare for journey
+4. updateTraffic(routeId, delayMinutes) - Update route with traffic delays
+5. suggestAlternatives(routeId) - Suggest alternative routes if main route is delayed
+6. optimizeSchedule(routes, demand) - Optimize taxi schedules based on passenger demand
+
+Features to consider:
+- Multiple stops along routes
+- Transfer points between routes
+- Peak hour demand patterns
+- Traffic congestion factors
+- Fare calculation based on distance
+
+Help improve township transportation by providing efficient routing and scheduling.`,
+    difficulty: 'Hard',
+    points: 210,
+    timeLimit: 3000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'addRoute("R001", ["Soweto", "Johannesburg CBD", "Sandton"], 25, 45, 15); findOptimalRoute("Soweto", "Sandton");',
+        output: '{"routeId": "R001", "stops": ["Soweto", "Johannesburg CBD", "Sandton"], "fare": 15, "duration": 45}',
+        explanation: 'Returns optimal route from Soweto to Sandton via Johannesburg CBD'
+      },
+      {
+        input: 'calculateFare("Soweto", "Johannesburg CBD", "R001");',
+        output: '10',
+        explanation: 'Calculates proportional fare for partial journey on the route'
+      }
+    ],
+    constraints: [
+      'Route distance in kilometers',
+      'Duration in minutes',
+      'Fare in South African Rand (ZAR)',
+      'Support up to 20 stops per route',
+      'Handle multiple routes between same points'
+    ]
+  },
+  {
+    id: 'illegal-dumping-reporting-tool',
+    title: 'Illegal Dumping Reporting Tool',
+    description: `Create a community reporting system for illegal dumping in South African townships to help maintain clean and healthy environments.
+
+Build an IllegalDumpingReporter class that manages waste reporting and cleanup coordination:
+
+1. reportDumping(location, wasteType, severity, reporterId, photos) - Report illegal dumping incident
+2. categorizeWaste(wasteType) - Categorize waste and determine cleanup requirements
+3. prioritizeCleanup(reports) - Prioritize cleanup based on health and environmental impact
+4. assignCleanupCrew(reportId, crewId, estimatedTime) - Assign cleanup crew to incident
+5. trackProgress(reportId, status) - Update cleanup progress
+6. generateHotspotMap(area, timeRange) - Identify dumping hotspots for prevention
+
+Waste categories:
+- Household waste
+- Construction debris
+- Electronic waste
+- Hazardous materials
+- Medical waste
+
+Help communities maintain clean environments and coordinate with municipal services.`,
+    difficulty: 'Medium',
+    points: 190,
+    timeLimit: 2500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'reportDumping("Corner of Main & 1st St", "construction", "high", "R001", 3); prioritizeCleanup(["D001", "D002", "D003"]);',
+        output: '["D002", "D001", "D003"]',
+        explanation: 'Prioritizes cleanup based on waste type severity and health impact'
+      },
+      {
+        input: 'generateHotspotMap("Soweto", "2024-03");',
+        output: '[{"location": "Main Road", "incidents": 15}, {"location": "School Street", "incidents": 8}]',
+        explanation: 'Identifies areas with highest dumping frequency for targeted prevention'
+      }
+    ],
+    constraints: [
+      'Severity levels: low, medium, high, critical',
+      'Waste types: household, construction, electronic, hazardous, medical',
+      'Location as street address or GPS coordinates',
+      'Photo count: 0-10 per report',
+      'Support status tracking: reported, assigned, in-progress, completed'
+    ]
+  },
+  {
+    id: 'basic-first-aid-chatbot',
+    title: 'Basic First Aid Chatbot',
+    description: `Develop a basic first aid guidance chatbot for South African communities where medical help may not be immediately available.
+
+Create a FirstAidChatbot class that provides emergency guidance:
+
+1. assessSymptoms(symptoms) - Analyze symptoms and determine urgency level
+2. provideGuidance(condition) - Give step-by-step first aid instructions
+3. findNearestClinic(location) - Locate nearest medical facility
+4. callEmergency(emergencyType) - Provide appropriate emergency numbers
+5. translateInstructions(language) - Translate instructions to local languages
+6. logInteraction(symptoms, guidance, outcome) - Track chatbot effectiveness
+
+Emergency categories:
+- Life-threatening (call ambulance immediately)
+- Urgent (seek medical attention within hours)
+- Non-urgent (basic first aid sufficient)
+- Information only (general health advice)
+
+Support multiple South African languages and provide culturally appropriate guidance.`,
+    difficulty: 'Medium',
+    points: 160,
+    timeLimit: 2000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'assessSymptoms(["chest pain", "difficulty breathing", "sweating"]); provideGuidance("heart attack");',
+        output: '{"urgency": "life-threatening", "instructions": ["Call 10177 immediately", "Keep patient calm and seated", "Loosen tight clothing", "Give aspirin if available and not allergic"]}',
+        explanation: 'Provides immediate life-saving guidance for heart attack symptoms'
+      },
+      {
+        input: 'translateInstructions("Apply pressure to wound", "zulu");',
+        output: '"Cindezela inxeba"',
+        explanation: 'Translates first aid instruction to isiZulu'
+      }
+    ],
+    constraints: [
+      'Urgency levels: life-threatening, urgent, non-urgent, information',
+      'Support languages: English, Afrikaans, isiZulu, isiXhosa, Sesotho',
+      'Emergency numbers: 10177 (ambulance), 10111 (police), 10177 (fire)',
+      'Provide disclaimers about seeking professional medical help',
+      'Include cultural sensitivity in guidance'
+    ]
+  },
+  {
+    id: 'rdp-housing-application-tracker',
+    title: 'RDP Housing Application Tracker',
+    description: `Design a tracking system for RDP (Reconstruction and Development Programme) housing applications in South Africa to help applicants monitor their application status.
+
+Implement an RDPTracker class that manages housing applications:
+
+1. submitApplication(applicantId, income, familySize, currentHousing, location) - Submit new housing application
+2. calculateScore(applicantId) - Calculate application priority score
+3. updateStatus(applicationId, newStatus, notes) - Update application status
+4. estimateWaitTime(applicationId) - Estimate waiting time based on queue position
+5. checkEligibility(income, citizenship, age, currentHousing) - Verify eligibility criteria
+6. generateProgressReport(applicationId) - Create detailed progress report
+
+Priority scoring factors:
+- Income level (lower income = higher priority)
+- Current housing conditions
+- Family size and composition
+- Time on waiting list
+- Special circumstances (disability, elderly, etc.)
+
+Help applicants understand the process and track their progress through the system.`,
+    difficulty: 'Hard',
+    points: 200,
+    timeLimit: 3000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'submitApplication("A001", 3500, 4, "informal settlement", "Western Cape"); calculateScore("A001");',
+        output: '78',
+        explanation: 'High priority score due to low income, family size, and poor current housing'
+      },
+      {
+        input: 'estimateWaitTime("APP001");',
+        output: '{"position": 1250, "estimatedMonths": 18, "factors": ["high demand in area", "limited available land"]}',
+        explanation: 'Provides realistic wait time estimate with contributing factors'
+      }
+    ],
+    constraints: [
+      'Income in South African Rand (ZAR) per month',
+      'Family size: 1-15 members',
+      'Current housing: formal, informal settlement, backyard dwelling, homeless',
+      'Status: submitted, under review, approved, allocated, completed',
+      'Eligibility: SA citizen/permanent resident, 18+, income below threshold'
+    ]
+  }
+];
+
 export const mockChallenge: Challenge = {
   id: 'varsity-cup-2024',
   title: 'Varsity Code Cup 2024',
@@ -866,6 +1232,15 @@ export const findErrorChallenge: Challenge = {
   startTime: '2024-03-15T09:00:00Z',
   endTime: '2024-03-15T12:00:00Z',
   problems: findErrorProblems
+};
+
+export const socialImpactChallenge: Challenge = {
+  id: 'eva-mamabolo-social-impact-2024',
+  title: 'Eva Mamabolo Social Impact Challenges',
+  description: 'Technology solutions for real South African social challenges. Develop systems that address community needs including load shedding, water conservation, healthcare access, and social services.',
+  startTime: '2024-03-15T09:00:00Z',
+  endTime: '2024-03-15T12:00:00Z',
+  problems: socialImpactProblems
 };
 
 // Mock validation function
@@ -1000,6 +1375,23 @@ export const validateSubmission = (code: string, language: string, problemId: st
         details: (isValid && hasFixLogic)
           ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
           : ['Test case 1: Failed - Error not properly fixed', 'Test case 2: Passed', 'Test case 3: Failed']
+      }
+    };
+  }
+
+  // Special validation for social impact challenges
+  if (socialImpactProblems.some(p => p.id === problemId)) {
+    const hasSocialLogic = code.includes('class') || code.includes('system') || code.includes('tracker') || 
+                          code.includes('schedule') || code.includes('queue') || code.includes('optimize') ||
+                          code.includes('alert') || code.includes('report') || code.includes('calculate');
+    return {
+      status: (isValid && hasSocialLogic) ? 'Accepted' : 'Wrong Answer' as const,
+      testResults: {
+        passed: (isValid && hasSocialLogic) ? 3 : 1,
+        total: 3,
+        details: (isValid && hasSocialLogic)
+          ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
+          : ['Test case 1: Failed - Missing social impact system logic', 'Test case 2: Passed', 'Test case 3: Failed']
       }
     };
   }
