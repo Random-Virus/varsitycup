@@ -32,6 +32,12 @@ const LeaderboardPage: React.FC = () => {
     }
   };
 
+  // Helper function to mask student number for privacy
+  const maskStudentNumber = (studentNumber: string, isCurrentUser: boolean) => {
+    if (isCurrentUser) return studentNumber;
+    return '*'.repeat(studentNumber.length - 2) + studentNumber.slice(-2);
+  };
+
   return (
     <div className="min-h-screen bg-black modern-grid">
       <div className="container mx-auto px-3 py-3">
@@ -188,7 +194,7 @@ const LeaderboardPage: React.FC = () => {
                                 </span>
                               )}
                             </p>
-                            <p className="text-white/60 text-xs">ID: {participant.studentNumber}</p>
+                            <p className="text-white/60 text-xs">ID: {maskStudentNumber(participant.studentNumber, isCurrentUser)}</p>
                           </div>
                         </Link>
                       </td>

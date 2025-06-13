@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { User, University, Mail, Hash, Trophy, Target, Clock, Calendar, ArrowLeft, Award, Code2, Zap } from 'lucide-react';
+import { User, University, Hash, Trophy, Target, Clock, Calendar, ArrowLeft, Award, Code2, Zap } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const ProfilePage: React.FC = () => {
@@ -44,6 +44,19 @@ const ProfilePage: React.FC = () => {
   const totalSubmissions = participantSubmissions.length;
   const successRate = totalSubmissions > 0 ? Math.round((acceptedSubmissions / totalSubmissions) * 100) : 0;
 
+  // Helper function to mask sensitive information
+  const maskEmail = (email: string) => {
+    if (isOwnProfile) return email;
+    const [username, domain] = email.split('@');
+    const maskedUsername = username.charAt(0) + '*'.repeat(username.length - 2) + username.charAt(username.length - 1);
+    return `${maskedUsername}@${domain}`;
+  };
+
+  const maskStudentNumber = (studentNumber: string) => {
+    if (isOwnProfile) return studentNumber;
+    return '*'.repeat(studentNumber.length - 2) + studentNumber.slice(-2);
+  };
+
   return (
     <div className="min-h-screen bg-black modern-grid">
       <div className="container mx-auto px-3 py-3">
@@ -76,21 +89,18 @@ const ProfilePage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Mail className="text-white" size={12} />
-                  <div>
-                    <p className="text-white/60 text-xs">Email</p>
-                    <p className="text-white text-xs">{profileParticipant.email}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Hash className="text-white" size={12} />
-                  <div>
-                    <p className="text-white/60 text-xs">Student Number</p>
-                    <p className="text-white font-mono text-xs">{profileParticipant.studentNumber}</p>
-                  </div>
-                </div>
+                {/* Only show email and student number for own profile or with masking */}
+                {(isOwnProfile || true) && (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <Hash className="text-white" size={12} />
+                      <div>
+                        <p className="text-white/60 text-xs">Student ID</p>
+                        <p className="text-white font-mono text-xs">{maskStudentNumber(profileParticipant.studentNumber)}</p>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <div className="flex items-center space-x-2">
                   <University className="text-white" size={12} />
@@ -173,11 +183,7 @@ const ProfilePage: React.FC = () => {
                         {solved && <Award className="text-white" size={10} />}
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className={`px-1 py-0.5 rounded text-xs font-semibold ${
-                          problem.difficulty === 'Easy' ? 'bg-white/20 text-white' :
-                          problem.difficulty === 'Medium' ? 'bg-white/20 text-white' :
-                          'bg-white/20 text-white'
-                        }`}>
+                        <span className="px-1 py-0.5 rounded text-xs font-semibold bg-white/20 text-white">
                           {problem.difficulty}
                         </span>
                         <span className="text-white/60 text-xs">{problem.points} pts</span>
