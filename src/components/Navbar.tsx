@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Code2, Trophy, Users, Home, LogOut, Terminal, User } from 'lucide-react';
+import { Code2, Trophy, Users, LogOut, Terminal, User } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Navbar: React.FC = () => {
@@ -38,17 +38,20 @@ const Navbar: React.FC = () => {
             </Link>
             
             <div className="hidden md:flex items-center space-x-2">
-              <Link 
-                to="/" 
-                className={`flex items-center space-x-2 px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                  location.pathname === '/' 
-                    ? 'text-white bg-white/10 border border-white/20 modern-glow' 
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <Home size={16} />
-                <span>HOME</span>
-              </Link>
+              {/* Only show Home tab if user is not logged in */}
+              {!currentUser && (
+                <Link 
+                  to="/" 
+                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                    location.pathname === '/' 
+                      ? 'text-white bg-white/10 border border-white/20 modern-glow' 
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Code2 size={16} />
+                  <span>HOME</span>
+                </Link>
+              )}
               
               <Link 
                 to="/leaderboard" 
@@ -63,17 +66,31 @@ const Navbar: React.FC = () => {
               </Link>
               
               {currentUser ? (
-                <Link 
-                  to="/dashboard" 
-                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                    location.pathname === '/dashboard' 
-                      ? 'text-white bg-white/10 border border-white/20 modern-glow' 
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <Code2 size={16} />
-                  <span>DASHBOARD</span>
-                </Link>
+                <>
+                  <Link 
+                    to="/dashboard" 
+                    className={`flex items-center space-x-2 px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                      location.pathname === '/dashboard' 
+                        ? 'text-white bg-white/10 border border-white/20 modern-glow' 
+                        : 'text-white/60 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    <Code2 size={16} />
+                    <span>DASHBOARD</span>
+                  </Link>
+                  
+                  <Link 
+                    to="/profile" 
+                    className={`flex items-center space-x-2 px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                      location.pathname === '/profile' 
+                        ? 'text-white bg-white/10 border border-white/20 modern-glow' 
+                        : 'text-white/60 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    <User size={16} />
+                    <span>PROFILE</span>
+                  </Link>
+                </>
               ) : (
                 <Link 
                   to="/register" 

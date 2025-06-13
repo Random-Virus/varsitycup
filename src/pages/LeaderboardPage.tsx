@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Trophy, Medal, Award, User, University, Target, Crown, Star, Zap } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -89,7 +90,10 @@ const LeaderboardPage: React.FC = () => {
             <h2 className="text-2xl font-bold text-white mb-6 text-center">Top Performers</h2>
             <div className="flex justify-center items-end space-x-8 max-w-4xl mx-auto">
               {/* Second Place */}
-              <div className="modern-card p-6 text-center hover-lift border-l-4 border-gray-300">
+              <Link 
+                to={`/profile/${participants[1].id}`}
+                className="modern-card p-6 text-center hover-lift border-l-4 border-gray-300 transition-all duration-300 hover:scale-105"
+              >
                 <div className="flex justify-center mb-4">
                   <Medal className="text-gray-300" size={40} />
                 </div>
@@ -97,10 +101,13 @@ const LeaderboardPage: React.FC = () => {
                 <p className="text-white/60 text-sm mb-2">{participants[1].university}</p>
                 <p className="text-2xl font-bold text-gray-300">{participants[1].score}</p>
                 <p className="text-white/60 text-sm">points</p>
-              </div>
+              </Link>
 
               {/* First Place */}
-              <div className="modern-card p-8 text-center transform scale-110 hover-lift border-l-4 border-yellow-400 modern-glow-strong modern-shimmer">
+              <Link 
+                to={`/profile/${participants[0].id}`}
+                className="modern-card p-8 text-center transform scale-110 hover-lift border-l-4 border-yellow-400 modern-glow-strong modern-shimmer transition-all duration-300 hover:scale-115"
+              >
                 <div className="flex justify-center mb-4">
                   <Crown className="text-yellow-400" size={48} />
                 </div>
@@ -108,10 +115,13 @@ const LeaderboardPage: React.FC = () => {
                 <p className="text-white/60 mb-2">{participants[0].university}</p>
                 <p className="text-3xl font-bold text-yellow-400">{participants[0].score}</p>
                 <p className="text-white/60">points</p>
-              </div>
+              </Link>
 
               {/* Third Place */}
-              <div className="modern-card p-6 text-center hover-lift border-l-4 border-orange-400">
+              <Link 
+                to={`/profile/${participants[2].id}`}
+                className="modern-card p-6 text-center hover-lift border-l-4 border-orange-400 transition-all duration-300 hover:scale-105"
+              >
                 <div className="flex justify-center mb-4">
                   <Award className="text-orange-400" size={40} />
                 </div>
@@ -119,7 +129,7 @@ const LeaderboardPage: React.FC = () => {
                 <p className="text-white/60 text-sm mb-2">{participants[2].university}</p>
                 <p className="text-2xl font-bold text-orange-400">{participants[2].score}</p>
                 <p className="text-white/60 text-sm">points</p>
-              </div>
+              </Link>
             </div>
           </div>
         )}
@@ -162,12 +172,15 @@ const LeaderboardPage: React.FC = () => {
                         </div>
                       </td>
                       <td className="py-4 px-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                        <Link 
+                          to={`/profile/${participant.id}`}
+                          className="flex items-center space-x-3 hover:text-blue-400 transition-colors duration-300 group"
+                        >
+                          <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors duration-300">
                             <User className="text-white" size={16} />
                           </div>
                           <div>
-                            <p className="font-semibold text-white">
+                            <p className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">
                               {participant.name}
                               {isCurrentUser && (
                                 <span className="ml-2 px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full border border-blue-500/30">
@@ -177,7 +190,7 @@ const LeaderboardPage: React.FC = () => {
                             </p>
                             <p className="text-white/60 text-sm">ID: {participant.studentNumber}</p>
                           </div>
-                        </div>
+                        </Link>
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex items-center space-x-2">
