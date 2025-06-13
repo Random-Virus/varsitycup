@@ -37,7 +37,11 @@ const LandingPage: React.FC = () => {
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-vscode-blue via-vscode-purple to-vscode-green rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
             <div className="relative z-10 p-8 bg-gradient-to-br from-vscode-blue/20 via-vscode-purple/20 to-vscode-green/20 rounded-full backdrop-blur-sm border border-white/10">
-              <Cpu className="w-32 h-32 text-vscode-blue" />
+              <img 
+                src="/pic.png" 
+                alt="Varsity Code Cup" 
+                className="w-32 h-32 object-contain"
+              />
             </div>
           </div>
         </div>

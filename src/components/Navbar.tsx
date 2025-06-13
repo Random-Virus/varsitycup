@@ -20,7 +20,11 @@ const Navbar: React.FC = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-vscode-blue to-vscode-purple rounded-lg blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                 <div className="relative z-10 p-2 bg-gradient-to-br from-vscode-blue/20 to-vscode-purple/20 rounded-lg">
-                  <Cpu className="w-8 h-8 text-vscode-blue" />
+                  <img 
+                    src="/pic.png" 
+                    alt="Varsity Code Cup" 
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
               </div>
               <div>
