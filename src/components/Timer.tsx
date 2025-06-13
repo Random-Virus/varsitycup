@@ -28,7 +28,7 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
     } else if (timeRemaining <= 1000 * 60 * 30) { // Less than 30 minutes
       return 'text-yellow-400';
     } else {
-      return 'text-blue-400';
+      return 'text-purple-400';
     }
   };
   
@@ -38,7 +38,7 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
     } else if (timeRemaining <= 1000 * 60 * 30) {
       return 'bg-yellow-500/20 border-yellow-500/30';
     } else {
-      return 'bg-blue-500/20 border-blue-500/30';
+      return 'neon-card';
     }
   };
   

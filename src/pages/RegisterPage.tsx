@@ -127,8 +127,8 @@ const RegisterPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-pattern flex items-center justify-center relative overflow-hidden">
         <div className="text-center relative z-10">
-          <div className="w-16 h-16 border-4 border-blue-400/30 border-t-blue-400 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-blue-400 font-semibold">Loading...</p>
+          <div className="w-16 h-16 border-4 border-purple-400/30 border-t-purple-400 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gradient-purple font-semibold">Loading...</p>
         </div>
       </div>
     );
@@ -136,16 +136,32 @@ const RegisterPage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-pattern py-12 relative overflow-hidden">
+      {/* Background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-float opacity-40"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 6}s`,
+              animationDuration: `${6 + Math.random() * 4}s`
+            }}
+          />
+        ))}
+      </div>
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-2xl mx-auto">
-          <div className="glass-card rounded-3xl overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600/20 to-green-600/20 p-8 border-b border-white/10">
+          <div className="neon-card rounded-3xl overflow-hidden animate-scaleIn">
+            <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 p-8 border-b border-white/10">
               <div className="flex items-center justify-center mb-6">
-                <div className="p-4 bg-blue-500/20 rounded-2xl mr-4">
+                <div className="p-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl mr-4 animate-glow">
                   {isLoginMode ? (
-                    <LogIn className="text-blue-400" size={32} />
+                    <LogIn className="text-gradient-purple" size={32} />
                   ) : (
-                    <UserPlus className="text-blue-400" size={32} />
+                    <UserPlus className="text-gradient-purple" size={32} />
                   )}
                 </div>
                 <div className="text-center">
@@ -164,7 +180,7 @@ const RegisterPage: React.FC = () => {
             
             <form onSubmit={handleSubmit} className="p-8">
               {errors.general && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl">
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl animate-fadeIn">
                   <div className="flex items-center">
                     <Shield size={18} className="mr-2" />
                     {errors.general}
@@ -174,7 +190,7 @@ const RegisterPage: React.FC = () => {
 
               {!isLoginMode && (
                 <div className="mb-6">
-                  <label htmlFor="name" className="block text-blue-400 font-semibold mb-3">
+                  <label htmlFor="name" className="block text-gradient-purple font-semibold mb-3">
                     Full Name
                   </label>
                   <div className="relative">
@@ -186,18 +202,18 @@ const RegisterPage: React.FC = () => {
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl font-medium ${
+                      className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl font-medium transition-all duration-300 ${
                         errors.name ? 'border-red-500/50' : ''
                       }`}
                       placeholder="Enter your full name"
                     />
                   </div>
-                  {errors.name && <p className="text-red-400 text-sm mt-2">{errors.name}</p>}
+                  {errors.name && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.name}</p>}
                 </div>
               )}
               
               <div className="mb-6">
-                <label htmlFor="email" className="block text-blue-400 font-semibold mb-3">
+                <label htmlFor="email" className="block text-gradient-purple font-semibold mb-3">
                   Email Address
                 </label>
                 <div className="relative">
@@ -209,18 +225,18 @@ const RegisterPage: React.FC = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl font-medium ${
+                    className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl font-medium transition-all duration-300 ${
                       errors.email ? 'border-red-500/50' : ''
                     }`}
                     placeholder="Enter your email address"
                   />
                 </div>
-                {errors.email && <p className="text-red-400 text-sm mt-2">{errors.email}</p>}
+                {errors.email && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.email}</p>}
               </div>
               
               {!isLoginMode && (
                 <div className="mb-6">
-                  <label htmlFor="university" className="block text-blue-400 font-semibold mb-3">
+                  <label htmlFor="university" className="block text-gradient-purple font-semibold mb-3">
                     University
                   </label>
                   <div className="relative">
@@ -231,7 +247,7 @@ const RegisterPage: React.FC = () => {
                       id="university"
                       value={university}
                       onChange={(e) => setUniversity(e.target.value)}
-                      className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl appearance-none font-medium ${
+                      className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl appearance-none font-medium transition-all duration-300 ${
                         errors.university ? 'border-red-500/50' : ''
                       }`}
                     >
@@ -243,12 +259,12 @@ const RegisterPage: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  {errors.university && <p className="text-red-400 text-sm mt-2">{errors.university}</p>}
+                  {errors.university && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.university}</p>}
                 </div>
               )}
               
               <div className="mb-8">
-                <label htmlFor="studentNumber" className="block text-blue-400 font-semibold mb-3">
+                <label htmlFor="studentNumber" className="block text-gradient-purple font-semibold mb-3">
                   Student Number
                 </label>
                 <div className="relative">
@@ -260,20 +276,20 @@ const RegisterPage: React.FC = () => {
                     id="studentNumber"
                     value={studentNumber}
                     onChange={(e) => setStudentNumber(e.target.value)}
-                    className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl font-medium ${
+                    className={`input-field w-full pl-12 pr-4 py-4 rounded-2xl font-medium transition-all duration-300 ${
                       errors.studentNumber ? 'border-red-500/50' : ''
                     }`}
                     placeholder="Enter your student number"
                   />
                 </div>
-                {errors.studentNumber && <p className="text-red-400 text-sm mt-2">{errors.studentNumber}</p>}
+                {errors.studentNumber && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.studentNumber}</p>}
               </div>
               
               <div className="mb-6">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`btn-primary w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 ${
+                  className={`btn-primary w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover-lift ${
                     isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
@@ -291,7 +307,7 @@ const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={toggleMode}
-                  className="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-300 underline underline-offset-4"
+                  className="text-gradient-purple hover:text-purple-300 font-medium transition-colors duration-300 underline underline-offset-4"
                 >
                   {isLoginMode 
                     ? "Don't have an account? Register here" 

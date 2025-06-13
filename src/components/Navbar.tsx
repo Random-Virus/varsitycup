@@ -21,24 +21,25 @@ const Navbar: React.FC = () => {
                 <img 
                   src="/pic.png" 
                   alt="Varsity Code Cup" 
-                  className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-110"
+                  className="w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div>
-                <span className="text-xl font-bold text-gradient">
+                <span className="text-2xl font-bold text-gradient">
                   Varsity Code Cup
                 </span>
                 <div className="text-xs text-gray-400 font-medium">2024 Championship</div>
               </div>
             </Link>
             
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-2">
               <Link 
                 to="/" 
                 className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
                   location.pathname === '/' 
-                    ? 'bg-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/25' 
-                    : 'text-gray-300 hover:text-blue-400 hover:bg-white/5'
+                    ? 'neon-card text-purple-300 shadow-lg' 
+                    : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
                 }`}
               >
                 <Home size={18} />
@@ -49,8 +50,8 @@ const Navbar: React.FC = () => {
                 to="/leaderboard" 
                 className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
                   location.pathname === '/leaderboard' 
-                    ? 'bg-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/25' 
-                    : 'text-gray-300 hover:text-blue-400 hover:bg-white/5'
+                    ? 'neon-card text-purple-300 shadow-lg' 
+                    : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
                 }`}
               >
                 <Trophy size={18} />
@@ -62,8 +63,8 @@ const Navbar: React.FC = () => {
                   to="/dashboard" 
                   className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
                     location.pathname === '/dashboard' 
-                      ? 'bg-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/25' 
-                      : 'text-gray-300 hover:text-blue-400 hover:bg-white/5'
+                      ? 'neon-card text-purple-300 shadow-lg' 
+                      : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
                   }`}
                 >
                   <Code2 size={18} />
@@ -74,8 +75,8 @@ const Navbar: React.FC = () => {
                   to="/register" 
                   className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
                     location.pathname === '/register' 
-                      ? 'bg-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/25' 
-                      : 'text-gray-300 hover:text-blue-400 hover:bg-white/5'
+                      ? 'neon-card text-purple-300 shadow-lg' 
+                      : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
                   }`}
                 >
                   <Users size={18} />
@@ -88,7 +89,7 @@ const Navbar: React.FC = () => {
           {currentUser && (
             <div className="flex items-center space-x-4">
               <div className="text-right hidden sm:block">
-                <div className="text-blue-400 font-bold text-sm">
+                <div className="text-gradient-purple font-bold text-sm">
                   {currentUser.name}
                 </div>
                 <div className="text-gray-400 text-xs">
@@ -97,7 +98,7 @@ const Navbar: React.FC = () => {
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 font-medium"
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 font-medium hover-lift"
               >
                 <LogOut size={16} />
                 <span className="hidden sm:inline">Logout</span>
