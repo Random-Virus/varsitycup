@@ -36,8 +36,9 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
       <div className="flex items-center space-x-3"> {/* Increased from space-x-2 by 40% */}
         <div className="flex items-center">
           <Clock size={17} className="text-white" /> {/* Increased from size={12} by 40% */}
+          {/* Increased from size={10} by 40% */}
           {timeRemaining <= 1000 * 60 * 10 && (
-            <AlertTriangle size={14} className="text-white ml-1 modern-pulse" /> {/* Increased from size={10} by 40% */}
+            <AlertTriangle size={14} className="text-white ml-1 modern-pulse" />
           )}
         </div>
         <div className="font-mono text-lg font-bold text-white"> {/* Increased from text-sm by 40% */}
