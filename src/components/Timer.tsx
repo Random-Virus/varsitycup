@@ -32,15 +32,15 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
   };
   
   return (
-    <div className={`modern-card px-2 py-1 border ${getBgColor()}`}>
-      <div className="flex items-center space-x-2">
+    <div className={`modern-card px-3 py-1 border ${getBgColor()}`}> {/* Increased from px-2 by 40% */}
+      <div className="flex items-center space-x-3"> {/* Increased from space-x-2 by 40% */}
         <div className="flex items-center">
-          <Clock size={12} className="text-white" />
+          <Clock size={17} className="text-white" /> {/* Increased from size={12} by 40% */}
           {timeRemaining <= 1000 * 60 * 10 && (
-            <AlertTriangle size={10} className="text-white ml-1 modern-pulse" />
+            <AlertTriangle size={14} className="text-white ml-1 modern-pulse" /> {/* Increased from size={10} by 40% */}
           )}
         </div>
-        <div className="font-mono text-sm font-bold text-white">
+        <div className="font-mono text-lg font-bold text-white"> {/* Increased from text-sm by 40% */}
           {hours}:{minutes}:{seconds}
         </div>
       </div>

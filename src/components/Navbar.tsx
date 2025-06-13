@@ -15,17 +15,17 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-vscode-sidebar border-b border-vscode sticky top-0 z-50 backdrop-blur-xl">
-      <div className="container mx-auto px-3">
-        <div className="flex justify-between items-center py-2">
-          <div className="flex items-center space-x-4">
-            <Link to="/" className="flex items-center space-x-2 group">
+      <div className="container mx-auto px-4"> {/* Increased from px-3 by 40% */}
+        <div className="flex justify-between items-center py-3"> {/* Increased from py-2 by 40% */}
+          <div className="flex items-center space-x-6"> {/* Increased from space-x-4 by 40% */}
+            <Link to="/" className="flex items-center space-x-3 group"> {/* Increased from space-x-2 by 40% */}
               <div className="relative">
                 <div className="absolute inset-0 bg-white/5 opacity-30 group-hover:opacity-50 transition-opacity duration-300 rounded"></div>
-                <div className="relative z-10 p-2 bg-black/50 border border-white/10 rounded backdrop-blur-sm">
+                <div className="relative z-10 p-3 bg-black/50 border border-white/10 rounded backdrop-blur-sm"> {/* Increased from p-2 by 40% */}
                   <img 
                     src="/pic.png" 
                     alt="Varsity Code Cup" 
-                    className="w-9 h-9 object-contain"
+                    className="w-13 h-13 object-contain" /* Increased from w-9 h-9 by 40% */
                   />
                 </div>
               </div>
@@ -36,26 +36,26 @@ const Navbar: React.FC = () => {
               {!currentUser && (
                 <Link 
                   to="/" 
-                  className={`flex items-center space-x-1 px-2 py-1 text-xs font-semibold transition-all duration-300 rounded ${
+                  className={`flex items-center space-x-1 px-3 py-1 text-sm font-semibold transition-all duration-300 rounded ${ /* Increased from px-2 and text-xs by 40% */
                     location.pathname === '/' 
                       ? 'text-white bg-white/10 border border-white/20 modern-glow' 
                       : 'text-white/60 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Code2 size={12} />
+                  <Code2 size={17} /> {/* Increased from size={12} by 40% */}
                   <span>HOME</span>
                 </Link>
               )}
               
               <Link 
                 to="/leaderboard" 
-                className={`flex items-center space-x-1 px-2 py-1 text-xs font-semibold transition-all duration-300 rounded ${
+                className={`flex items-center space-x-1 px-3 py-1 text-sm font-semibold transition-all duration-300 rounded ${ /* Increased from px-2 and text-xs by 40% */
                   location.pathname === '/leaderboard' 
                     ? 'text-white bg-white/10 border border-white/20 modern-glow' 
                     : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <Trophy size={12} />
+                <Trophy size={17} /> {/* Increased from size={12} by 40% */}
                 <span>LEADERBOARD</span>
               </Link>
               
@@ -63,38 +63,38 @@ const Navbar: React.FC = () => {
                 <>
                   <Link 
                     to="/dashboard" 
-                    className={`flex items-center space-x-1 px-2 py-1 text-xs font-semibold transition-all duration-300 rounded ${
+                    className={`flex items-center space-x-1 px-3 py-1 text-sm font-semibold transition-all duration-300 rounded ${ /* Increased from px-2 and text-xs by 40% */
                       location.pathname === '/dashboard' 
                         ? 'text-white bg-white/10 border border-white/20 modern-glow' 
                         : 'text-white/60 hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <Code2 size={12} />
+                    <Code2 size={17} /> {/* Increased from size={12} by 40% */}
                     <span>DASHBOARD</span>
                   </Link>
                   
                   <Link 
                     to="/profile" 
-                    className={`flex items-center space-x-1 px-2 py-1 text-xs font-semibold transition-all duration-300 rounded ${
+                    className={`flex items-center space-x-1 px-3 py-1 text-sm font-semibold transition-all duration-300 rounded ${ /* Increased from px-2 and text-xs by 40% */
                       location.pathname === '/profile' 
                         ? 'text-white bg-white/10 border border-white/20 modern-glow' 
                         : 'text-white/60 hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <User size={12} />
+                    <User size={17} /> {/* Increased from size={12} by 40% */}
                     <span>PROFILE</span>
                   </Link>
                 </>
               ) : (
                 <Link 
                   to="/register" 
-                  className={`flex items-center space-x-1 px-2 py-1 text-xs font-semibold transition-all duration-300 rounded ${
+                  className={`flex items-center space-x-1 px-3 py-1 text-sm font-semibold transition-all duration-300 rounded ${ /* Increased from px-2 and text-xs by 40% */
                     location.pathname === '/register' 
                       ? 'text-white bg-white/10 border border-white/20 modern-glow' 
                       : 'text-white/60 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Users size={12} />
+                  <Users size={17} /> {/* Increased from size={12} by 40% */}
                   <span>REGISTER</span>
                 </Link>
               )}
@@ -102,20 +102,20 @@ const Navbar: React.FC = () => {
           </div>
 
           {currentUser && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3"> {/* Increased from space-x-2 by 40% */}
               <div className="text-right hidden sm:block">
-                <div className="text-white font-semibold text-xs">
+                <div className="text-white font-semibold text-sm"> {/* Increased from text-xs by 40% */}
                   {currentUser.name}
                 </div>
-                <div className="text-white/60 text-xs">
+                <div className="text-white/60 text-sm"> {/* Increased from text-xs by 40% */}
                   {currentUser.university}
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-1 px-2 py-1 text-xs modern-button hover-lift font-semibold transition-all duration-300"
+                className="flex items-center space-x-1 px-3 py-1 text-sm modern-button hover-lift font-semibold transition-all duration-300" /* Increased from px-2 and text-xs by 40% */
               >
-                <LogOut size={10} />
+                <LogOut size={14} /> {/* Increased from size={10} by 40% */}
                 <span className="hidden sm:inline">LOGOUT</span>
               </button>
             </div>
