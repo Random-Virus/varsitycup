@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import ProfilePage from './pages/ProfilePage';
+import CodeSpacePage from './pages/CodeSpacePage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/leaderboard" element={<LeaderboardPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/:participantId" element={<ProfilePage />} />
+            <Route path="/code/:problemId" element={<CodeSpacePage />} />
           </Routes>
           <NotificationBar />
         </div>
