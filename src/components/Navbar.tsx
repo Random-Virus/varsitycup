@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Code2, Trophy, Users, Home, LogOut, Zap } from 'lucide-react';
+import { Code2, Trophy, Users, Home, LogOut, Terminal } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Navbar: React.FC = () => {
@@ -12,74 +12,73 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="glass-card border-b border-white/10 sticky top-0 z-50">
+    <nav className="bg-vscode-panel border-b border-vscode sticky top-0 z-50">
       <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-3">
           <div className="flex items-center space-x-8">
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
                 <img 
                   src="/pic.png" 
                   alt="Varsity Code Cup" 
-                  className="w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg"
+                  className="w-8 h-8 object-contain transition-transform duration-200 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div>
-                <span className="text-2xl font-bold text-gradient">
+                <span className="text-lg font-semibold text-vscode-blue">
                   Varsity Code Cup
                 </span>
-                <div className="text-xs text-gray-400 font-medium">2024 Championship</div>
+                <div className="text-xs text-vscode-comment">2024 Championship</div>
               </div>
             </Link>
             
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="hidden md:flex items-center">
               <Link 
                 to="/" 
-                className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
+                className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-all duration-200 ${
                   location.pathname === '/' 
-                    ? 'neon-card text-purple-300 shadow-lg' 
-                    : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
+                    ? 'text-white bg-vscode-tab-active border-b-2 border-vscode-blue' 
+                    : 'text-vscode-foreground hover:text-white hover:bg-vscode-tab'
                 }`}
               >
-                <Home size={18} />
+                <Home size={16} />
                 <span>Home</span>
               </Link>
               
               <Link 
                 to="/leaderboard" 
-                className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
+                className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-all duration-200 ${
                   location.pathname === '/leaderboard' 
-                    ? 'neon-card text-purple-300 shadow-lg' 
-                    : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
+                    ? 'text-white bg-vscode-tab-active border-b-2 border-vscode-blue' 
+                    : 'text-vscode-foreground hover:text-white hover:bg-vscode-tab'
                 }`}
               >
-                <Trophy size={18} />
+                <Trophy size={16} />
                 <span>Leaderboard</span>
               </Link>
               
               {currentUser ? (
                 <Link 
                   to="/dashboard" 
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
+                  className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     location.pathname === '/dashboard' 
-                      ? 'neon-card text-purple-300 shadow-lg' 
-                      : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
+                      ? 'text-white bg-vscode-tab-active border-b-2 border-vscode-blue' 
+                      : 'text-vscode-foreground hover:text-white hover:bg-vscode-tab'
                   }`}
                 >
-                  <Code2 size={18} />
+                  <Code2 size={16} />
                   <span>Dashboard</span>
                 </Link>
               ) : (
                 <Link 
                   to="/register" 
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium ${
+                  className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     location.pathname === '/register' 
-                      ? 'neon-card text-purple-300 shadow-lg' 
-                      : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
+                      ? 'text-white bg-vscode-tab-active border-b-2 border-vscode-blue' 
+                      : 'text-vscode-foreground hover:text-white hover:bg-vscode-tab'
                   }`}
                 >
-                  <Users size={18} />
+                  <Users size={16} />
                   <span>Register</span>
                 </Link>
               )}
@@ -89,18 +88,18 @@ const Navbar: React.FC = () => {
           {currentUser && (
             <div className="flex items-center space-x-4">
               <div className="text-right hidden sm:block">
-                <div className="text-gradient-purple font-bold text-sm">
+                <div className="text-vscode-blue font-medium text-sm">
                   {currentUser.name}
                 </div>
-                <div className="text-gray-400 text-xs">
+                <div className="text-vscode-comment text-xs">
                   {currentUser.university}
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 font-medium hover-lift"
+                className="flex items-center space-x-2 px-3 py-1 text-sm bg-vscode-red hover:bg-red-600 text-white rounded transition-colors duration-200"
               >
-                <LogOut size={16} />
+                <LogOut size={14} />
                 <span className="hidden sm:inline">Logout</span>
               </button>
             </div>

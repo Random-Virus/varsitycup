@@ -1,0 +1,504 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #1e1e1e;
+    color: #cccccc;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  .font-mono {
+    font-family: 'Fira Code', monospace;
+  }
+}
+
+@layer utilities {
+  /* VS Code color scheme */
+  .bg-vscode-dark {
+    background-color: #1e1e1e;
+  }
+  
+  .bg-vscode-sidebar {
+    background-color: #252526;
+  }
+  
+  .bg-vscode-editor {
+    background-color: #1e1e1e;
+  }
+  
+  .bg-vscode-panel {
+    background-color: #2d2d30;
+  }
+  
+  .bg-vscode-tab {
+    background-color: #2d2d30;
+  }
+  
+  .bg-vscode-tab-active {
+    background-color: #1e1e1e;
+  }
+  
+  .text-vscode-foreground {
+    color: #cccccc;
+  }
+  
+  .text-vscode-blue {
+    color: #569cd6;
+  }
+  
+  .text-vscode-green {
+    color: #4ec9b0;
+  }
+  
+  .text-vscode-orange {
+    color: #ce9178;
+  }
+  
+  .text-vscode-purple {
+    color: #c586c0;
+  }
+  
+  .text-vscode-yellow {
+    color: #dcdcaa;
+  }
+  
+  .text-vscode-red {
+    color: #f44747;
+  }
+  
+  .text-vscode-comment {
+    color: #6a9955;
+  }
+  
+  .border-vscode {
+    border-color: #3c3c3c;
+  }
+  
+  .border-vscode-focus {
+    border-color: #007acc;
+  }
+  
+  /* VS Code-style components */
+  .vscode-card {
+    background-color: #252526;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+  }
+  
+  .vscode-button {
+    background-color: #0e639c;
+    border: 1px solid #0e639c;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .vscode-button:hover {
+    background-color: #1177bb;
+    border-color: #1177bb;
+  }
+  
+  .vscode-button:disabled {
+    background-color: #3c3c3c;
+    border-color: #3c3c3c;
+    color: #858585;
+    cursor: not-allowed;
+  }
+  
+  .vscode-button-secondary {
+    background-color: transparent;
+    border: 1px solid #3c3c3c;
+    color: #cccccc;
+  }
+  
+  .vscode-button-secondary:hover {
+    background-color: #2a2d2e;
+    border-color: #464647;
+  }
+  
+  .vscode-input {
+    background-color: #3c3c3c;
+    border: 1px solid #3c3c3c;
+    color: #cccccc;
+    padding: 8px 12px;
+    border-radius: 2px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+  }
+  
+  .vscode-input:focus {
+    outline: none;
+    border-color: #007acc;
+    box-shadow: 0 0 0 1px #007acc;
+  }
+  
+  .vscode-input::placeholder {
+    color: #858585;
+  }
+  
+  .vscode-select {
+    background-color: #3c3c3c;
+    border: 1px solid #3c3c3c;
+    color: #cccccc;
+    padding: 8px 12px;
+    border-radius: 2px;
+    font-size: 13px;
+  }
+  
+  .vscode-textarea {
+    background-color: #1e1e1e;
+    border: 1px solid #3c3c3c;
+    color: #cccccc;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+  }
+  
+  .vscode-textarea:focus {
+    outline: none;
+    border-color: #007acc;
+  }
+  
+  /* Activity bar (left sidebar) */
+  .activity-bar {
+    background-color: #333333;
+    width: 48px;
+    border-right: 1px solid #3c3c3c;
+  }
+  
+  .activity-bar-item {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #858585;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .activity-bar-item:hover {
+    color: #cccccc;
+  }
+  
+  .activity-bar-item.active {
+    color: #ffffff;
+    background-color: #37373d;
+    border-left: 2px solid #007acc;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    background-color: #252526;
+    border-right: 1px solid #3c3c3c;
+    min-width: 240px;
+  }
+  
+  .sidebar-header {
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #858585;
+    background-color: #2d2d30;
+    border-bottom: 1px solid #3c3c3c;
+  }
+  
+  .sidebar-item {
+    padding: 4px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 13px;
+  }
+  
+  .sidebar-item:hover {
+    background-color: #2a2d2e;
+  }
+  
+  .sidebar-item.active {
+    background-color: #37373d;
+    color: #ffffff;
+  }
+  
+  /* Editor tabs */
+  .editor-tabs {
+    background-color: #2d2d30;
+    border-bottom: 1px solid #3c3c3c;
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .editor-tab {
+    background-color: #2d2d30;
+    border-right: 1px solid #3c3c3c;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #858585;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .editor-tab:hover {
+    background-color: #37373d;
+    color: #cccccc;
+  }
+  
+  .editor-tab.active {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  
+  /* Status bar */
+  .status-bar {
+    background-color: #007acc;
+    color: #ffffff;
+    height: 22px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    justify-content: space-between;
+  }
+  
+  .status-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0 4px;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .status-bar-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Problem difficulty badges */
+  .difficulty-easy {
+    background-color: #4ec9b0;
+    color: #1e1e1e;
+  }
+  
+  .difficulty-medium {
+    background-color: #dcdcaa;
+    color: #1e1e1e;
+  }
+  
+  .difficulty-hard {
+    background-color: #f44747;
+    color: #ffffff;
+  }
+  
+  /* Submission status */
+  .status-accepted {
+    background-color: #4ec9b0;
+    color: #1e1e1e;
+  }
+  
+  .status-failed {
+    background-color: #f44747;
+    color: #ffffff;
+  }
+  
+  .status-pending {
+    background-color: #dcdcaa;
+    color: #1e1e1e;
+  }
+  
+  /* Animations */
+  .animate-slideIn {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+  
+  .hover-lift {
+    transition: transform 0.2s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Syntax highlighting for code examples */
+  .syntax-keyword {
+    color: #569cd6;
+  }
+  
+  .syntax-string {
+    color: #ce9178;
+  }
+  
+  .syntax-number {
+    color: #b5cea8;
+  }
+  
+  .syntax-comment {
+    color: #6a9955;
+    font-style: italic;
+  }
+  
+  .syntax-function {
+    color: #dcdcaa;
+  }
+  
+  .syntax-variable {
+    color: #9cdcfe;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scrollbar styling to match VS Code */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
+}
+
+::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}
+
+/* Selection styling */
+::selection {
+  background: #264f78;
+  color: #ffffff;
+}
+
+/* Code block styling */
+.prose pre {
+  background-color: #1e1e1e;
+  border: 1px solid #3c3c3c;
+  border-radius: 4px;
+  padding: 16px;
+  overflow-x: auto;
+  color: #cccccc;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  color: #cccccc;
+}
+
+.prose h1 {
+  font-size: 24px;
+}
+
+.prose h2 {
+  font-size: 20px;
+}
+
+.prose h3 {
+  font-size: 16px;
+}
+
+.prose p {
+  margin-bottom: 16px;
+  color: #cccccc;
+}
+
+.prose ul, .prose ol {
+  margin-left: 24px;
+  margin-bottom: 16px;
+}
+
+.prose li {
+  margin-bottom: 8px;
+  color: #cccccc;
+}
+
+/* VS Code-style focus indicators */
+.focus-visible {
+  outline: 1px solid #007acc;
+  outline-offset: 2px;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  border: 2px solid #3c3c3c;
+  border-top: 2px solid #007acc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
