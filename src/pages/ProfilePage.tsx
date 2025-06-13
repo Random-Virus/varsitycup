@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { User, University, Hash, Trophy, Target, Clock, Calendar, ArrowLeft, Award, Code2, Zap, Star } from 'lucide-react';
+import { User, University, Hash, Trophy, Target, Calendar, ArrowLeft, Award, Code2, Zap, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import BadgeDisplay from '../components/BadgeDisplay';
 
@@ -146,7 +146,7 @@ const ProfilePage: React.FC = () => {
           {/* Stats and Performance */}
           <div className="lg:col-span-2">
             {/* Performance Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-3">
               <div className="modern-card p-2 text-center">
                 <div className="text-lg font-bold text-white mb-1">{profileParticipant.score}</div>
                 <p className="text-white/60 text-xs">Total Score</p>
@@ -155,11 +155,6 @@ const ProfilePage: React.FC = () => {
               <div className="modern-card p-2 text-center">
                 <div className="text-lg font-bold text-white mb-1">{profileParticipant.solvedProblems}</div>
                 <p className="text-white/60 text-xs">Problems Solved</p>
-              </div>
-              
-              <div className="modern-card p-2 text-center">
-                <div className="text-lg font-bold text-white mb-1">{profileParticipant.penaltyTime}m</div>
-                <p className="text-white/60 text-xs">Penalty Time</p>
               </div>
               
               <div className="modern-card p-2 text-center">

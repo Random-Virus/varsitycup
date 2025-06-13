@@ -1,4 +1,4 @@
-import { BadgeDefinition } from '../types';
+import { BadgeDefinition, Participant, Submission } from '../types';
 
 export const BADGE_DEFINITIONS: BadgeDefinition[] = [
   {

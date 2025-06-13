@@ -21,7 +21,7 @@ interface AppContextType {
   participants: Participant[];
   challenge: Challenge;
   submissions: Submission[];
-  registerParticipant: (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt' | 'badges'>) => Promise<void>;
+  registerParticipant: (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'createdAt' | 'badges'>) => Promise<void>;
   loginParticipant: (email: string, studentNumber: string) => Promise<void>;
   logoutParticipant: () => void;
   submitSolution: (problemId: string, code: string, language: string) => Promise<Submission>;
@@ -152,7 +152,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   // Register a new participant
-  const registerParticipant = async (participantData: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt' | 'badges'>) => {
+  const registerParticipant = async (participantData: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'createdAt' | 'badges'>) => {
     try {
       // Check if email already exists
       const existingEmailParticipant = await getParticipantByEmail(participantData.email);
@@ -251,12 +251,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           if (!alreadySolved) {
             const newScore = currentUser.score + problem.points;
             const newSolvedProblems = currentUser.solvedProblems + 1;
-            const newPenaltyTime = currentUser.penaltyTime + Math.floor((new Date().getTime() - new Date(challenge.startTime).getTime()) / (1000 * 60));
             
             await updateParticipant(currentUser.id, {
               score: newScore,
               solvedProblems: newSolvedProblems,
-              penaltyTime: newPenaltyTime,
             });
             
             addNotification(`Congratulations! You solved "${problem.title}" and earned ${problem.points} points!`);

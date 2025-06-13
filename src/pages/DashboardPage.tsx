@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Code2, Clock, Trophy, User, Send, CheckCircle, XCircle, AlertCircle, Play, Terminal, Zap, Target, Award, ArrowRight } from 'lucide-react';
+import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertCircle, Play, Terminal, Zap, Target, Award, ArrowRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
@@ -68,7 +68,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
             <div className="modern-card p-3 hover-lift">
               <div className="flex items-center justify-between">
                 <div>
@@ -89,18 +89,6 @@ const DashboardPage: React.FC = () => {
                 </div>
                 <div className="p-2 bg-white/10 rounded">
                   <CheckCircle className="text-white" size={16} />
-                </div>
-              </div>
-            </div>
-            
-            <div className="modern-card p-3 hover-lift">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-white/60 text-xs font-medium mb-1">Penalty Time</p>
-                  <p className="text-lg font-bold text-white">{currentUser.penaltyTime}m</p>
-                </div>
-                <div className="p-2 bg-white/10 rounded">
-                  <Clock className="text-white" size={16} />
                 </div>
               </div>
             </div>
@@ -165,10 +153,6 @@ const DashboardPage: React.FC = () => {
                   
                   <div className="flex justify-between items-center text-xs">
                     <div className="flex items-center space-x-3">
-                      <div className="flex items-center space-x-1">
-                        <Clock className="text-white/60" size={10} />
-                        <span className="text-white/60">{problem.timeLimit}ms</span>
-                      </div>
                       <div className="flex items-center space-x-1">
                         <Target className="text-white/60" size={10} />
                         <span className="text-white/60">{problem.memoryLimit}MB</span>

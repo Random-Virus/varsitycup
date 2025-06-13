@@ -6,7 +6,6 @@ export interface Participant {
   studentNumber: string;
   score: number;
   solvedProblems: number;
-  penaltyTime: number;
   createdAt: string;
   badges: Badge[];
 }

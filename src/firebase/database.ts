@@ -21,12 +21,11 @@ export const DB_PATHS = {
 };
 
 // Participant operations
-export const createParticipant = async (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'penaltyTime' | 'createdAt' | 'badges'>) => {
+export const createParticipant = async (participant: Omit<Participant, 'id' | 'score' | 'solvedProblems' | 'createdAt' | 'badges'>) => {
   const newParticipant = {
     ...participant,
     score: 0,
     solvedProblems: 0,
-    penaltyTime: 0,
     badges: [],
     createdAt: new Date().toISOString()
   };
@@ -49,11 +48,8 @@ export const getParticipants = async (): Promise<Participant[]> => {
       badges: [], // Ensure badges array exists
       ...data[key]
     } as Participant)).sort((a, b) => {
-      // Sort by score descending, then by penalty time ascending
-      if (b.score !== a.score) {
-        return b.score - a.score;
-      }
-      return a.penaltyTime - b.penaltyTime;
+      // Sort by score descending only (no penalty time)
+      return b.score - a.score;
     });
   }
   
@@ -181,11 +177,8 @@ export const subscribeToParticipants = (callback: (participants: Participant[]) 
         badges: [], // Ensure badges array exists
         ...data[key]
       } as Participant)).sort((a, b) => {
-        // Sort by score descending, then by penalty time ascending
-        if (b.score !== a.score) {
-          return b.score - a.score;
-        }
-        return a.penaltyTime - b.penaltyTime;
+        // Sort by score descending only (no penalty time)
+        return b.score - a.score;
       });
       
       callback(participants);
