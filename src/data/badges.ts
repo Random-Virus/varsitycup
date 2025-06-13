@@ -63,12 +63,116 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
       
       console.log('  - Unique solved problems:', solvedProblems.size);
-      console.log('  - Total problems in competition:', 4);
+      console.log('  - Total problems in competition:', 8); // Updated from 4 to 8
       
-      const meetsCondition = solvedProblems.size >= 4;
-      console.log('  - Meets condition (>=4):', meetsCondition);
+      const meetsCondition = solvedProblems.size >= 8; // Updated from 4 to 8
+      console.log('  - Meets condition (>=8):', meetsCondition);
       
       return meetsCondition;
+    }
+  },
+  {
+    id: 'security-expert',
+    name: 'Security Expert',
+    description: 'Solved all security/cryptography challenges',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking SECURITY EXPERT badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const securityProblems = ['caesar-cipher-cracker', 'password-strength-analyzer', 'simple-rsa-keygen', 'hash-collision-finder'];
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedSecurityProblems = new Set(
+        acceptedSubmissions
+          .filter(s => securityProblems.includes(s.problemId))
+          .map(s => s.problemId)
+      );
+      
+      console.log('  - Security problems solved:', solvedSecurityProblems.size);
+      console.log('  - Security problem IDs solved:', Array.from(solvedSecurityProblems));
+      
+      const meetsCondition = solvedSecurityProblems.size >= 4;
+      console.log('  - Meets condition (>=4 security problems):', meetsCondition);
+      
+      return meetsCondition;
+    }
+  },
+  {
+    id: 'crypto-cracker',
+    name: 'Crypto Cracker',
+    description: 'Successfully cracked the Caesar cipher',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking CRYPTO CRACKER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const caesarSolved = submissions.some(s => 
+        s.problemId === 'caesar-cipher-cracker' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Caesar cipher solved:', caesarSolved);
+      return caesarSolved;
+    }
+  },
+  {
+    id: 'password-guardian',
+    name: 'Password Guardian',
+    description: 'Built a comprehensive password strength analyzer',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking PASSWORD GUARDIAN badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const passwordSolved = submissions.some(s => 
+        s.problemId === 'password-strength-analyzer' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Password analyzer solved:', passwordSolved);
+      return passwordSolved;
+    }
+  },
+  {
+    id: 'rsa-architect',
+    name: 'RSA Architect',
+    description: 'Implemented RSA key generation algorithm',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking RSA ARCHITECT badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const rsaSolved = submissions.some(s => 
+        s.problemId === 'simple-rsa-keygen' && s.status === 'Accepted'
+      );
+      
+      console.log('  - RSA keygen solved:', rsaSolved);
+      return rsaSolved;
+    }
+  },
+  {
+    id: 'hash-hunter',
+    name: 'Hash Hunter',
+    description: 'Found hash collisions and exposed vulnerabilities',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking HASH HUNTER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const hashSolved = submissions.some(s => 
+        s.problemId === 'hash-collision-finder' && s.status === 'Accepted'
+      );
+      
+      console.log('  - Hash collision finder solved:', hashSolved);
+      return hashSolved;
     }
   },
   {
@@ -208,10 +312,9 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       console.log('  - Participant:', participant.name);
       console.log('  - Score:', participant.score);
       
-      // This would need to be checked against current rankings
-      // For now, we'll check if they have a high score
-      const meetsCondition = participant.score >= 300;
-      console.log('  - Meets condition (>=300 points):', meetsCondition);
+      // Updated threshold for expanded challenge set
+      const meetsCondition = participant.score >= 500; // Increased from 300
+      console.log('  - Meets condition (>=500 points):', meetsCondition);
       
       return meetsCondition;
     }
