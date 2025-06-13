@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Code2, Clock, Trophy, User, Send, CheckCircle, XCircle, AlertCircle, Play } from 'lucide-react';
+import { Code2, Clock, Trophy, User, Send, CheckCircle, XCircle, AlertCircle, Play, Terminal, Zap, Target, Award } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
@@ -12,10 +12,11 @@ const DashboardPage: React.FC = () => {
 
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-xl font-bold text-white mb-2 font-display tracking-wider">ACCESS DENIED</h1>
-          <p className="text-white/60 font-display tracking-wider text-sm">AUTHENTICATION REQUIRED</p>
+      <div className="min-h-screen bg-black flex items-center justify-center modern-grid">
+        <div className="text-center modern-card p-8">
+          <Terminal className="mx-auto mb-4 text-white" size={48} />
+          <h1 className="text-2xl font-bold text-white mb-2">ACCESS DENIED</h1>
+          <p className="text-white/60">Authentication required to access dashboard</p>
         </div>
       </div>
     );
@@ -38,292 +39,263 @@ const DashboardPage: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'Accepted':
-        return <CheckCircle className="text-white" size={12} />;
+        return <CheckCircle className="text-green-400" size={16} />;
       case 'Wrong Answer':
       case 'Runtime Error':
       case 'Compilation Error':
-        return <XCircle className="text-white" size={12} />;
+        return <XCircle className="text-red-400" size={16} />;
       default:
-        return <AlertCircle className="text-white" size={12} />;
+        return <AlertCircle className="text-yellow-400" size={16} />;
     }
   };
 
   const getStatusClass = (status: string) => {
     switch (status) {
       case 'Accepted':
-        return 'status-accepted';
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
       case 'Wrong Answer':
       case 'Runtime Error':
       case 'Compilation Error':
-        return 'status-failed';
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
       default:
-        return 'status-pending';
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
     }
   };
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Futuristic background */}
-      <div className="absolute inset-0 matrix-bg"></div>
-      <div className="absolute inset-0 scanlines"></div>
-
-      {/* Compact VS Code-style layout */}
-      <div className="flex h-screen relative z-10">
-        {/* Compact Activity Bar */}
-        <div className="bg-black/95 w-8 border-r border-white/10">
-          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer border-l-2 border-white">
-            <Code2 size={16} />
+    <div className="min-h-screen bg-black modern-grid">
+      <div className="container mx-auto px-6 py-6">
+        {/* Header Section */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h1 className="text-3xl font-bold modern-gradient-text mb-2">
+                CODING DASHBOARD
+              </h1>
+              <p className="text-white/60">
+                Welcome back, <span className="text-white font-semibold">{currentUser.name}</span>
+              </p>
+            </div>
+            <Timer timeRemaining={timeRemaining} />
           </div>
-          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer">
-            <Trophy size={16} />
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="modern-card p-6 hover-lift">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/60 text-sm font-medium mb-1">Total Score</p>
+                  <p className="text-2xl font-bold text-white">{currentUser.score}</p>
+                </div>
+                <div className="p-3 bg-blue-500/20 rounded-lg">
+                  <Trophy className="text-blue-400" size={24} />
+                </div>
+              </div>
+            </div>
+            
+            <div className="modern-card p-6 hover-lift">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/60 text-sm font-medium mb-1">Problems Solved</p>
+                  <p className="text-2xl font-bold text-white">{currentUser.solvedProblems}</p>
+                </div>
+                <div className="p-3 bg-green-500/20 rounded-lg">
+                  <CheckCircle className="text-green-400" size={24} />
+                </div>
+              </div>
+            </div>
+            
+            <div className="modern-card p-6 hover-lift">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/60 text-sm font-medium mb-1">Penalty Time</p>
+                  <p className="text-2xl font-bold text-white">{currentUser.penaltyTime}m</p>
+                </div>
+                <div className="p-3 bg-red-500/20 rounded-lg">
+                  <Clock className="text-red-400" size={24} />
+                </div>
+              </div>
+            </div>
+            
+            <div className="modern-card p-6 hover-lift">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/60 text-sm font-medium mb-1">Submissions</p>
+                  <p className="text-2xl font-bold text-white">{submissions.length}</p>
+                </div>
+                <div className="p-3 bg-purple-500/20 rounded-lg">
+                  <Send className="text-purple-400" size={24} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Compact Sidebar */}
-        <div className="bg-black/95 border-r border-white/10 w-48">
-          <div className="p-2 text-xs font-bold text-white/80 bg-black/90 border-b border-white/10 font-display tracking-wider">
-            PROBLEMS
-          </div>
-          <div className="p-2">
-            {challenge.problems.map((problem) => (
-              <div
-                key={problem.id}
-                onClick={() => setSelectedProblem(problem)}
-                className={`cursor-pointer mb-1 p-2 text-xs transition-all duration-200 ${
-                  selectedProblem.id === problem.id 
-                    ? 'bg-white/10 text-white border-l-2 border-white' 
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <h3 className="font-bold font-display tracking-wider">{problem.title.toUpperCase()}</h3>
-                  <span className={`px-1 py-0.5 text-xs font-bold ${
-                    problem.difficulty === 'Easy' ? 'difficulty-easy' :
-                    problem.difficulty === 'Medium' ? 'difficulty-medium' :
-                    'difficulty-hard'
-                  }`}>
-                    {problem.difficulty.charAt(0)}
-                  </span>
-                </div>
-                <p className="text-white/60 text-xs font-display tracking-wider">{problem.points}PTS</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col">
-          {/* Compact Header */}
-          <div className="bg-black/90 border-b border-white/10 p-3">
-            <div className="flex justify-between items-center mb-2">
-              <div>
-                <h1 className="text-lg font-bold text-white font-display tracking-wider">DASHBOARD</h1>
-                <p className="text-white/60 text-xs font-display tracking-wider">
-                  {currentUser.name.toUpperCase()}
-                </p>
-              </div>
-              <div className="scale-75">
-                <Timer timeRemaining={timeRemaining} />
-              </div>
-            </div>
-
-            {/* Compact Stats */}
-            <div className="grid grid-cols-4 gap-2">
-              <div className="vscode-card p-2 terminal">
-                <div className="pt-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white/60 text-xs font-display tracking-wider">SCORE</p>
-                      <p className="text-sm font-bold text-white font-mono">{currentUser.score}</p>
-                    </div>
-                    <Trophy className="text-white" size={16} />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="vscode-card p-2 terminal">
-                <div className="pt-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white/60 text-xs font-display tracking-wider">SOLVED</p>
-                      <p className="text-sm font-bold text-white font-mono">{currentUser.solvedProblems}</p>
-                    </div>
-                    <CheckCircle className="text-white" size={16} />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="vscode-card p-2 terminal">
-                <div className="pt-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white/60 text-xs font-display tracking-wider">PENALTY</p>
-                      <p className="text-sm font-bold text-white font-mono">{currentUser.penaltyTime}M</p>
-                    </div>
-                    <Clock className="text-white" size={16} />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="vscode-card p-2 terminal">
-                <div className="pt-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white/60 text-xs font-display tracking-wider">SUBS</p>
-                      <p className="text-sm font-bold text-white font-mono">{submissions.length}</p>
-                    </div>
-                    <Send className="text-white" size={16} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Compact Editor Tabs */}
-          <div className="bg-black/90 border-b border-white/10 flex px-2">
-            <div className="px-3 py-2 bg-black text-white text-xs font-display tracking-wider border-b-2 border-white">
-              {selectedProblem.title.toUpperCase()}
-            </div>
-            <div className="px-3 py-2 text-white/60 text-xs font-display tracking-wider">
-              SOLUTION.{language.toUpperCase()}
-            </div>
-          </div>
-
-          {/* Compact Main Editor Area */}
-          <div className="flex-1 flex">
-            {/* Compact Problem Description */}
-            <div className="w-1/2 bg-black border-r border-white/10 p-3 overflow-y-auto text-sm">
-              <div className="mb-3">
-                <div className="flex justify-between items-start mb-2">
-                  <h2 className="text-lg font-bold text-white font-display tracking-wider">{selectedProblem.title.toUpperCase()}</h2>
-                  <div className="flex items-center space-x-2">
-                    <span className={`px-2 py-1 text-xs font-bold ${
-                      selectedProblem.difficulty === 'Easy' ? 'difficulty-easy' :
-                      selectedProblem.difficulty === 'Medium' ? 'difficulty-medium' :
-                      'difficulty-hard'
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Problems List */}
+          <div className="modern-card p-6">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center">
+              <Code2 className="mr-2" size={20} />
+              Problems
+            </h2>
+            <div className="space-y-3">
+              {challenge.problems.map((problem) => (
+                <div
+                  key={problem.id}
+                  onClick={() => setSelectedProblem(problem)}
+                  className={`p-4 rounded-lg cursor-pointer transition-all duration-300 border ${
+                    selectedProblem.id === problem.id 
+                      ? 'bg-white/10 border-white/30 modern-glow' 
+                      : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/20'
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-semibold text-white">{problem.title}</h3>
+                    <span className={`px-2 py-1 rounded text-xs font-semibold modern-badge ${
+                      problem.difficulty === 'Easy' ? 'bg-green-500/20 text-green-400' :
+                      problem.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                      'bg-red-500/20 text-red-400'
                     }`}>
-                      {selectedProblem.difficulty.toUpperCase()}
+                      {problem.difficulty}
                     </span>
-                    <span className="text-white font-bold font-mono text-xs">{selectedProblem.points}PTS</span>
                   </div>
+                  <p className="text-white/60 text-sm">{problem.points} points</p>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Problem Details & Code Editor */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Problem Description */}
+            <div className="modern-card p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold text-white">{selectedProblem.title}</h2>
+                <div className="flex items-center space-x-3">
+                  <span className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+                    selectedProblem.difficulty === 'Easy' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                    selectedProblem.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+                    'bg-red-500/20 text-red-400 border border-red-500/30'
+                  }`}>
+                    {selectedProblem.difficulty}
+                  </span>
+                  <span className="text-blue-400 font-bold text-lg">{selectedProblem.points} pts</span>
+                </div>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-white/80 leading-relaxed mb-6">
+                  {selectedProblem.description}
+                </p>
                 
-                <div className="prose max-w-none">
-                  <p className="text-white leading-relaxed mb-3 text-sm">
-                    {selectedProblem.description}
-                  </p>
-                  
-                  <h3 className="text-sm font-bold text-white mb-2 font-display tracking-wider">EXAMPLES:</h3>
-                  {selectedProblem.examples.slice(0, 2).map((example, index) => (
-                    <div key={index} className="mb-2 p-2 bg-white/5 border border-white/10">
-                      <p className="text-white mb-1 text-xs">
-                        <strong className="text-white font-display tracking-wider">IN:</strong> <code>{example.input}</code>
+                <h3 className="text-lg font-semibold text-white mb-3">Examples:</h3>
+                {selectedProblem.examples.map((example, index) => (
+                  <div key={index} className="mb-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                    <p className="text-white mb-2">
+                      <strong className="text-blue-400">Input:</strong> <code className="bg-black/50 px-2 py-1 rounded">{example.input}</code>
+                    </p>
+                    <p className="text-white mb-2">
+                      <strong className="text-green-400">Output:</strong> <code className="bg-black/50 px-2 py-1 rounded">{example.output}</code>
+                    </p>
+                    {example.explanation && (
+                      <p className="text-white/60 text-sm">
+                        <strong>Explanation:</strong> {example.explanation}
                       </p>
-                      <p className="text-white mb-1 text-xs">
-                        <strong className="text-white font-display tracking-wider">OUT:</strong> <code>{example.output}</code>
-                      </p>
-                    </div>
+                    )}
+                  </div>
+                ))}
+                
+                <h3 className="text-lg font-semibold text-white mb-3">Constraints:</h3>
+                <ul className="list-disc list-inside text-white/80 space-y-1">
+                  {selectedProblem.constraints.map((constraint, index) => (
+                    <li key={index}><code className="bg-black/50 px-2 py-1 rounded text-sm">{constraint}</code></li>
                   ))}
-                  
-                  <h3 className="text-sm font-bold text-white mb-2 font-display tracking-wider">CONSTRAINTS:</h3>
-                  <ul className="list-disc list-inside text-white space-y-1 text-xs">
-                    {selectedProblem.constraints.slice(0, 3).map((constraint, index) => (
-                      <li key={index}><code>{constraint}</code></li>
-                    ))}
-                  </ul>
-                </div>
+                </ul>
               </div>
             </div>
 
-            {/* Compact Code Editor */}
-            <div className="w-1/2 bg-black flex flex-col">
-              <div className="flex justify-between items-center p-2 border-b border-white/10">
-                <h3 className="text-sm font-bold text-white font-display tracking-wider">EDITOR</h3>
+            {/* Code Editor */}
+            <div className="modern-card p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-white flex items-center">
+                  <Terminal className="mr-2" size={20} />
+                  Code Editor
+                </h3>
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="vscode-select text-xs"
+                  className="modern-select"
                 >
-                  <option value="javascript">JS</option>
-                  <option value="python">PY</option>
-                  <option value="java">JAVA</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="python">Python</option>
+                  <option value="java">Java</option>
                   <option value="cpp">C++</option>
                 </select>
               </div>
               
-              <div className="flex-1 p-2">
+              <div className="mb-4">
                 <textarea
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="vscode-textarea w-full h-full p-2 text-sm"
-                  placeholder="// WRITE YOUR SOLUTION HERE..."
+                  className="modern-textarea w-full h-64 p-4 rounded-lg"
+                  placeholder="// Write your solution here..."
                 />
               </div>
               
-              <div className="p-2 border-t border-white/10">
-                <div className="flex justify-between items-center">
-                  <div className="text-white/60 text-xs font-display tracking-wider">
-                    {selectedProblem.timeLimit}MS | {selectedProblem.memoryLimit}MB
-                  </div>
-                  <button
-                    onClick={handleSubmit}
-                    disabled={!code.trim() || isSubmitting}
-                    className={`vscode-button flex items-center text-xs px-3 py-1 ${
-                      !code.trim() || isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                  >
-                    <Play size={12} className="mr-1" />
-                    {isSubmitting ? 'SUBMITTING...' : 'SUBMIT'}
-                  </button>
+              <div className="flex justify-between items-center">
+                <div className="text-white/60 text-sm">
+                  Time Limit: {selectedProblem.timeLimit}ms | Memory: {selectedProblem.memoryLimit}MB
                 </div>
+                <button
+                  onClick={handleSubmit}
+                  disabled={!code.trim() || isSubmitting}
+                  className={`modern-button flex items-center ${
+                    !code.trim() || isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover-lift'
+                  }`}
+                >
+                  <Play size={16} className="mr-2" />
+                  {isSubmitting ? 'Submitting...' : 'Submit Solution'}
+                </button>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Compact Status Bar */}
-          <div className="bg-white text-black h-6 text-xs flex items-center px-3 justify-between font-display tracking-wider">
-            <div className="flex items-center space-x-3">
-              <span>LN 1, COL 1</span>
-              <span>{language.toUpperCase()}</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <span>PROBLEMS: {challenge.problems.length}</span>
-              <span>SOLVED: {currentUser.solvedProblems}</span>
+        {/* Recent Submissions */}
+        {submissions.length > 0 && (
+          <div className="mt-6">
+            <div className="modern-card p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                <Zap className="mr-2" size={20} />
+                Recent Submissions
+              </h3>
+              <div className="space-y-3">
+                {submissions.slice(0, 5).map((submission) => {
+                  const problem = challenge.problems.find(p => p.id === submission.problemId);
+                  return (
+                    <div key={submission.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                      <div className="flex items-center space-x-3">
+                        {getStatusIcon(submission.status)}
+                        <span className="text-white font-medium">{problem?.title}</span>
+                        <span className="text-white/60 text-sm">{submission.language}</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <span className={`px-3 py-1 rounded-lg text-sm font-semibold border ${getStatusClass(submission.status)}`}>
+                          {submission.status}
+                        </span>
+                        <span className="text-white/60 text-sm">
+                          {new Date(submission.timestamp).toLocaleTimeString()}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
-
-      {/* Compact Recent Submissions */}
-      {submissions.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-white/10 max-h-32 overflow-y-auto">
-          <div className="p-2">
-            <h3 className="text-sm font-bold text-white mb-2 font-display tracking-wider">RECENT SUBMISSIONS</h3>
-            <div className="space-y-1">
-              {submissions.slice(0, 3).map((submission) => {
-                const problem = challenge.problems.find(p => p.id === submission.problemId);
-                return (
-                  <div key={submission.id} className="flex items-center justify-between p-1 bg-white/5 border border-white/10 text-xs">
-                    <div className="flex items-center space-x-2">
-                      {getStatusIcon(submission.status)}
-                      <span className="text-white font-display tracking-wider">{problem?.title.toUpperCase()}</span>
-                      <span className="text-white/60 font-display tracking-wider">{submission.language.toUpperCase()}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <span className={`px-1 py-0.5 text-xs font-bold ${getStatusClass(submission.status)}`}>
-                        {submission.status.toUpperCase()}
-                      </span>
-                      <span className="text-white/60 font-mono">
-                        {new Date(submission.timestamp).toLocaleTimeString()}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

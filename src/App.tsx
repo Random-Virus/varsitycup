@@ -12,7 +12,7 @@ function App() {
   return (
     <AppProvider>
       <Router>
-        <div className="min-h-screen bg-vscode-dark text-vscode-foreground matrix-bg">
+        <div className="min-h-screen bg-black text-white">
           <Navbar />
           <Routes>
             <Route path="/" element={<LandingPage />} />

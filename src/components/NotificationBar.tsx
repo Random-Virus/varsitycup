@@ -11,21 +11,21 @@ const NotificationBar: React.FC = () => {
   
   const getNotificationIcon = (message: string) => {
     if (message.toLowerCase().includes('congratulations') || message.toLowerCase().includes('success')) {
-      return <CheckCircle size={18} className="text-white" />;
+      return <CheckCircle size={18} className="text-green-400" />;
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
-      return <AlertTriangle size={18} className="text-white" />;
+      return <AlertTriangle size={18} className="text-red-400" />;
     } else {
-      return <Info size={18} className="text-white" />;
+      return <Info size={18} className="text-blue-400" />;
     }
   };
   
   const getNotificationStyle = (message: string) => {
     if (message.toLowerCase().includes('congratulations') || message.toLowerCase().includes('success')) {
-      return 'border-white/50 bg-white/10 neon-glow';
+      return 'border-green-500/30 bg-green-500/10';
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
-      return 'border-white/50 bg-white/10 neon-glow';
+      return 'border-red-500/30 bg-red-500/10';
     } else {
-      return 'border-white/50 bg-white/10 neon-glow';
+      return 'border-blue-500/30 bg-blue-500/10';
     }
   };
   
@@ -34,20 +34,18 @@ const NotificationBar: React.FC = () => {
       {notifications.map((notification, index) => (
         <div 
           key={index}
-          className={`glass-card shadow-2xl mb-4 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)} terminal`}
+          className={`modern-glass shadow-2xl mb-4 p-4 flex items-start animate-slideIn border rounded-lg ${getNotificationStyle(notification)}`}
         >
-          <div className="pt-4">
-            <div className="mr-3 flex-shrink-0 mt-0.5">
-              {getNotificationIcon(notification)}
-            </div>
-            <div className="flex-grow text-white font-bold font-display tracking-wider">{notification.toUpperCase()}</div>
-            <button 
-              onClick={() => dismissNotification(index)}
-              className="ml-3 text-white/60 hover:text-white flex-shrink-0 transition-colors duration-200 p-1 hover:bg-white/10"
-            >
-              <X size={16} />
-            </button>
+          <div className="mr-3 flex-shrink-0 mt-0.5">
+            {getNotificationIcon(notification)}
           </div>
+          <div className="flex-grow text-white font-medium">{notification}</div>
+          <button 
+            onClick={() => dismissNotification(index)}
+            className="ml-3 text-white/60 hover:text-white flex-shrink-0 transition-colors duration-200 p-1 hover:bg-white/10 rounded-lg"
+          >
+            <X size={16} />
+          </button>
         </div>
       ))}
     </div>

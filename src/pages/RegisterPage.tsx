@@ -60,21 +60,21 @@ const RegisterPage: React.FC = () => {
     } = {};
     
     if (!isLoginMode && !name.trim()) {
-      newErrors.name = 'FULL NAME IS REQUIRED';
+      newErrors.name = 'Full name is required';
     }
     
     if (!email.trim()) {
-      newErrors.email = 'EMAIL ADDRESS IS REQUIRED';
+      newErrors.email = 'Email address is required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'PLEASE ENTER A VALID EMAIL ADDRESS';
+      newErrors.email = 'Please enter a valid email address';
     }
     
     if (!isLoginMode && !university) {
-      newErrors.university = 'PLEASE SELECT YOUR UNIVERSITY';
+      newErrors.university = 'Please select your university';
     }
     
     if (!studentNumber.trim()) {
-      newErrors.studentNumber = 'STUDENT NUMBER IS REQUIRED';
+      newErrors.studentNumber = 'Student number is required';
     }
     
     setErrors(newErrors);
@@ -104,9 +104,9 @@ const RegisterPage: React.FC = () => {
       } catch (error) {
         console.error('Authentication error:', error);
         if (error instanceof Error) {
-          setErrors({ general: error.message.toUpperCase() });
+          setErrors({ general: error.message });
         } else {
-          setErrors({ general: isLoginMode ? 'LOGIN FAILED. PLEASE CHECK YOUR CREDENTIALS.' : 'REGISTRATION FAILED. PLEASE TRY AGAIN.' });
+          setErrors({ general: isLoginMode ? 'Login failed. Please check your credentials.' : 'Registration failed. Please try again.' });
         }
       } finally {
         setIsSubmitting(false);
@@ -125,28 +125,26 @@ const RegisterPage: React.FC = () => {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-vscode-dark flex items-center justify-center relative overflow-hidden matrix-bg">
-        <div className="absolute inset-0 scanlines"></div>
+      <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden modern-grid">
         <div className="text-center relative z-10">
-          <div className="w-16 h-16 loading-spinner mx-auto mb-4"></div>
-          <p className="text-white font-bold font-display tracking-wider">INITIALIZING SYSTEM...</p>
+          <div className="w-16 h-16 modern-spinner mx-auto mb-4"></div>
+          <p className="text-white font-semibold">Initializing system...</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="min-h-screen bg-vscode-dark py-12 relative overflow-hidden">
-      {/* Futuristic background */}
-      <div className="absolute inset-0 matrix-bg"></div>
-      <div className="absolute inset-0 scanlines"></div>
+    <div className="min-h-screen bg-black py-12 relative overflow-hidden">
+      {/* Modern background */}
+      <div className="absolute inset-0 modern-grid"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-2xl mx-auto">
-          <div className="vscode-card overflow-hidden animate-scaleIn shadow-2xl terminal">
-            <div className="bg-black/90 p-8 border-b border-white/10 pt-12">
+          <div className="modern-card overflow-hidden animate-scaleIn shadow-2xl">
+            <div className="bg-black/90 p-8 border-b border-white/10">
               <div className="flex items-center justify-center mb-6">
-                <div className="p-4 bg-white/10 mr-4">
+                <div className="p-4 bg-white/10 rounded-lg mr-4">
                   {isLoginMode ? (
                     <LogIn className="text-white" size={32} />
                   ) : (
@@ -154,13 +152,13 @@ const RegisterPage: React.FC = () => {
                   )}
                 </div>
                 <div className="text-center">
-                  <h1 className="text-4xl font-bold gradient-text mb-2 font-display">
+                  <h1 className="text-4xl font-bold modern-gradient-text mb-2 font-display">
                     {isLoginMode ? 'SYSTEM ACCESS' : 'JOIN NETWORK'}
                   </h1>
-                  <p className="text-white/60 font-bold font-display tracking-wider">
+                  <p className="text-white/60 font-semibold">
                     {isLoginMode 
-                      ? 'AUTHENTICATE TO CONTINUE YOUR CODING JOURNEY' 
-                      : 'REGISTER FOR THE VARSITY CODE CUP 2024'
+                      ? 'Authenticate to continue your coding journey' 
+                      : 'Register for the Varsity Code Cup 2024'
                     }
                   </p>
                 </div>
@@ -168,25 +166,25 @@ const RegisterPage: React.FC = () => {
               
               <div className="flex items-center justify-center space-x-2 text-sm text-white/60">
                 <Shield size={16} className="text-white" />
-                <span className="font-display tracking-wider">SECURE AUTHENTICATION POWERED BY FIREBASE</span>
+                <span className="font-semibold">Secure authentication powered by Firebase</span>
                 <Lock size={16} className="text-white" />
               </div>
             </div>
             
             <form onSubmit={handleSubmit} className="p-8">
               {errors.general && (
-                <div className="mb-6 p-4 bg-white/10 border border-white/30 text-white animate-fadeIn">
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg animate-fadeIn">
                   <div className="flex items-center">
                     <Shield size={18} className="mr-2" />
-                    <span className="font-display tracking-wider">{errors.general}</span>
+                    <span className="font-semibold">{errors.general}</span>
                   </div>
                 </div>
               )}
 
               {!isLoginMode && (
                 <div className="mb-6">
-                  <label htmlFor="name" className="block text-white font-bold mb-3 font-display tracking-wider">
-                    FULL NAME
+                  <label htmlFor="name" className="block text-white font-semibold mb-3">
+                    Full Name
                   </label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
@@ -197,19 +195,19 @@ const RegisterPage: React.FC = () => {
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className={`vscode-input w-full pl-12 pr-4 py-3 ${
-                        errors.name ? 'border-white' : ''
+                      className={`modern-input w-full pl-12 pr-4 py-3 ${
+                        errors.name ? 'border-red-500/50' : ''
                       }`}
-                      placeholder="ENTER YOUR FULL NAME"
+                      placeholder="Enter your full name"
                     />
                   </div>
-                  {errors.name && <p className="text-white text-sm mt-2 animate-fadeIn font-display tracking-wider">{errors.name}</p>}
+                  {errors.name && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.name}</p>}
                 </div>
               )}
               
               <div className="mb-6">
-                <label htmlFor="email" className="block text-white font-bold mb-3 font-display tracking-wider">
-                  EMAIL ADDRESS
+                <label htmlFor="email" className="block text-white font-semibold mb-3">
+                  Email Address
                 </label>
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
@@ -220,19 +218,19 @@ const RegisterPage: React.FC = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`vscode-input w-full pl-12 pr-4 py-3 ${
-                      errors.email ? 'border-white' : ''
+                    className={`modern-input w-full pl-12 pr-4 py-3 ${
+                      errors.email ? 'border-red-500/50' : ''
                     }`}
-                    placeholder="ENTER YOUR EMAIL ADDRESS"
+                    placeholder="Enter your email address"
                   />
                 </div>
-                {errors.email && <p className="text-white text-sm mt-2 animate-fadeIn font-display tracking-wider">{errors.email}</p>}
+                {errors.email && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.email}</p>}
               </div>
               
               {!isLoginMode && (
                 <div className="mb-6">
-                  <label htmlFor="university" className="block text-white font-bold mb-3 font-display tracking-wider">
-                    UNIVERSITY
+                  <label htmlFor="university" className="block text-white font-semibold mb-3">
+                    University
                   </label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
@@ -242,11 +240,11 @@ const RegisterPage: React.FC = () => {
                       id="university"
                       value={university}
                       onChange={(e) => setUniversity(e.target.value)}
-                      className={`vscode-select w-full pl-12 pr-4 py-3 ${
-                        errors.university ? 'border-white' : ''
+                      className={`modern-select w-full pl-12 pr-4 py-3 ${
+                        errors.university ? 'border-red-500/50' : ''
                       }`}
                     >
-                      <option value="">SELECT YOUR UNIVERSITY</option>
+                      <option value="">Select your university</option>
                       {universities.map((uni) => (
                         <option key={uni} value={uni}>
                           {uni}
@@ -254,13 +252,13 @@ const RegisterPage: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  {errors.university && <p className="text-white text-sm mt-2 animate-fadeIn font-display tracking-wider">{errors.university}</p>}
+                  {errors.university && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.university}</p>}
                 </div>
               )}
               
               <div className="mb-8">
-                <label htmlFor="studentNumber" className="block text-white font-bold mb-3 font-display tracking-wider">
-                  STUDENT NUMBER
+                <label htmlFor="studentNumber" className="block text-white font-semibold mb-3">
+                  Student Number
                 </label>
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
@@ -271,28 +269,28 @@ const RegisterPage: React.FC = () => {
                     id="studentNumber"
                     value={studentNumber}
                     onChange={(e) => setStudentNumber(e.target.value)}
-                    className={`vscode-input w-full pl-12 pr-4 py-3 ${
-                      errors.studentNumber ? 'border-white' : ''
+                    className={`modern-input w-full pl-12 pr-4 py-3 ${
+                      errors.studentNumber ? 'border-red-500/50' : ''
                     }`}
-                    placeholder="ENTER YOUR STUDENT NUMBER"
+                    placeholder="Enter your student number"
                   />
                 </div>
-                {errors.studentNumber && <p className="text-white text-sm mt-2 animate-fadeIn font-display tracking-wider">{errors.studentNumber}</p>}
+                {errors.studentNumber && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.studentNumber}</p>}
               </div>
               
               <div className="mb-6">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`vscode-button w-full py-3 text-lg font-bold hover-lift ${
+                  className={`modern-button w-full py-3 text-lg font-semibold hover-lift ${
                     isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
                   <div className="flex items-center justify-center">
                     <Terminal size={20} className="mr-2" />
                     {isSubmitting 
-                      ? (isLoginMode ? 'AUTHENTICATING...' : 'REGISTERING...') 
-                      : (isLoginMode ? 'ACCESS SYSTEM' : 'JOIN NETWORK')
+                      ? (isLoginMode ? 'Authenticating...' : 'Registering...') 
+                      : (isLoginMode ? 'Access System' : 'Join Network')
                     }
                   </div>
                 </button>
@@ -302,11 +300,11 @@ const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={toggleMode}
-                  className="text-white hover:text-white/80 font-bold transition-colors duration-200 underline underline-offset-4 font-display tracking-wider"
+                  className="text-white hover:text-white/80 font-semibold transition-colors duration-200 underline underline-offset-4"
                 >
                   {isLoginMode 
-                    ? "DON'T HAVE ACCESS? REGISTER HERE" 
-                    : "ALREADY REGISTERED? ACCESS SYSTEM"
+                    ? "Don't have an account? Register here" 
+                    : "Already registered? Access system"
                   }
                 </button>
               </div>

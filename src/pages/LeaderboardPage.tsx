@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, Medal, Award, User, University, Target, BarChart3, Code2, Crown, Star } from 'lucide-react';
+import { Trophy, Medal, Award, User, University, Target, Crown, Star, Zap } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const LeaderboardPage: React.FC = () => {
@@ -8,252 +8,214 @@ const LeaderboardPage: React.FC = () => {
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Crown className="text-white" size={16} />;
+        return <Crown className="text-yellow-400" size={20} />;
       case 2:
-        return <Medal className="text-white" size={16} />;
+        return <Medal className="text-gray-300" size={20} />;
       case 3:
-        return <Award className="text-white" size={16} />;
+        return <Award className="text-orange-400" size={20} />;
       default:
-        return <div className="w-4 h-4 flex items-center justify-center bg-white/20 text-white font-bold text-xs font-display">{rank}</div>;
+        return <div className="w-5 h-5 flex items-center justify-center bg-white/10 rounded-full text-white font-bold text-xs">{rank}</div>;
     }
   };
 
   const getRankClass = (rank: number) => {
     switch (rank) {
       case 1:
-        return 'border-l-2 border-white neon-glow bg-white/5';
+        return 'border-l-4 border-yellow-400 bg-yellow-400/5 modern-glow-strong';
       case 2:
-        return 'border-l-2 border-white/70 bg-white/3';
+        return 'border-l-4 border-gray-300 bg-gray-300/5';
       case 3:
-        return 'border-l-2 border-white/50 bg-white/2';
+        return 'border-l-4 border-orange-400 bg-orange-400/5';
       default:
-        return 'border-l-2 border-transparent hover:border-white/30 hover:bg-white/5';
+        return 'border-l-4 border-transparent hover:border-white/30 hover:bg-white/5';
     }
   };
 
   return (
-    <div className="min-h-screen bg-vscode-dark">
-      {/* Futuristic background */}
-      <div className="absolute inset-0 matrix-bg"></div>
-      <div className="absolute inset-0 scanlines"></div>
-
-      {/* Compact VS Code-style layout */}
-      <div className="flex h-screen relative z-10">
-        {/* Compact Activity Bar */}
-        <div className="bg-black/95 w-8 border-r border-white/10">
-          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer">
-            <Code2 size={16} />
-          </div>
-          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer border-l-2 border-white">
-            <BarChart3 size={16} />
-          </div>
+    <div className="min-h-screen bg-black modern-grid">
+      <div className="container mx-auto px-6 py-6">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold modern-gradient-text mb-2">
+            GLOBAL RANKINGS
+          </h1>
+          <p className="text-white/60 text-lg">
+            Elite coders competing for digital supremacy
+          </p>
         </div>
 
-        {/* Compact Sidebar */}
-        <div className="bg-black/95 border-r border-white/10 w-48">
-          <div className="p-2 text-xs font-bold text-white/80 bg-black/90 border-b border-white/10 font-display tracking-wider">
-            LEADERBOARD
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="modern-card p-6 hover-lift">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-white/60 text-sm font-medium mb-1">Total Participants</p>
+                <p className="text-2xl font-bold text-white">{participants.length}</p>
+              </div>
+              <div className="p-3 bg-blue-500/20 rounded-lg">
+                <User className="text-blue-400" size={24} />
+              </div>
+            </div>
           </div>
-          <div className="p-2">
-            <div className="vscode-card p-2 mb-2 neon-glow terminal">
-              <div className="pt-2">
-                <h3 className="text-white font-bold mb-2 flex items-center font-display tracking-wider text-xs">
-                  <Star className="mr-1" size={12} />
-                  STATS
-                </h3>
-                <div className="space-y-2 text-xs">
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60 font-display tracking-wider">PARTICIPANTS:</span>
-                    <span className="text-white font-bold font-mono">{participants.length}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60 font-display tracking-wider">SOLVED:</span>
-                    <span className="text-white font-bold font-mono">{participants.reduce((sum, p) => sum + p.solvedProblems, 0)}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60 font-display tracking-wider">TOP SCORE:</span>
-                    <span className="text-white font-bold font-mono">{participants.length > 0 ? Math.max(...participants.map(p => p.score)) : 0}</span>
-                  </div>
-                </div>
+          
+          <div className="modern-card p-6 hover-lift">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-white/60 text-sm font-medium mb-1">Problems Solved</p>
+                <p className="text-2xl font-bold text-white">{participants.reduce((sum, p) => sum + p.solvedProblems, 0)}</p>
+              </div>
+              <div className="p-3 bg-green-500/20 rounded-lg">
+                <Target className="text-green-400" size={24} />
+              </div>
+            </div>
+          </div>
+          
+          <div className="modern-card p-6 hover-lift">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-white/60 text-sm font-medium mb-1">Highest Score</p>
+                <p className="text-2xl font-bold text-white">{participants.length > 0 ? Math.max(...participants.map(p => p.score)) : 0}</p>
+              </div>
+              <div className="p-3 bg-yellow-500/20 rounded-lg">
+                <Star className="text-yellow-400" size={24} />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col">
-          {/* Compact Header */}
-          <div className="bg-black/90 border-b border-white/10 p-3">
-            <h1 className="text-xl font-bold gradient-text font-display">
-              GLOBAL RANKINGS
-            </h1>
-            <p className="text-white/60 font-bold font-display tracking-wider text-xs">
-              ELITE CODERS COMPETING FOR DIGITAL SUPREMACY
-            </p>
-          </div>
-
-          {/* Compact Top 3 Podium */}
-          {participants.length >= 3 && (
-            <div className="bg-black/50 border-b border-white/10 p-4">
-              <div className="flex justify-center items-end space-x-4 max-w-3xl mx-auto">
-                {/* Second Place */}
-                <div className="vscode-card p-3 text-center hover-lift border-l-2 border-white/70 terminal">
-                  <div className="pt-2">
-                    <div className="flex justify-center mb-2">
-                      <Medal className="text-white" size={24} />
-                    </div>
-                    <h3 className="font-bold text-white text-xs font-display tracking-wider">{participants[1].name.toUpperCase()}</h3>
-                    <p className="text-white/60 text-xs font-display tracking-wider">{participants[1].university.split(' ')[0].toUpperCase()}</p>
-                    <p className="text-lg font-bold text-white font-mono">{participants[1].score}</p>
-                    <p className="text-white/60 text-xs font-display tracking-wider">PTS</p>
-                  </div>
+        {/* Top 3 Podium */}
+        {participants.length >= 3 && (
+          <div className="modern-card p-8 mb-8">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Top Performers</h2>
+            <div className="flex justify-center items-end space-x-8 max-w-4xl mx-auto">
+              {/* Second Place */}
+              <div className="modern-card p-6 text-center hover-lift border-l-4 border-gray-300">
+                <div className="flex justify-center mb-4">
+                  <Medal className="text-gray-300" size={40} />
                 </div>
-
-                {/* First Place */}
-                <div className="vscode-card p-4 text-center transform scale-105 hover-lift border-l-2 border-white shadow-xl neon-glow holographic terminal">
-                  <div className="pt-2">
-                    <div className="flex justify-center mb-2">
-                      <Crown className="text-white" size={32} />
-                    </div>
-                    <h3 className="font-bold text-white text-sm font-display tracking-wider">{participants[0].name.toUpperCase()}</h3>
-                    <p className="text-white/60 text-xs font-display tracking-wider">{participants[0].university.split(' ')[0].toUpperCase()}</p>
-                    <p className="text-xl font-bold text-white font-mono neon-glow">{participants[0].score}</p>
-                    <p className="text-white/60 text-xs font-display tracking-wider">PTS</p>
-                  </div>
-                </div>
-
-                {/* Third Place */}
-                <div className="vscode-card p-3 text-center hover-lift border-l-2 border-white/50 terminal">
-                  <div className="pt-2">
-                    <div className="flex justify-center mb-2">
-                      <Award className="text-white" size={24} />
-                    </div>
-                    <h3 className="font-bold text-white text-xs font-display tracking-wider">{participants[2].name.toUpperCase()}</h3>
-                    <p className="text-white/60 text-xs font-display tracking-wider">{participants[2].university.split(' ')[0].toUpperCase()}</p>
-                    <p className="text-lg font-bold text-white font-mono">{participants[2].score}</p>
-                    <p className="text-white/60 text-xs font-display tracking-wider">PTS</p>
-                  </div>
-                </div>
+                <h3 className="font-bold text-gray-300 text-lg mb-1">{participants[1].name}</h3>
+                <p className="text-white/60 text-sm mb-2">{participants[1].university}</p>
+                <p className="text-2xl font-bold text-gray-300">{participants[1].score}</p>
+                <p className="text-white/60 text-sm">points</p>
               </div>
+
+              {/* First Place */}
+              <div className="modern-card p-8 text-center transform scale-110 hover-lift border-l-4 border-yellow-400 modern-glow-strong modern-shimmer">
+                <div className="flex justify-center mb-4">
+                  <Crown className="text-yellow-400" size={48} />
+                </div>
+                <h3 className="font-bold text-yellow-400 text-xl mb-1">{participants[0].name}</h3>
+                <p className="text-white/60 mb-2">{participants[0].university}</p>
+                <p className="text-3xl font-bold text-yellow-400">{participants[0].score}</p>
+                <p className="text-white/60">points</p>
+              </div>
+
+              {/* Third Place */}
+              <div className="modern-card p-6 text-center hover-lift border-l-4 border-orange-400">
+                <div className="flex justify-center mb-4">
+                  <Award className="text-orange-400" size={40} />
+                </div>
+                <h3 className="font-bold text-orange-400 text-lg mb-1">{participants[2].name}</h3>
+                <p className="text-white/60 text-sm mb-2">{participants[2].university}</p>
+                <p className="text-2xl font-bold text-orange-400">{participants[2].score}</p>
+                <p className="text-white/60 text-sm">points</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Full Leaderboard */}
+        <div className="modern-card p-6">
+          <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+            <Trophy className="mr-2" size={24} />
+            Complete Rankings
+          </h2>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="border-b border-white/10">
+                <tr>
+                  <th className="text-left py-4 px-4 font-semibold text-white">Rank</th>
+                  <th className="text-left py-4 px-4 font-semibold text-white">Participant</th>
+                  <th className="text-left py-4 px-4 font-semibold text-white">Institution</th>
+                  <th className="text-left py-4 px-4 font-semibold text-white">Score</th>
+                  <th className="text-left py-4 px-4 font-semibold text-white">Solved</th>
+                  <th className="text-left py-4 px-4 font-semibold text-white">Penalty</th>
+                </tr>
+              </thead>
+              <tbody>
+                {participants.map((participant, index) => {
+                  const rank = index + 1;
+                  const isCurrentUser = currentUser?.id === participant.id;
+                  
+                  return (
+                    <tr 
+                      key={participant.id} 
+                      className={`border-b border-white/10 transition-all duration-300 hover:bg-white/5 ${
+                        isCurrentUser ? 'bg-blue-500/10 border-blue-500/30' : ''
+                      } ${getRankClass(rank)}`}
+                    >
+                      <td className="py-4 px-4">
+                        <div className="flex items-center space-x-3">
+                          {getRankIcon(rank)}
+                          <span className="font-mono text-white font-semibold">#{rank}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                            <User className="text-white" size={16} />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-white">
+                              {participant.name}
+                              {isCurrentUser && (
+                                <span className="ml-2 px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full border border-blue-500/30">
+                                  YOU
+                                </span>
+                              )}
+                            </p>
+                            <p className="text-white/60 text-sm">ID: {participant.studentNumber}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center space-x-2">
+                          <University className="text-white/60" size={16} />
+                          <span className="text-white text-sm">{participant.university}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center space-x-2">
+                          <Target className="text-blue-400" size={16} />
+                          <span className="text-xl font-bold text-blue-400 font-mono">
+                            {participant.score}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="text-green-400 font-bold font-mono text-lg">
+                          {participant.solvedProblems}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="text-red-400 font-mono">
+                          {participant.penaltyTime}m
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          
+          {participants.length === 0 && (
+            <div className="text-center py-12">
+              <Trophy className="text-white/40 mx-auto mb-4" size={48} />
+              <p className="text-white/60">No participants yet. Be the first to register!</p>
             </div>
           )}
-
-          {/* Compact Editor Tabs */}
-          <div className="bg-black/90 border-b border-white/10 flex px-2">
-            <div className="px-3 py-2 bg-black text-white text-xs font-display tracking-wider border-b-2 border-white">
-              RANKINGS.JSON
-            </div>
-          </div>
-
-          {/* Compact Full Leaderboard */}
-          <div className="flex-1 bg-black overflow-y-auto">
-            <div className="p-3">
-              <div className="vscode-card overflow-hidden shadow-xl terminal">
-                <div className="bg-black/90 p-2 border-b border-white/10 pt-4">
-                  <h2 className="text-sm font-bold text-white font-display tracking-wider">
-                    COMPLETE RANKINGS
-                  </h2>
-                </div>
-                
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead className="bg-black/90 border-b border-white/10">
-                      <tr>
-                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">RANK</th>
-                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">PARTICIPANT</th>
-                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">INSTITUTION</th>
-                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">SCORE</th>
-                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">SOLVED</th>
-                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">PENALTY</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {participants.map((participant, index) => {
-                        const rank = index + 1;
-                        const isCurrentUser = currentUser?.id === participant.id;
-                        
-                        return (
-                          <tr 
-                            key={participant.id} 
-                            className={`border-b border-white/10 transition-all duration-200 hover:bg-white/5 ${
-                              isCurrentUser ? 'bg-white/10 neon-glow' : ''
-                            } ${getRankClass(rank)}`}
-                          >
-                            <td className="py-2 px-3">
-                              <div className="flex items-center space-x-2">
-                                {getRankIcon(rank)}
-                                <span className="font-mono text-white font-bold">#{rank}</span>
-                              </div>
-                            </td>
-                            <td className="py-2 px-3">
-                              <div className="flex items-center space-x-2">
-                                <div className="w-6 h-6 bg-white/10 flex items-center justify-center">
-                                  <User className="text-white" size={12} />
-                                </div>
-                                <div>
-                                  <p className="font-bold text-white font-display tracking-wider">
-                                    {participant.name.toUpperCase()}
-                                    {isCurrentUser && (
-                                      <span className="ml-1 px-1 py-0.5 bg-white/20 text-white text-xs font-bold neon-glow font-display tracking-wider">
-                                        YOU
-                                      </span>
-                                    )}
-                                  </p>
-                                  <p className="text-white/60 text-xs font-mono">ID: {participant.studentNumber}</p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="py-2 px-3">
-                              <div className="flex items-center space-x-1">
-                                <University className="text-white/60" size={12} />
-                                <span className="text-white font-bold font-display tracking-wider">{participant.university.split(' ')[0].toUpperCase()}</span>
-                              </div>
-                            </td>
-                            <td className="py-2 px-3">
-                              <div className="flex items-center space-x-1">
-                                <Target className="text-white" size={12} />
-                                <span className="text-sm font-bold text-white font-mono neon-glow">
-                                  {participant.score}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="py-2 px-3">
-                              <span className="text-white font-bold font-mono neon-glow">
-                                {participant.solvedProblems}
-                              </span>
-                            </td>
-                            <td className="py-2 px-3">
-                              <span className="text-white font-mono font-bold">
-                                {participant.penaltyTime}M
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                
-                {participants.length === 0 && (
-                  <div className="text-center py-8">
-                    <Trophy className="text-white/60 mx-auto mb-2" size={32} />
-                    <p className="text-white/60 font-bold font-display tracking-wider text-xs">NO PARTICIPANTS YET</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Compact Status Bar */}
-          <div className="bg-white text-black h-6 text-xs flex items-center px-3 justify-between font-display tracking-wider">
-            <div className="flex items-center space-x-3">
-              <span>PARTICIPANTS: {participants.length}</span>
-              <span>JSON</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <span>UPDATED: {new Date().toLocaleTimeString()}</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
