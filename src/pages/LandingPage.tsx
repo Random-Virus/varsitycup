@@ -30,9 +30,9 @@ const LandingPage: React.FC = () => {
             <div className="absolute inset-0 bg-white/5 blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             <div className="relative z-10 p-4 modern-card modern-glow">
               <img 
-                src="/pic.png" 
+                src="/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png" 
                 alt="Varsity Code Cup" 
-                className="w-16 h-16 object-contain filter brightness-0 invert"
+                className="w-16 h-16 object-contain"
               />
             </div>
           </div>

@@ -5,18 +5,22 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'newbie',
     name: 'Newbie',
     description: 'Solved your first coding problem',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'milestone',
     rarity: 'common',
     condition: (participant, submissions) => {
-      console.log('Checking newbie badge condition:', {
-        participantName: participant.name,
-        submissions: submissions.length,
-        acceptedSubmissions: submissions.filter(s => s.status === 'Accepted').length
-      });
+      console.log('🔍 Checking NEWBIE badge condition:');
+      console.log('  - Participant:', participant.name);
+      console.log('  - Total submissions:', submissions.length);
+      console.log('  - Submission statuses:', submissions.map(s => s.status));
       
-      const hasAcceptedSubmission = submissions.some(s => s.status === 'Accepted');
-      console.log('Has accepted submission:', hasAcceptedSubmission);
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      console.log('  - Accepted submissions:', acceptedSubmissions.length);
+      
+      const hasAcceptedSubmission = acceptedSubmissions.length > 0;
+      console.log('  - Has accepted submission:', hasAcceptedSubmission);
+      console.log('  - Current badges:', participant.badges?.map(b => b.name) || []);
+      
       return hasAcceptedSubmission;
     }
   },
@@ -24,107 +28,123 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'problem-solver',
     name: 'Problem Solver',
     description: 'Solved 3 problems',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'milestone',
     rarity: 'common',
     condition: (participant, submissions) => {
-      const solvedProblems = new Set(
-        submissions.filter(s => s.status === 'Accepted').map(s => s.problemId)
-      );
-      console.log('Problem solver check:', {
-        participantName: participant.name,
-        uniqueSolvedProblems: solvedProblems.size,
-        needed: 3
-      });
-      return solvedProblems.size >= 3;
+      console.log('🔍 Checking PROBLEM SOLVER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
+      
+      console.log('  - Accepted submissions:', acceptedSubmissions.length);
+      console.log('  - Unique solved problems:', solvedProblems.size);
+      console.log('  - Problem IDs solved:', Array.from(solvedProblems));
+      
+      const meetsCondition = solvedProblems.size >= 3;
+      console.log('  - Meets condition (>=3):', meetsCondition);
+      
+      return meetsCondition;
     }
   },
   {
     id: 'code-master',
     name: 'Code Master',
     description: 'Solved all problems in the competition',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'achievement',
     rarity: 'epic',
     condition: (participant, submissions) => {
-      const solvedProblems = new Set(
-        submissions.filter(s => s.status === 'Accepted').map(s => s.problemId)
-      );
-      console.log('Code master check:', {
-        participantName: participant.name,
-        uniqueSolvedProblems: solvedProblems.size,
-        totalProblems: 4
-      });
-      return solvedProblems.size >= 4; // Total problems in competition
+      console.log('🔍 Checking CODE MASTER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
+      
+      console.log('  - Unique solved problems:', solvedProblems.size);
+      console.log('  - Total problems in competition:', 4);
+      
+      const meetsCondition = solvedProblems.size >= 4;
+      console.log('  - Meets condition (>=4):', meetsCondition);
+      
+      return meetsCondition;
     }
   },
   {
     id: 'speed-demon',
     name: 'Speed Demon',
     description: 'Solved a problem in under 10 minutes',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'achievement',
     rarity: 'rare',
     condition: (participant, submissions) => {
+      console.log('🔍 Checking SPEED DEMON badge condition:');
+      console.log('  - Participant:', participant.name);
+      
       const competitionStart = new Date('2024-03-15T09:00:00Z').getTime();
-      const hasSpeedSolution = submissions.some(s => {
-        if (s.status === 'Accepted') {
-          const submissionTime = new Date(s.timestamp).getTime();
-          const timeTaken = (submissionTime - competitionStart) / (1000 * 60); // minutes
-          return timeTaken <= 10;
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      
+      for (const submission of acceptedSubmissions) {
+        const submissionTime = new Date(submission.timestamp).getTime();
+        const timeTaken = (submissionTime - competitionStart) / (1000 * 60); // minutes
+        console.log(`  - Submission ${submission.id}: ${timeTaken.toFixed(2)} minutes`);
+        
+        if (timeTaken <= 10) {
+          console.log('  - Found speed solution!');
+          return true;
         }
-        return false;
-      });
-      console.log('Speed demon check:', {
-        participantName: participant.name,
-        hasSpeedSolution
-      });
-      return hasSpeedSolution;
+      }
+      
+      console.log('  - No speed solutions found');
+      return false;
     }
   },
   {
     id: 'persistent',
     name: 'Persistent',
     description: 'Made 10 or more submissions',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'achievement',
     rarity: 'common',
     condition: (participant, submissions) => {
-      console.log('Persistent check:', {
-        participantName: participant.name,
-        totalSubmissions: submissions.length,
-        needed: 10
-      });
-      return submissions.length >= 10;
+      console.log('🔍 Checking PERSISTENT badge condition:');
+      console.log('  - Participant:', participant.name);
+      console.log('  - Total submissions:', submissions.length);
+      
+      const meetsCondition = submissions.length >= 10;
+      console.log('  - Meets condition (>=10):', meetsCondition);
+      
+      return meetsCondition;
     }
   },
   {
     id: 'perfectionist',
     name: 'Perfectionist',
     description: 'Solved a problem on first attempt',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'achievement',
     rarity: 'rare',
     condition: (participant, submissions) => {
-      const problemAttempts = new Map<string, number>();
+      console.log('🔍 Checking PERFECTIONIST badge condition:');
+      console.log('  - Participant:', participant.name);
       
-      for (const submission of submissions.sort((a, b) => 
+      const problemAttempts = new Map<string, number>();
+      const sortedSubmissions = submissions.sort((a, b) => 
         new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-      )) {
+      );
+      
+      for (const submission of sortedSubmissions) {
         const attempts = problemAttempts.get(submission.problemId) || 0;
         problemAttempts.set(submission.problemId, attempts + 1);
         
         if (submission.status === 'Accepted' && attempts === 0) {
-          console.log('Perfectionist check - found first attempt success:', {
-            participantName: participant.name,
-            problemId: submission.problemId
-          });
+          console.log(`  - Found first attempt success for problem: ${submission.problemId}`);
           return true;
         }
       }
-      console.log('Perfectionist check - no first attempt success:', {
-        participantName: participant.name
-      });
+      
+      console.log('  - No first attempt successes found');
       return false;
     }
   },
@@ -132,58 +152,68 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     id: 'polyglot',
     name: 'Polyglot',
     description: 'Used 3 different programming languages',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'achievement',
     rarity: 'rare',
     condition: (participant, submissions) => {
+      console.log('🔍 Checking POLYGLOT badge condition:');
+      console.log('  - Participant:', participant.name);
+      
       const languages = new Set(submissions.map(s => s.language));
-      console.log('Polyglot check:', {
-        participantName: participant.name,
-        uniqueLanguages: languages.size,
-        languages: Array.from(languages),
-        needed: 3
-      });
-      return languages.size >= 3;
+      console.log('  - Languages used:', Array.from(languages));
+      console.log('  - Unique languages count:', languages.size);
+      
+      const meetsCondition = languages.size >= 3;
+      console.log('  - Meets condition (>=3):', meetsCondition);
+      
+      return meetsCondition;
     }
   },
   {
     id: 'early-bird',
     name: 'Early Bird',
     description: 'First submission within 5 minutes of competition start',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'special',
     rarity: 'rare',
     condition: (participant, submissions) => {
+      console.log('🔍 Checking EARLY BIRD badge condition:');
+      console.log('  - Participant:', participant.name);
+      
       const competitionStart = new Date('2024-03-15T09:00:00Z').getTime();
-      const hasEarlySubmission = submissions.some(s => {
-        const submissionTime = new Date(s.timestamp).getTime();
+      
+      for (const submission of submissions) {
+        const submissionTime = new Date(submission.timestamp).getTime();
         const timeTaken = (submissionTime - competitionStart) / (1000 * 60); // minutes
-        return timeTaken <= 5;
-      });
-      console.log('Early bird check:', {
-        participantName: participant.name,
-        hasEarlySubmission
-      });
-      return hasEarlySubmission;
+        
+        if (timeTaken <= 5) {
+          console.log(`  - Found early submission: ${timeTaken.toFixed(2)} minutes`);
+          return true;
+        }
+      }
+      
+      console.log('  - No early submissions found');
+      return false;
     }
   },
   {
     id: 'champion',
     name: 'Champion',
     description: 'Achieved top 3 ranking',
-    icon: '/newbie-badge.png',
+    icon: '/Blue_and_Yellow_Circle_Modern_Football_Club_Badge_Logo__1_-removebg-preview.png',
     category: 'special',
     rarity: 'legendary',
     condition: (participant, submissions) => {
+      console.log('🔍 Checking CHAMPION badge condition:');
+      console.log('  - Participant:', participant.name);
+      console.log('  - Score:', participant.score);
+      
       // This would need to be checked against current rankings
       // For now, we'll check if they have a high score
-      const isChampion = participant.score >= 300;
-      console.log('Champion check:', {
-        participantName: participant.name,
-        score: participant.score,
-        isChampion
-      });
-      return isChampion;
+      const meetsCondition = participant.score >= 300;
+      console.log('  - Meets condition (>=300 points):', meetsCondition);
+      
+      return meetsCondition;
     }
   }
 ];
@@ -192,38 +222,46 @@ export const checkForNewBadges = (
   participant: Participant, 
   submissions: Submission[]
 ): BadgeDefinition[] => {
-  console.log('=== CHECKING FOR NEW BADGES ===');
-  console.log('Participant:', participant.name);
-  console.log('Current badges:', participant.badges?.map(b => b.name) || []);
-  console.log('Submissions count:', submissions.length);
-  console.log('Accepted submissions:', submissions.filter(s => s.status === 'Accepted').length);
+  console.log('🏆 === CHECKING FOR NEW BADGES ===');
+  console.log('🏆 Participant:', participant.name);
+  console.log('🏆 Current badges in participant:', participant.badges?.map(b => b.name) || []);
+  console.log('🏆 Submissions count:', submissions.length);
+  console.log('🏆 Accepted submissions:', submissions.filter(s => s.status === 'Accepted').length);
   
   const currentBadgeIds = (participant.badges || []).map(b => b.id);
+  console.log('🏆 Current badge IDs:', currentBadgeIds);
+  
   const newBadges: BadgeDefinition[] = [];
   
   for (const badgeDefinition of BADGE_DEFINITIONS) {
-    console.log(`\nChecking badge: ${badgeDefinition.name} (${badgeDefinition.id})`);
-    console.log('Already has badge:', currentBadgeIds.includes(badgeDefinition.id));
+    console.log(`\n🔍 Checking badge: ${badgeDefinition.name} (${badgeDefinition.id})`);
     
-    if (!currentBadgeIds.includes(badgeDefinition.id)) {
-      console.log('Badge not yet earned, checking condition...');
+    const alreadyHasBadge = currentBadgeIds.includes(badgeDefinition.id);
+    console.log('🔍 Already has badge:', alreadyHasBadge);
+    
+    if (!alreadyHasBadge) {
+      console.log('🔍 Badge not yet earned, checking condition...');
       
       try {
         const meetsCondition = badgeDefinition.condition(participant, submissions);
-        console.log('Meets condition:', meetsCondition);
+        console.log('🔍 Meets condition:', meetsCondition);
         
         if (meetsCondition) {
           console.log(`✅ NEW BADGE EARNED: ${badgeDefinition.name}`);
           newBadges.push(badgeDefinition);
+        } else {
+          console.log(`❌ Condition not met for: ${badgeDefinition.name}`);
         }
       } catch (error) {
-        console.error(`Error checking condition for badge ${badgeDefinition.id}:`, error);
+        console.error(`❌ Error checking condition for badge ${badgeDefinition.id}:`, error);
       }
+    } else {
+      console.log(`⏭️ Already has badge: ${badgeDefinition.name}`);
     }
   }
   
-  console.log('=== BADGE CHECK COMPLETE ===');
-  console.log('New badges to award:', newBadges.map(b => b.name));
+  console.log('🏆 === BADGE CHECK COMPLETE ===');
+  console.log('🏆 New badges to award:', newBadges.map(b => b.name));
   
   return newBadges;
 };
