@@ -166,9 +166,8 @@ const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Problem Details & Code Editor */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Problem Description */}
+          {/* Problem Details Only */}
+          <div className="lg:col-span-2">
             <div className="modern-card p-6">
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-2xl font-bold text-white">{selectedProblem.title}</h2>
@@ -213,50 +212,21 @@ const DashboardPage: React.FC = () => {
                   ))}
                 </ul>
               </div>
-            </div>
 
-            {/* Code Editor */}
-            <div className="modern-card p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-white flex items-center">
-                  <Terminal className="mr-2" size={20} />
-                  Code Editor
-                </h3>
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="modern-select"
-                >
-                  <option value="javascript">JavaScript</option>
-                  <option value="python">Python</option>
-                  <option value="java">Java</option>
-                  <option value="cpp">C++</option>
-                </select>
-              </div>
-              
-              <div className="mb-4">
-                <textarea
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="modern-textarea w-full h-64 p-4 rounded-lg"
-                  placeholder="// Write your solution here..."
-                />
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <div className="text-white/60 text-sm">
-                  Time Limit: {selectedProblem.timeLimit}ms | Memory: {selectedProblem.memoryLimit}MB
+              {/* Problem Metadata */}
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <Clock className="text-blue-400" size={16} />
+                    <span className="text-white/60">Time Limit:</span>
+                    <span className="text-white font-mono">{selectedProblem.timeLimit}ms</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Target className="text-green-400" size={16} />
+                    <span className="text-white/60">Memory Limit:</span>
+                    <span className="text-white font-mono">{selectedProblem.memoryLimit}MB</span>
+                  </div>
                 </div>
-                <button
-                  onClick={handleSubmit}
-                  disabled={!code.trim() || isSubmitting}
-                  className={`modern-button flex items-center ${
-                    !code.trim() || isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover-lift'
-                  }`}
-                >
-                  <Play size={16} className="mr-2" />
-                  {isSubmitting ? 'Submitting...' : 'Submit Solution'}
-                </button>
               </div>
             </div>
           </div>
