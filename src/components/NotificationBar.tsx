@@ -11,21 +11,21 @@ const NotificationBar: React.FC = () => {
   
   const getNotificationIcon = (message: string) => {
     if (message.toLowerCase().includes('congratulations') || message.toLowerCase().includes('success')) {
-      return <CheckCircle size={18} className="text-vscode-green" />;
+      return <CheckCircle size={18} className="text-white" />;
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
-      return <AlertTriangle size={18} className="text-vscode-red" />;
+      return <AlertTriangle size={18} className="text-white" />;
     } else {
-      return <Info size={18} className="text-vscode-blue" />;
+      return <Info size={18} className="text-white" />;
     }
   };
   
   const getNotificationStyle = (message: string) => {
     if (message.toLowerCase().includes('congratulations') || message.toLowerCase().includes('success')) {
-      return 'border-vscode-green/50 bg-vscode-green/10 neon-green';
+      return 'border-white/50 bg-white/10 neon-glow';
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
-      return 'border-vscode-red/50 bg-vscode-red/10 neon-red';
+      return 'border-white/50 bg-white/10 neon-glow';
     } else {
-      return 'border-vscode-blue/50 bg-vscode-blue/10 neon-blue';
+      return 'border-white/50 bg-white/10 neon-glow';
     }
   };
   
@@ -34,18 +34,20 @@ const NotificationBar: React.FC = () => {
       {notifications.map((notification, index) => (
         <div 
           key={index}
-          className={`glass-card rounded-lg shadow-2xl mb-4 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)} terminal`}
+          className={`glass-card shadow-2xl mb-4 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)} terminal`}
         >
-          <div className="mr-3 flex-shrink-0 mt-0.5">
-            {getNotificationIcon(notification)}
+          <div className="pt-4">
+            <div className="mr-3 flex-shrink-0 mt-0.5">
+              {getNotificationIcon(notification)}
+            </div>
+            <div className="flex-grow text-white font-bold font-display tracking-wider">{notification.toUpperCase()}</div>
+            <button 
+              onClick={() => dismissNotification(index)}
+              className="ml-3 text-white/60 hover:text-white flex-shrink-0 transition-colors duration-200 p-1 hover:bg-white/10"
+            >
+              <X size={16} />
+            </button>
           </div>
-          <div className="flex-grow text-vscode-foreground font-medium">{notification}</div>
-          <button 
-            onClick={() => dismissNotification(index)}
-            className="ml-3 text-vscode-comment hover:text-vscode-foreground flex-shrink-0 transition-colors duration-200 p-1 hover:bg-vscode-blue/10 rounded-lg"
-          >
-            <X size={16} />
-          </button>
         </div>
       ))}
     </div>

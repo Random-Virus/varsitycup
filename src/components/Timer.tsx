@@ -23,27 +23,21 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
   
   // Determine color based on time remaining
   const getTimerColor = () => {
-    if (timeRemaining <= 1000 * 60 * 10) { // Less than 10 minutes
-      return 'text-vscode-red';
-    } else if (timeRemaining <= 1000 * 60 * 30) { // Less than 30 minutes
-      return 'text-vscode-orange';
-    } else {
-      return 'text-vscode-green';
-    }
+    return 'text-white';
   };
   
   const getBgColor = () => {
     if (timeRemaining <= 1000 * 60 * 10) {
-      return 'bg-gradient-to-r from-vscode-red/20 to-red-600/20 border-vscode-red neon-red';
+      return 'bg-black border-white neon-glow';
     } else if (timeRemaining <= 1000 * 60 * 30) {
-      return 'bg-gradient-to-r from-vscode-orange/20 to-orange-600/20 border-vscode-orange';
+      return 'bg-black border-white/50';
     } else {
-      return 'bg-gradient-to-r from-vscode-green/20 to-green-600/20 border-vscode-green neon-green';
+      return 'bg-black border-white/30';
     }
   };
   
   return (
-    <div className={`vscode-card px-6 py-3 border ${getBgColor()} shadow-lg terminal`}>
+    <div className={`vscode-card px-6 py-3 border ${getBgColor()} terminal`}>
       <div className="flex items-center space-x-3 pt-4">
         <div className="flex items-center">
           <Clock size={18} className={`${getTimerColor()}`} />
@@ -51,7 +45,7 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
             <AlertTriangle size={16} className={`${getTimerColor()} ml-2 animate-pulse`} />
           )}
         </div>
-        <div className={`font-mono text-xl font-bold ${getTimerColor()}`}>
+        <div className={`font-mono text-xl font-bold ${getTimerColor()} font-display tracking-wider`}>
           {hours}:{minutes}:{seconds}
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Code2, Trophy, Users, Home, LogOut, Terminal, Cpu } from 'lucide-react';
+import { Code2, Trophy, Users, Home, LogOut, Terminal } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Navbar: React.FC = () => {
@@ -18,71 +18,71 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-8">
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-vscode-blue to-vscode-purple rounded-lg blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                <div className="relative z-10 p-2 bg-gradient-to-br from-vscode-blue/20 to-vscode-purple/20 rounded-lg">
+                <div className="absolute inset-0 bg-white/10 opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="relative z-10 p-2 bg-black border border-white/20">
                   <img 
                     src="/pic.png" 
                     alt="Varsity Code Cup" 
-                    className="w-8 h-8 object-contain"
+                    className="w-8 h-8 object-contain filter brightness-0 invert"
                   />
                 </div>
               </div>
               <div>
                 <span className="text-xl font-bold font-display gradient-text">
-                  Varsity Code Cup
+                  VARSITY CODE CUP
                 </span>
-                <div className="text-xs text-vscode-comment font-medium">2024 Championship</div>
+                <div className="text-xs text-white/60 font-bold font-display tracking-wider">2024 CHAMPIONSHIP</div>
               </div>
             </Link>
             
             <div className="hidden md:flex items-center space-x-1">
               <Link 
                 to="/" 
-                className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-bold transition-all duration-200 font-display tracking-wider ${
                   location.pathname === '/' 
-                    ? 'text-vscode-blue bg-vscode-blue/10 border border-vscode-blue/30 neon-blue' 
-                    : 'text-vscode-comment hover:text-vscode-foreground hover:bg-vscode-blue/5'
+                    ? 'text-white bg-white/10 border border-white/30' 
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <Home size={16} />
-                <span>Home</span>
+                <span>HOME</span>
               </Link>
               
               <Link 
                 to="/leaderboard" 
-                className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-bold transition-all duration-200 font-display tracking-wider ${
                   location.pathname === '/leaderboard' 
-                    ? 'text-vscode-blue bg-vscode-blue/10 border border-vscode-blue/30 neon-blue' 
-                    : 'text-vscode-comment hover:text-vscode-foreground hover:bg-vscode-blue/5'
+                    ? 'text-white bg-white/10 border border-white/30' 
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <Trophy size={16} />
-                <span>Leaderboard</span>
+                <span>LEADERBOARD</span>
               </Link>
               
               {currentUser ? (
                 <Link 
                   to="/dashboard" 
-                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-bold transition-all duration-200 font-display tracking-wider ${
                     location.pathname === '/dashboard' 
-                      ? 'text-vscode-blue bg-vscode-blue/10 border border-vscode-blue/30 neon-blue' 
-                      : 'text-vscode-comment hover:text-vscode-foreground hover:bg-vscode-blue/5'
+                      ? 'text-white bg-white/10 border border-white/30' 
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   <Code2 size={16} />
-                  <span>Dashboard</span>
+                  <span>DASHBOARD</span>
                 </Link>
               ) : (
                 <Link 
                   to="/register" 
-                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-bold transition-all duration-200 font-display tracking-wider ${
                     location.pathname === '/register' 
-                      ? 'text-vscode-blue bg-vscode-blue/10 border border-vscode-blue/30 neon-blue' 
-                      : 'text-vscode-comment hover:text-vscode-foreground hover:bg-vscode-blue/5'
+                      ? 'text-white bg-white/10 border border-white/30' 
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   <Users size={16} />
-                  <span>Register</span>
+                  <span>REGISTER</span>
                 </Link>
               )}
             </div>
@@ -91,19 +91,19 @@ const Navbar: React.FC = () => {
           {currentUser && (
             <div className="flex items-center space-x-4">
               <div className="text-right hidden sm:block">
-                <div className="text-vscode-blue font-semibold text-sm">
-                  {currentUser.name}
+                <div className="text-white font-bold text-sm font-display tracking-wider">
+                  {currentUser.name.toUpperCase()}
                 </div>
-                <div className="text-vscode-comment text-xs">
-                  {currentUser.university}
+                <div className="text-white/60 text-xs font-display tracking-wider">
+                  {currentUser.university.toUpperCase()}
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-2 px-4 py-2 text-sm bg-gradient-to-r from-vscode-red to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-red-500/25 glow-red"
+                className="flex items-center space-x-2 px-4 py-2 text-sm bg-white text-black hover:bg-black hover:text-white border border-white font-bold transition-all duration-200 font-display tracking-wider"
               >
                 <LogOut size={14} />
-                <span className="hidden sm:inline">Logout</span>
+                <span className="hidden sm:inline">LOGOUT</span>
               </button>
             </div>
           )}
