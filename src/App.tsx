@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import Navbar from './components/Navbar';
 import NotificationBar from './components/NotificationBar';
+import BadgeModal from './components/BadgeModal';
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/code/:problemId" element={<CodeSpacePage />} />
           </Routes>
           <NotificationBar />
+          <BadgeModal />
         </div>
       </Router>
     </AppProvider>

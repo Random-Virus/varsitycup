@@ -30,6 +30,11 @@ interface AppContextType {
   dismissNotification: (index: number) => void;
   loading: boolean;
   authUser: User | null;
+  // Badge popup state
+  selectedBadge: Badge | null;
+  isBadgeModalOpen: boolean;
+  showBadgeModal: (badge: Badge) => void;
+  closeBadgeModal: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -43,6 +48,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [notifications, setNotifications] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [authUser, setAuthUser] = useState<User | null>(null);
+  
+  // Badge modal state
+  const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
+  const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false);
+
+  // Badge modal functions
+  const showBadgeModal = (badge: Badge) => {
+    setSelectedBadge(badge);
+    setIsBadgeModalOpen(true);
+  };
+
+  const closeBadgeModal = () => {
+    setIsBadgeModalOpen(false);
+    setSelectedBadge(null);
+  };
 
   // Initialize Firebase Auth
   useEffect(() => {
@@ -58,6 +78,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             const participantData = await getParticipants();
             const participant = participantData.find(p => p.id === storedParticipantId);
             if (participant) {
+              console.log('Loaded participant with badges:', participant.badges);
               setCurrentUser(participant);
             }
           } catch (error) {
@@ -82,12 +103,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Subscribe to participants updates
   useEffect(() => {
     const unsubscribe = subscribeToParticipants((updatedParticipants) => {
+      console.log('Participants updated from database:', updatedParticipants.map(p => ({ name: p.name, badges: p.badges?.length || 0 })));
       setParticipants(updatedParticipants);
       
       // Update current user if they're in the list
       if (currentUser) {
         const updatedCurrentUser = updatedParticipants.find(p => p.id === currentUser.id);
         if (updatedCurrentUser) {
+          console.log('Current user updated with badges:', updatedCurrentUser.badges);
           setCurrentUser(updatedCurrentUser);
         }
       }
@@ -100,10 +123,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     if (currentUser) {
       const unsubscribe = subscribeToSubmissions(currentUser.id, (updatedSubmissions) => {
+        console.log('Submissions updated for user:', currentUser.name, 'Count:', updatedSubmissions.length);
         setSubmissions(updatedSubmissions);
         
         // Check for new badges after submissions update
-        checkAndAwardBadges(currentUser, updatedSubmissions);
+        setTimeout(() => {
+          checkAndAwardBadges(currentUser, updatedSubmissions);
+        }, 500); // Small delay to ensure database consistency
       });
 
       return () => unsubscribe();
@@ -127,25 +153,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Check and award new badges
   const checkAndAwardBadges = async (participant: Participant, userSubmissions: Submission[]) => {
-    console.log('Checking badges for participant:', participant.name);
-    console.log('Current badges:', participant.badges);
-    console.log('Submissions:', userSubmissions);
+    console.log('=== CHECKING BADGES FOR PARTICIPANT ===');
+    console.log('Participant:', participant.name);
+    console.log('Current badges in participant object:', participant.badges);
+    console.log('Submissions count:', userSubmissions.length);
+    console.log('Accepted submissions:', userSubmissions.filter(s => s.status === 'Accepted').length);
     
-    const newBadges = checkForNewBadges(participant, userSubmissions);
-    console.log('New badges to award:', newBadges);
-    
-    if (newBadges.length > 0) {
-      const updatedBadges: Badge[] = [
-        ...(participant.badges || []),
-        ...newBadges.map(badge => ({
-          ...badge,
-          earnedAt: new Date().toISOString()
-        }))
-      ];
+    try {
+      // Get fresh participant data from database to ensure we have latest badges
+      const freshParticipants = await getParticipants();
+      const freshParticipant = freshParticipants.find(p => p.id === participant.id);
       
-      console.log('Updating participant with badges:', updatedBadges);
+      if (!freshParticipant) {
+        console.error('Could not find fresh participant data');
+        return;
+      }
       
-      try {
+      console.log('Fresh participant badges from database:', freshParticipant.badges);
+      
+      const newBadges = checkForNewBadges(freshParticipant, userSubmissions);
+      console.log('New badges to award:', newBadges);
+      
+      if (newBadges.length > 0) {
+        const currentBadges = freshParticipant.badges || [];
+        const updatedBadges: Badge[] = [
+          ...currentBadges,
+          ...newBadges.map(badgeDefinition => ({
+            id: badgeDefinition.id,
+            name: badgeDefinition.name,
+            description: badgeDefinition.description,
+            icon: badgeDefinition.icon,
+            category: badgeDefinition.category,
+            rarity: badgeDefinition.rarity,
+            earnedAt: new Date().toISOString()
+          }))
+        ];
+        
+        console.log('Updating participant badges in database:', updatedBadges);
+        
+        // Update badges in database
         await updateParticipant(participant.id, { badges: updatedBadges });
         
         // Show notifications for new badges
@@ -153,10 +199,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           addNotification(`🏆 Badge Earned: ${badge.name} - ${badge.description}`);
         });
         
-        console.log('Badges successfully updated!');
-      } catch (error) {
-        console.error('Error updating badges:', error);
+        console.log('✅ Badges successfully updated in database!');
+        
+        // Force refresh participant data
+        setTimeout(async () => {
+          try {
+            const refreshedParticipants = await getParticipants();
+            const refreshedParticipant = refreshedParticipants.find(p => p.id === participant.id);
+            if (refreshedParticipant) {
+              console.log('Refreshed participant badges:', refreshedParticipant.badges);
+              setCurrentUser(refreshedParticipant);
+            }
+          } catch (error) {
+            console.error('Error refreshing participant data:', error);
+          }
+        }, 1000);
+        
+      } else {
+        console.log('No new badges to award');
       }
+    } catch (error) {
+      console.error('Error in checkAndAwardBadges:', error);
     }
   };
 
@@ -176,6 +239,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
 
       const newParticipant = await createParticipant(participantData);
+      console.log('New participant created with badges:', newParticipant.badges);
       setCurrentUser(newParticipant);
       localStorage.setItem('participantId', newParticipant.id);
       addNotification(`Welcome ${newParticipant.name}! You have been registered successfully.`);
@@ -206,6 +270,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         throw new Error('Student number does not match the registered email.');
       }
 
+      console.log('Logged in participant with badges:', participant.badges);
       setCurrentUser(participant);
       localStorage.setItem('participantId', participant.id);
       addNotification(`Welcome back, ${participant.name}!`);
@@ -272,21 +337,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             
             addNotification(`Congratulations! You solved "${problem.title}" and earned ${problem.points} points!`);
             
-            // Force check badges immediately after score update
-            const updatedParticipant = {
-              ...currentUser,
-              score: newScore,
-              solvedProblems: newSolvedProblems
-            };
-            
-            // Get all submissions including the new one
-            const allSubmissions = [...submissions, submission];
-            console.log('Checking badges with updated participant and submissions:', updatedParticipant, allSubmissions);
-            
-            // Check badges with updated data
-            setTimeout(() => {
-              checkAndAwardBadges(updatedParticipant, allSubmissions);
-            }, 1000); // Small delay to ensure database is updated
+            // Force check badges after score update with fresh data
+            setTimeout(async () => {
+              try {
+                const freshParticipants = await getParticipants();
+                const updatedParticipant = freshParticipants.find(p => p.id === currentUser.id);
+                if (updatedParticipant) {
+                  const allSubmissions = await getSubmissions(currentUser.id);
+                  console.log('Checking badges after score update with fresh data');
+                  await checkAndAwardBadges(updatedParticipant, allSubmissions);
+                }
+              } catch (error) {
+                console.error('Error checking badges after score update:', error);
+              }
+            }, 1500); // Longer delay to ensure database consistency
           }
         }
       } else {
@@ -331,6 +395,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         dismissNotification,
         loading,
         authUser,
+        selectedBadge,
+        isBadgeModalOpen,
+        showBadgeModal,
+        closeBadgeModal,
       }}
     >
       {children}
