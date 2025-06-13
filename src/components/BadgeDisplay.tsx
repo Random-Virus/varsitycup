@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from '../types';
 import { getRarityColor, getRarityTextColor } from '../data/badges';
+import BadgeModal from './BadgeModal';
 
 interface BadgeDisplayProps {
   badges: Badge[];
@@ -13,6 +14,9 @@ const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
   size = 'medium', 
   showTooltip = true 
 }) => {
+  const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const getSizeClasses = () => {
     switch (size) {
       case 'small':
@@ -39,6 +43,16 @@ const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
     }
   };
 
+  const handleBadgeClick = (badge: Badge) => {
+    setSelectedBadge(badge);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedBadge(null);
+  };
+
   if (badges.length === 0) {
     return (
       <div className="text-white/60 text-xs italic">
@@ -48,31 +62,52 @@ const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
-      {badges.map((badge) => (
-        <div
-          key={badge.id}
-          className={`modern-card ${getContainerClasses()} hover-lift transition-all duration-300 group relative ${getRarityColor(badge.rarity)}`}
-          title={showTooltip ? `${badge.name}: ${badge.description}` : undefined}
-        >
-          <img
-            src={badge.icon}
-            alt={badge.name}
-            className={`${getSizeClasses()} object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300`}
-          />
-          
-          {showTooltip && (
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50">
-              <div className="font-semibold">{badge.name}</div>
-              <div className="text-white/80">{badge.description}</div>
-              <div className={`text-xs ${getRarityTextColor(badge.rarity)} capitalize`}>
-                {badge.rarity}
+    <>
+      <div className="flex flex-wrap gap-2">
+        {badges.map((badge) => (
+          <div
+            key={badge.id}
+            className={`modern-card ${getContainerClasses()} hover-lift transition-all duration-300 group relative cursor-pointer ${getRarityColor(badge.rarity)} hover:scale-110`}
+            title={showTooltip ? `${badge.name}: ${badge.description}` : undefined}
+            onClick={() => handleBadgeClick(badge)}
+          >
+            <img
+              src={badge.icon}
+              alt={badge.name}
+              className={`${getSizeClasses()} object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300`}
+            />
+            
+            {showTooltip && (
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50">
+                <div className="font-semibold">{badge.name}</div>
+                <div className="text-white/80">{badge.description}</div>
+                <div className={`text-xs ${getRarityTextColor(badge.rarity)} capitalize`}>
+                  {badge.rarity}
+                </div>
+                <div className="text-white/60 text-xs">
+                  Click to view details
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
+            )}
+
+            {/* Rarity indicator */}
+            <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
+              badge.rarity === 'common' ? 'bg-white/60' :
+              badge.rarity === 'rare' ? 'bg-blue-400' :
+              badge.rarity === 'epic' ? 'bg-purple-400' :
+              'bg-yellow-400'
+            } border border-black/20`}></div>
+          </div>
+        ))}
+      </div>
+
+      {/* Badge Modal */}
+      <BadgeModal
+        badge={selectedBadge}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 };
 
