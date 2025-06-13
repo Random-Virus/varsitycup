@@ -21,11 +21,11 @@ const Navbar: React.FC = () => {
             <Link to="/" className="flex items-center space-x-3 group"> {/* Increased from space-x-2 by 40% */}
               <div className="relative">
                 <div className="absolute inset-0 bg-white/5 opacity-30 group-hover:opacity-50 transition-opacity duration-300 rounded"></div>
-                <div className="relative z-10 p-3 bg-black/50 border border-white/10 rounded backdrop-blur-sm"> {/* Increased from p-2 by 40% */}
+                <div className="relative z-10 p-1 bg-black/50 border border-white/10 rounded backdrop-blur-sm"> {/* Reduced from p-3 to p-1 (80% reduction) */}
                   <img 
                     src="/pic.png" 
                     alt="Varsity Code Cup" 
-                    className="w-13 h-13 object-contain" /* Increased from w-9 h-9 by 40% */
+                    className="w-3 h-3 object-contain" /* Reduced from w-13 h-13 to w-3 h-3 (80% reduction) */
                   />
                 </div>
               </div>
