@@ -17,6 +17,63 @@ const CodeSpacePage: React.FC = () => {
   const problemSubmissions = submissions.filter(s => s.problemId === problemId);
   const isSolved = problemSubmissions.some(s => s.status === 'Accepted');
 
+  const getLanguageTemplate = (lang: string) => {
+    switch (lang) {
+      case 'javascript':
+        return `// JavaScript Solution
+function solve() {
+    // Write your solution here
+    
+}
+
+// Example usage:
+// console.log(solve());`;
+      case 'python':
+        return `# Python Solution
+def solve():
+    # Write your solution here
+    pass
+
+# Example usage:
+# print(solve())`;
+      case 'java':
+        return `// Java Solution
+public class Solution {
+    public static void main(String[] args) {
+        // Write your solution here
+        
+    }
+}`;
+      case 'cpp':
+        return `// C++ Solution
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    // Write your solution here
+    
+    return 0;
+}`;
+      default:
+        return '// Write your solution here...';
+    }
+  };
+
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
+    if (!code.trim()) {
+      setCode(getLanguageTemplate(newLanguage));
+    }
+  };
+
+  // Initialize code template if empty - moved before conditional returns
+  React.useEffect(() => {
+    if (!code.trim()) {
+      setCode(getLanguageTemplate(language));
+    }
+  }, []);
+
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center modern-grid">
@@ -86,63 +143,6 @@ const CodeSpacePage: React.FC = () => {
         return 'bg-white/10 text-white border-white/20';
     }
   };
-
-  const getLanguageTemplate = (lang: string) => {
-    switch (lang) {
-      case 'javascript':
-        return `// JavaScript Solution
-function solve() {
-    // Write your solution here
-    
-}
-
-// Example usage:
-// console.log(solve());`;
-      case 'python':
-        return `# Python Solution
-def solve():
-    # Write your solution here
-    pass
-
-# Example usage:
-# print(solve())`;
-      case 'java':
-        return `// Java Solution
-public class Solution {
-    public static void main(String[] args) {
-        // Write your solution here
-        
-    }
-}`;
-      case 'cpp':
-        return `// C++ Solution
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main() {
-    // Write your solution here
-    
-    return 0;
-}`;
-      default:
-        return '// Write your solution here...';
-    }
-  };
-
-  const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
-    if (!code.trim()) {
-      setCode(getLanguageTemplate(newLanguage));
-    }
-  };
-
-  // Initialize code template if empty
-  React.useEffect(() => {
-    if (!code.trim()) {
-      setCode(getLanguageTemplate(language));
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-black modern-grid">
