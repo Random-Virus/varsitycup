@@ -11,8 +11,8 @@
   
   body {
     font-family: 'Inter', sans-serif;
-    background: #1e1e1e;
-    color: #cccccc;
+    background: #ffffff;
+    color: #000000;
     overflow-x: hidden;
     line-height: 1.6;
   }
@@ -23,81 +23,81 @@
 }
 
 @layer utilities {
-  /* VS Code color scheme */
+  /* White and black color scheme */
   .bg-vscode-dark {
-    background-color: #1e1e1e;
+    background-color: #ffffff;
   }
   
   .bg-vscode-sidebar {
-    background-color: #252526;
+    background-color: #f8f8f8;
   }
   
   .bg-vscode-editor {
-    background-color: #1e1e1e;
+    background-color: #ffffff;
   }
   
   .bg-vscode-panel {
-    background-color: #2d2d30;
+    background-color: #f0f0f0;
   }
   
   .bg-vscode-tab {
-    background-color: #2d2d30;
+    background-color: #e8e8e8;
   }
   
   .bg-vscode-tab-active {
-    background-color: #1e1e1e;
+    background-color: #ffffff;
   }
   
   .text-vscode-foreground {
-    color: #cccccc;
+    color: #000000;
   }
   
   .text-vscode-blue {
-    color: #569cd6;
+    color: #0066cc;
   }
   
   .text-vscode-green {
-    color: #4ec9b0;
+    color: #008000;
   }
   
   .text-vscode-orange {
-    color: #ce9178;
+    color: #ff8c00;
   }
   
   .text-vscode-purple {
-    color: #c586c0;
+    color: #800080;
   }
   
   .text-vscode-yellow {
-    color: #dcdcaa;
+    color: #b8860b;
   }
   
   .text-vscode-red {
-    color: #f44747;
+    color: #cc0000;
   }
   
   .text-vscode-comment {
-    color: #6a9955;
+    color: #666666;
   }
   
   .border-vscode {
-    border-color: #3c3c3c;
+    border-color: #d0d0d0;
   }
   
   .border-vscode-focus {
-    border-color: #007acc;
+    border-color: #0066cc;
   }
   
-  /* VS Code-style components */
+  /* White and black VS Code-style components */
   .vscode-card {
-    background-color: #252526;
-    border: 1px solid #3c3c3c;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
     border-radius: 4px;
   }
   
   .vscode-button {
-    background-color: #0e639c;
-    border: 1px solid #0e639c;
+    background-color: #0066cc;
+    border: 1px solid #0066cc;
     color: #ffffff;
     padding: 8px 16px;
     border-radius: 2px;
@@ -108,32 +108,32 @@
   }
   
   .vscode-button:hover {
-    background-color: #1177bb;
-    border-color: #1177bb;
+    background-color: #0052a3;
+    border-color: #0052a3;
   }
   
   .vscode-button:disabled {
-    background-color: #3c3c3c;
-    border-color: #3c3c3c;
-    color: #858585;
+    background-color: #cccccc;
+    border-color: #cccccc;
+    color: #666666;
     cursor: not-allowed;
   }
   
   .vscode-button-secondary {
     background-color: transparent;
-    border: 1px solid #3c3c3c;
-    color: #cccccc;
+    border: 1px solid #d0d0d0;
+    color: #000000;
   }
   
   .vscode-button-secondary:hover {
-    background-color: #2a2d2e;
-    border-color: #464647;
+    background-color: #f0f0f0;
+    border-color: #b0b0b0;
   }
   
   .vscode-input {
-    background-color: #3c3c3c;
-    border: 1px solid #3c3c3c;
-    color: #cccccc;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    color: #000000;
     padding: 8px 12px;
     border-radius: 2px;
     font-size: 13px;
@@ -142,27 +142,27 @@
   
   .vscode-input:focus {
     outline: none;
-    border-color: #007acc;
-    box-shadow: 0 0 0 1px #007acc;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 1px #0066cc;
   }
   
   .vscode-input::placeholder {
-    color: #858585;
+    color: #999999;
   }
   
   .vscode-select {
-    background-color: #3c3c3c;
-    border: 1px solid #3c3c3c;
-    color: #cccccc;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    color: #000000;
     padding: 8px 12px;
     border-radius: 2px;
     font-size: 13px;
   }
   
   .vscode-textarea {
-    background-color: #1e1e1e;
-    border: 1px solid #3c3c3c;
-    color: #cccccc;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    color: #000000;
     font-family: 'Fira Code', monospace;
     font-size: 14px;
     line-height: 1.5;
@@ -171,14 +171,14 @@
   
   .vscode-textarea:focus {
     outline: none;
-    border-color: #007acc;
+    border-color: #0066cc;
   }
   
   /* Activity bar (left sidebar) */
   .activity-bar {
-    background-color: #333333;
+    background-color: #f0f0f0;
     width: 48px;
-    border-right: 1px solid #3c3c3c;
+    border-right: 1px solid #d0d0d0;
   }
   
   .activity-bar-item {
@@ -187,25 +187,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #858585;
+    color: #666666;
     cursor: pointer;
     transition: color 0.2s ease;
   }
   
   .activity-bar-item:hover {
-    color: #cccccc;
+    color: #000000;
   }
   
   .activity-bar-item.active {
-    color: #ffffff;
-    background-color: #37373d;
-    border-left: 2px solid #007acc;
+    color: #0066cc;
+    background-color: #e6f3ff;
+    border-left: 2px solid #0066cc;
   }
   
   /* Sidebar */
   .sidebar {
-    background-color: #252526;
-    border-right: 1px solid #3c3c3c;
+    background-color: #f8f8f8;
+    border-right: 1px solid #d0d0d0;
     min-width: 240px;
   }
   
@@ -214,9 +214,9 @@
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    color: #858585;
-    background-color: #2d2d30;
-    border-bottom: 1px solid #3c3c3c;
+    color: #666666;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #d0d0d0;
   }
   
   .sidebar-item {
@@ -227,28 +227,28 @@
   }
   
   .sidebar-item:hover {
-    background-color: #2a2d2e;
+    background-color: #e8e8e8;
   }
   
   .sidebar-item.active {
-    background-color: #37373d;
-    color: #ffffff;
+    background-color: #e6f3ff;
+    color: #0066cc;
   }
   
   /* Editor tabs */
   .editor-tabs {
-    background-color: #2d2d30;
-    border-bottom: 1px solid #3c3c3c;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #d0d0d0;
     display: flex;
     overflow-x: auto;
   }
   
   .editor-tab {
-    background-color: #2d2d30;
-    border-right: 1px solid #3c3c3c;
+    background-color: #e8e8e8;
+    border-right: 1px solid #d0d0d0;
     padding: 8px 16px;
     font-size: 13px;
-    color: #858585;
+    color: #666666;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -259,19 +259,19 @@
   }
   
   .editor-tab:hover {
-    background-color: #37373d;
-    color: #cccccc;
+    background-color: #f0f0f0;
+    color: #000000;
   }
   
   .editor-tab.active {
-    background-color: #1e1e1e;
-    color: #ffffff;
-    border-bottom: 1px solid #1e1e1e;
+    background-color: #ffffff;
+    color: #000000;
+    border-bottom: 1px solid #ffffff;
   }
   
   /* Status bar */
   .status-bar {
-    background-color: #007acc;
+    background-color: #0066cc;
     color: #ffffff;
     height: 22px;
     font-size: 12px;
@@ -297,34 +297,34 @@
   
   /* Problem difficulty badges */
   .difficulty-easy {
-    background-color: #4ec9b0;
-    color: #1e1e1e;
+    background-color: #008000;
+    color: #ffffff;
   }
   
   .difficulty-medium {
-    background-color: #dcdcaa;
-    color: #1e1e1e;
+    background-color: #ff8c00;
+    color: #ffffff;
   }
   
   .difficulty-hard {
-    background-color: #f44747;
+    background-color: #cc0000;
     color: #ffffff;
   }
   
   /* Submission status */
   .status-accepted {
-    background-color: #4ec9b0;
-    color: #1e1e1e;
+    background-color: #008000;
+    color: #ffffff;
   }
   
   .status-failed {
-    background-color: #f44747;
+    background-color: #cc0000;
     color: #ffffff;
   }
   
   .status-pending {
-    background-color: #dcdcaa;
-    color: #1e1e1e;
+    background-color: #b8860b;
+    color: #ffffff;
   }
   
   /* Animations */
@@ -350,28 +350,28 @@
   
   /* Syntax highlighting for code examples */
   .syntax-keyword {
-    color: #569cd6;
+    color: #0066cc;
   }
   
   .syntax-string {
-    color: #ce9178;
+    color: #008000;
   }
   
   .syntax-number {
-    color: #b5cea8;
+    color: #b8860b;
   }
   
   .syntax-comment {
-    color: #6a9955;
+    color: #666666;
     font-style: italic;
   }
   
   .syntax-function {
-    color: #dcdcaa;
+    color: #800080;
   }
   
   .syntax-variable {
-    color: #9cdcfe;
+    color: #000080;
   }
 }
 
@@ -408,43 +408,43 @@
   }
 }
 
-/* Scrollbar styling to match VS Code */
+/* Scrollbar styling to match white theme */
 ::-webkit-scrollbar {
   width: 14px;
   height: 14px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e1e1e;
+  background: #f8f8f8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #424242;
+  background: #d0d0d0;
   border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4f4f4f;
+  background: #b0b0b0;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #1e1e1e;
+  background: #f8f8f8;
 }
 
 /* Selection styling */
 ::selection {
-  background: #264f78;
-  color: #ffffff;
+  background: #b3d9ff;
+  color: #000000;
 }
 
 /* Code block styling */
 .prose pre {
-  background-color: #1e1e1e;
-  border: 1px solid #3c3c3c;
+  background-color: #f8f8f8;
+  border: 1px solid #d0d0d0;
   border-radius: 4px;
   padding: 16px;
   overflow-x: auto;
-  color: #cccccc;
+  color: #000000;
   font-family: 'Fira Code', monospace;
   font-size: 14px;
   line-height: 1.5;
@@ -454,7 +454,7 @@
   font-weight: 600;
   margin-top: 24px;
   margin-bottom: 16px;
-  color: #cccccc;
+  color: #000000;
 }
 
 .prose h1 {
@@ -471,7 +471,7 @@
 
 .prose p {
   margin-bottom: 16px;
-  color: #cccccc;
+  color: #000000;
 }
 
 .prose ul, .prose ol {
@@ -481,19 +481,19 @@
 
 .prose li {
   margin-bottom: 8px;
-  color: #cccccc;
+  color: #000000;
 }
 
-/* VS Code-style focus indicators */
+/* Focus indicators */
 .focus-visible {
-  outline: 1px solid #007acc;
+  outline: 1px solid #0066cc;
   outline-offset: 2px;
 }
 
 /* Loading spinner */
 .loading-spinner {
-  border: 2px solid #3c3c3c;
-  border-top: 2px solid #007acc;
+  border: 2px solid #d0d0d0;
+  border-top: 2px solid #0066cc;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -501,4 +501,11 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Glass card effect for notifications */
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }

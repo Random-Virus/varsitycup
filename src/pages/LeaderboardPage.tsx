@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, Medal, Award, User, University, Target, BarChart3 } from 'lucide-react';
+import { Trophy, Medal, Award, User, University, Target, BarChart3, Code2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const LeaderboardPage: React.FC = () => {
