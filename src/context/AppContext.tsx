@@ -127,16 +127,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Check and award new badges
   const checkAndAwardBadges = async (participant: Participant, userSubmissions: Submission[]) => {
+    console.log('Checking badges for participant:', participant.name);
+    console.log('Current badges:', participant.badges);
+    console.log('Submissions:', userSubmissions);
+    
     const newBadges = checkForNewBadges(participant, userSubmissions);
+    console.log('New badges to award:', newBadges);
     
     if (newBadges.length > 0) {
       const updatedBadges: Badge[] = [
-        ...participant.badges,
+        ...(participant.badges || []),
         ...newBadges.map(badge => ({
           ...badge,
           earnedAt: new Date().toISOString()
         }))
       ];
+      
+      console.log('Updating participant with badges:', updatedBadges);
       
       try {
         await updateParticipant(participant.id, { badges: updatedBadges });
@@ -145,6 +152,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         newBadges.forEach(badge => {
           addNotification(`🏆 Badge Earned: ${badge.name} - ${badge.description}`);
         });
+        
+        console.log('Badges successfully updated!');
       } catch (error) {
         console.error('Error updating badges:', error);
       }
@@ -238,6 +247,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         testResults: validationResult.testResults,
       });
 
+      console.log('Submission created:', submission);
+
       // Update participant score if submission is accepted
       if (submission.status === 'Accepted') {
         const problem = challenge.problems.find(p => p.id === problemId);
@@ -252,12 +263,30 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             const newScore = currentUser.score + problem.points;
             const newSolvedProblems = currentUser.solvedProblems + 1;
             
+            console.log('Updating participant score:', { newScore, newSolvedProblems });
+            
             await updateParticipant(currentUser.id, {
               score: newScore,
               solvedProblems: newSolvedProblems,
             });
             
             addNotification(`Congratulations! You solved "${problem.title}" and earned ${problem.points} points!`);
+            
+            // Force check badges immediately after score update
+            const updatedParticipant = {
+              ...currentUser,
+              score: newScore,
+              solvedProblems: newSolvedProblems
+            };
+            
+            // Get all submissions including the new one
+            const allSubmissions = [...submissions, submission];
+            console.log('Checking badges with updated participant and submissions:', updatedParticipant, allSubmissions);
+            
+            // Check badges with updated data
+            setTimeout(() => {
+              checkAndAwardBadges(updatedParticipant, allSubmissions);
+            }, 1000); // Small delay to ensure database is updated
           }
         }
       } else {

@@ -9,7 +9,15 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     category: 'milestone',
     rarity: 'common',
     condition: (participant, submissions) => {
-      return submissions.some(s => s.status === 'Accepted');
+      console.log('Checking newbie badge condition:', {
+        participantName: participant.name,
+        submissions: submissions.length,
+        acceptedSubmissions: submissions.filter(s => s.status === 'Accepted').length
+      });
+      
+      const hasAcceptedSubmission = submissions.some(s => s.status === 'Accepted');
+      console.log('Has accepted submission:', hasAcceptedSubmission);
+      return hasAcceptedSubmission;
     }
   },
   {
@@ -23,6 +31,11 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(
         submissions.filter(s => s.status === 'Accepted').map(s => s.problemId)
       );
+      console.log('Problem solver check:', {
+        participantName: participant.name,
+        uniqueSolvedProblems: solvedProblems.size,
+        needed: 3
+      });
       return solvedProblems.size >= 3;
     }
   },
@@ -37,6 +50,11 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(
         submissions.filter(s => s.status === 'Accepted').map(s => s.problemId)
       );
+      console.log('Code master check:', {
+        participantName: participant.name,
+        uniqueSolvedProblems: solvedProblems.size,
+        totalProblems: 4
+      });
       return solvedProblems.size >= 4; // Total problems in competition
     }
   },
@@ -49,7 +67,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     rarity: 'rare',
     condition: (participant, submissions) => {
       const competitionStart = new Date('2024-03-15T09:00:00Z').getTime();
-      return submissions.some(s => {
+      const hasSpeedSolution = submissions.some(s => {
         if (s.status === 'Accepted') {
           const submissionTime = new Date(s.timestamp).getTime();
           const timeTaken = (submissionTime - competitionStart) / (1000 * 60); // minutes
@@ -57,6 +75,11 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
         }
         return false;
       });
+      console.log('Speed demon check:', {
+        participantName: participant.name,
+        hasSpeedSolution
+      });
+      return hasSpeedSolution;
     }
   },
   {
@@ -67,6 +90,11 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     category: 'achievement',
     rarity: 'common',
     condition: (participant, submissions) => {
+      console.log('Persistent check:', {
+        participantName: participant.name,
+        totalSubmissions: submissions.length,
+        needed: 10
+      });
       return submissions.length >= 10;
     }
   },
@@ -87,9 +115,16 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
         problemAttempts.set(submission.problemId, attempts + 1);
         
         if (submission.status === 'Accepted' && attempts === 0) {
+          console.log('Perfectionist check - found first attempt success:', {
+            participantName: participant.name,
+            problemId: submission.problemId
+          });
           return true;
         }
       }
+      console.log('Perfectionist check - no first attempt success:', {
+        participantName: participant.name
+      });
       return false;
     }
   },
@@ -102,6 +137,12 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     rarity: 'rare',
     condition: (participant, submissions) => {
       const languages = new Set(submissions.map(s => s.language));
+      console.log('Polyglot check:', {
+        participantName: participant.name,
+        uniqueLanguages: languages.size,
+        languages: Array.from(languages),
+        needed: 3
+      });
       return languages.size >= 3;
     }
   },
@@ -114,11 +155,16 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     rarity: 'rare',
     condition: (participant, submissions) => {
       const competitionStart = new Date('2024-03-15T09:00:00Z').getTime();
-      return submissions.some(s => {
+      const hasEarlySubmission = submissions.some(s => {
         const submissionTime = new Date(s.timestamp).getTime();
         const timeTaken = (submissionTime - competitionStart) / (1000 * 60); // minutes
         return timeTaken <= 5;
       });
+      console.log('Early bird check:', {
+        participantName: participant.name,
+        hasEarlySubmission
+      });
+      return hasEarlySubmission;
     }
   },
   {
@@ -131,7 +177,13 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     condition: (participant, submissions) => {
       // This would need to be checked against current rankings
       // For now, we'll check if they have a high score
-      return participant.score >= 300;
+      const isChampion = participant.score >= 300;
+      console.log('Champion check:', {
+        participantName: participant.name,
+        score: participant.score,
+        isChampion
+      });
+      return isChampion;
     }
   }
 ];
@@ -140,16 +192,38 @@ export const checkForNewBadges = (
   participant: Participant, 
   submissions: Submission[]
 ): BadgeDefinition[] => {
-  const currentBadgeIds = participant.badges.map(b => b.id);
+  console.log('=== CHECKING FOR NEW BADGES ===');
+  console.log('Participant:', participant.name);
+  console.log('Current badges:', participant.badges?.map(b => b.name) || []);
+  console.log('Submissions count:', submissions.length);
+  console.log('Accepted submissions:', submissions.filter(s => s.status === 'Accepted').length);
+  
+  const currentBadgeIds = (participant.badges || []).map(b => b.id);
   const newBadges: BadgeDefinition[] = [];
   
   for (const badgeDefinition of BADGE_DEFINITIONS) {
+    console.log(`\nChecking badge: ${badgeDefinition.name} (${badgeDefinition.id})`);
+    console.log('Already has badge:', currentBadgeIds.includes(badgeDefinition.id));
+    
     if (!currentBadgeIds.includes(badgeDefinition.id)) {
-      if (badgeDefinition.condition(participant, submissions)) {
-        newBadges.push(badgeDefinition);
+      console.log('Badge not yet earned, checking condition...');
+      
+      try {
+        const meetsCondition = badgeDefinition.condition(participant, submissions);
+        console.log('Meets condition:', meetsCondition);
+        
+        if (meetsCondition) {
+          console.log(`✅ NEW BADGE EARNED: ${badgeDefinition.name}`);
+          newBadges.push(badgeDefinition);
+        }
+      } catch (error) {
+        console.error(`Error checking condition for badge ${badgeDefinition.id}:`, error);
       }
     }
   }
+  
+  console.log('=== BADGE CHECK COMPLETE ===');
+  console.log('New badges to award:', newBadges.map(b => b.name));
   
   return newBadges;
 };
