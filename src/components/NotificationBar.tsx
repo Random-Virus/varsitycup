@@ -11,21 +11,21 @@ const NotificationBar: React.FC = () => {
   
   const getNotificationIcon = (message: string) => {
     if (message.toLowerCase().includes('congratulations') || message.toLowerCase().includes('success')) {
-      return <CheckCircle size={18} className="text-green-600" />;
+      return <CheckCircle size={18} className="text-vscode-green" />;
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
-      return <AlertTriangle size={18} className="text-red-600" />;
+      return <AlertTriangle size={18} className="text-vscode-red" />;
     } else {
-      return <Info size={18} className="text-blue-600" />;
+      return <Info size={18} className="text-vscode-blue" />;
     }
   };
   
   const getNotificationStyle = (message: string) => {
     if (message.toLowerCase().includes('congratulations') || message.toLowerCase().includes('success')) {
-      return 'border-green-200 bg-green-50';
+      return 'border-vscode-green/50 bg-vscode-green/10 neon-green';
     } else if (message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')) {
-      return 'border-red-200 bg-red-50';
+      return 'border-vscode-red/50 bg-vscode-red/10 neon-red';
     } else {
-      return 'border-blue-200 bg-blue-50';
+      return 'border-vscode-blue/50 bg-vscode-blue/10 neon-blue';
     }
   };
   
@@ -34,15 +34,15 @@ const NotificationBar: React.FC = () => {
       {notifications.map((notification, index) => (
         <div 
           key={index}
-          className={`glass-card rounded-lg shadow-lg mb-4 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)}`}
+          className={`glass-card rounded-lg shadow-2xl mb-4 p-4 flex items-start animate-slideIn border ${getNotificationStyle(notification)} terminal`}
         >
           <div className="mr-3 flex-shrink-0 mt-0.5">
             {getNotificationIcon(notification)}
           </div>
-          <div className="flex-grow text-black font-medium">{notification}</div>
+          <div className="flex-grow text-vscode-foreground font-medium">{notification}</div>
           <button 
             onClick={() => dismissNotification(index)}
-            className="ml-3 text-gray-500 hover:text-black flex-shrink-0 transition-colors duration-200 p-1 hover:bg-gray-100 rounded-lg"
+            className="ml-3 text-vscode-comment hover:text-vscode-foreground flex-shrink-0 transition-colors duration-200 p-1 hover:bg-vscode-blue/10 rounded-lg"
           >
             <X size={16} />
           </button>

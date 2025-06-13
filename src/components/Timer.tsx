@@ -24,27 +24,27 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
   // Determine color based on time remaining
   const getTimerColor = () => {
     if (timeRemaining <= 1000 * 60 * 10) { // Less than 10 minutes
-      return 'text-red-600';
+      return 'text-vscode-red';
     } else if (timeRemaining <= 1000 * 60 * 30) { // Less than 30 minutes
-      return 'text-orange-600';
+      return 'text-vscode-orange';
     } else {
-      return 'text-green-600';
+      return 'text-vscode-green';
     }
   };
   
   const getBgColor = () => {
     if (timeRemaining <= 1000 * 60 * 10) {
-      return 'bg-gradient-to-r from-red-50 to-red-100 border-red-200';
+      return 'bg-gradient-to-r from-vscode-red/20 to-red-600/20 border-vscode-red neon-red';
     } else if (timeRemaining <= 1000 * 60 * 30) {
-      return 'bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200';
+      return 'bg-gradient-to-r from-vscode-orange/20 to-orange-600/20 border-vscode-orange';
     } else {
-      return 'bg-gradient-to-r from-green-50 to-green-100 border-green-200';
+      return 'bg-gradient-to-r from-vscode-green/20 to-green-600/20 border-vscode-green neon-green';
     }
   };
   
   return (
-    <div className={`vscode-card px-6 py-3 border ${getBgColor()} shadow-sm`}>
-      <div className="flex items-center space-x-3">
+    <div className={`vscode-card px-6 py-3 border ${getBgColor()} shadow-lg terminal`}>
+      <div className="flex items-center space-x-3 pt-4">
         <div className="flex items-center">
           <Clock size={18} className={`${getTimerColor()}`} />
           {timeRemaining <= 1000 * 60 * 10 && (

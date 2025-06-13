@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, University, Mail, Hash, LogIn, UserPlus, Shield, Terminal, Sparkles } from 'lucide-react';
+import { User, University, Mail, Hash, LogIn, UserPlus, Shield, Terminal, Sparkles, Cpu, Lock } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const RegisterPage: React.FC = () => {
@@ -125,62 +125,64 @@ const RegisterPage: React.FC = () => {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-blue-600/20 rounded-full blur-3xl"></div>
-        </div>
+      <div className="min-h-screen bg-vscode-dark flex items-center justify-center relative overflow-hidden matrix-bg">
+        <div className="absolute inset-0 cyber-grid opacity-30"></div>
         <div className="text-center relative z-10">
           <div className="w-16 h-16 loading-spinner mx-auto mb-4"></div>
-          <p className="text-blue-600 font-semibold">Loading...</p>
+          <p className="text-vscode-blue font-semibold">Initializing system...</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-12 relative overflow-hidden">
-      {/* Background decorations */}
+    <div className="min-h-screen bg-vscode-dark py-12 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 cyber-grid opacity-30"></div>
+      
+      {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-blue-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-20 w-2 h-2 bg-vscode-blue rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-32 w-1 h-1 bg-vscode-green rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-vscode-purple rounded-full animate-pulse delay-2000"></div>
+        <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-vscode-yellow rounded-full animate-pulse delay-3000"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-2xl mx-auto">
-          <div className="vscode-card overflow-hidden animate-scaleIn shadow-xl">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 border-b border-slate-200">
+          <div className="vscode-card overflow-hidden animate-scaleIn shadow-2xl terminal">
+            <div className="bg-gradient-to-r from-vscode-blue/10 via-vscode-purple/10 to-vscode-green/10 p-8 border-b border-vscode pt-12">
               <div className="flex items-center justify-center mb-6">
-                <div className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-2xl mr-4">
+                <div className="p-4 bg-gradient-to-br from-vscode-blue/20 to-vscode-purple/20 rounded-2xl mr-4 neon-blue">
                   {isLoginMode ? (
-                    <LogIn className="text-blue-600" size={32} />
+                    <LogIn className="text-vscode-blue" size={32} />
                   ) : (
-                    <UserPlus className="text-blue-600" size={32} />
+                    <UserPlus className="text-vscode-blue" size={32} />
                   )}
                 </div>
                 <div className="text-center">
-                  <h1 className="text-4xl font-bold gradient-text mb-2">
-                    {isLoginMode ? 'Welcome Back' : 'Join Competition'}
+                  <h1 className="text-4xl font-bold gradient-text mb-2 font-display">
+                    {isLoginMode ? 'System Access' : 'Join Network'}
                   </h1>
-                  <p className="text-slate-600 font-medium">
+                  <p className="text-vscode-comment font-medium">
                     {isLoginMode 
-                      ? 'Sign in to continue your coding journey' 
+                      ? 'Authenticate to continue your coding journey' 
                       : 'Register for the Varsity Code Cup 2024'
                     }
                   </p>
                 </div>
               </div>
               
-              <div className="flex items-center justify-center space-x-2 text-sm text-slate-600">
-                <Sparkles size={16} className="text-blue-500" />
+              <div className="flex items-center justify-center space-x-2 text-sm text-vscode-comment">
+                <Shield size={16} className="text-vscode-green" />
                 <span>Secure authentication powered by Firebase</span>
-                <Shield size={16} className="text-green-500" />
+                <Lock size={16} className="text-vscode-blue" />
               </div>
             </div>
             
             <form onSubmit={handleSubmit} className="p-8">
               {errors.general && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg animate-fadeIn">
+                <div className="mb-6 p-4 bg-vscode-red/10 border border-vscode-red/30 text-vscode-red rounded-lg animate-fadeIn neon-red">
                   <div className="flex items-center">
                     <Shield size={18} className="mr-2" />
                     {errors.general}
@@ -190,11 +192,11 @@ const RegisterPage: React.FC = () => {
 
               {!isLoginMode && (
                 <div className="mb-6">
-                  <label htmlFor="name" className="block text-slate-700 font-semibold mb-3">
+                  <label htmlFor="name" className="block text-vscode-blue font-semibold mb-3">
                     Full Name
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-vscode-comment">
                       <User size={20} />
                     </span>
                     <input
@@ -203,21 +205,21 @@ const RegisterPage: React.FC = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className={`vscode-input w-full pl-12 pr-4 py-3 ${
-                        errors.name ? 'border-red-300 focus:border-red-500' : ''
+                        errors.name ? 'border-vscode-red neon-red' : ''
                       }`}
                       placeholder="Enter your full name"
                     />
                   </div>
-                  {errors.name && <p className="text-red-600 text-sm mt-2 animate-fadeIn">{errors.name}</p>}
+                  {errors.name && <p className="text-vscode-red text-sm mt-2 animate-fadeIn">{errors.name}</p>}
                 </div>
               )}
               
               <div className="mb-6">
-                <label htmlFor="email" className="block text-slate-700 font-semibold mb-3">
+                <label htmlFor="email" className="block text-vscode-blue font-semibold mb-3">
                   Email Address
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-vscode-comment">
                     <Mail size={20} />
                   </span>
                   <input
@@ -226,21 +228,21 @@ const RegisterPage: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={`vscode-input w-full pl-12 pr-4 py-3 ${
-                      errors.email ? 'border-red-300 focus:border-red-500' : ''
+                      errors.email ? 'border-vscode-red neon-red' : ''
                     }`}
                     placeholder="Enter your email address"
                   />
                 </div>
-                {errors.email && <p className="text-red-600 text-sm mt-2 animate-fadeIn">{errors.email}</p>}
+                {errors.email && <p className="text-vscode-red text-sm mt-2 animate-fadeIn">{errors.email}</p>}
               </div>
               
               {!isLoginMode && (
                 <div className="mb-6">
-                  <label htmlFor="university" className="block text-slate-700 font-semibold mb-3">
+                  <label htmlFor="university" className="block text-vscode-blue font-semibold mb-3">
                     University
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-vscode-comment">
                       <University size={20} />
                     </span>
                     <select
@@ -248,7 +250,7 @@ const RegisterPage: React.FC = () => {
                       value={university}
                       onChange={(e) => setUniversity(e.target.value)}
                       className={`vscode-select w-full pl-12 pr-4 py-3 ${
-                        errors.university ? 'border-red-300 focus:border-red-500' : ''
+                        errors.university ? 'border-vscode-red neon-red' : ''
                       }`}
                     >
                       <option value="">Select your university</option>
@@ -259,16 +261,16 @@ const RegisterPage: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  {errors.university && <p className="text-red-600 text-sm mt-2 animate-fadeIn">{errors.university}</p>}
+                  {errors.university && <p className="text-vscode-red text-sm mt-2 animate-fadeIn">{errors.university}</p>}
                 </div>
               )}
               
               <div className="mb-8">
-                <label htmlFor="studentNumber" className="block text-slate-700 font-semibold mb-3">
+                <label htmlFor="studentNumber" className="block text-vscode-blue font-semibold mb-3">
                   Student Number
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-vscode-comment">
                     <Hash size={20} />
                   </span>
                   <input
@@ -277,27 +279,27 @@ const RegisterPage: React.FC = () => {
                     value={studentNumber}
                     onChange={(e) => setStudentNumber(e.target.value)}
                     className={`vscode-input w-full pl-12 pr-4 py-3 ${
-                      errors.studentNumber ? 'border-red-300 focus:border-red-500' : ''
+                      errors.studentNumber ? 'border-vscode-red neon-red' : ''
                     }`}
                     placeholder="Enter your student number"
                   />
                 </div>
-                {errors.studentNumber && <p className="text-red-600 text-sm mt-2 animate-fadeIn">{errors.studentNumber}</p>}
+                {errors.studentNumber && <p className="text-vscode-red text-sm mt-2 animate-fadeIn">{errors.studentNumber}</p>}
               </div>
               
               <div className="mb-6">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`btn-primary w-full py-3 text-lg font-semibold hover-lift ${
+                  className={`vscode-button w-full py-3 text-lg font-semibold hover-lift ${
                     isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
                   <div className="flex items-center justify-center">
                     <Terminal size={20} className="mr-2" />
                     {isSubmitting 
-                      ? (isLoginMode ? 'Signing In...' : 'Registering...') 
-                      : (isLoginMode ? 'Sign In' : 'Register Now')
+                      ? (isLoginMode ? 'Authenticating...' : 'Registering...') 
+                      : (isLoginMode ? 'Access System' : 'Join Network')
                     }
                   </div>
                 </button>
@@ -307,11 +309,11 @@ const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={toggleMode}
-                  className="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 underline underline-offset-4"
+                  className="text-vscode-blue hover:text-vscode-foreground font-semibold transition-colors duration-200 underline underline-offset-4"
                 >
                   {isLoginMode 
-                    ? "Don't have an account? Register here" 
-                    : "Already registered? Sign in here"
+                    ? "Don't have access? Register here" 
+                    : "Already registered? Access system"
                   }
                 </button>
               </div>
