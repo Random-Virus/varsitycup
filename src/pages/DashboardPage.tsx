@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertTriangle, Play, Terminal, Zap, Target, Award, ArrowRight, Shield, Lock, Database, Layers } from 'lucide-react';
+import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertTriangle, Play, Terminal, Zap, Target, Award, ArrowRight, Shield, Lock, Database, Layers, Bug } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
 const DashboardPage: React.FC = () => {
-  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, submissions, timeRemaining } = useApp();
-  const [activeTab, setActiveTab] = useState<'programming' | 'cryptography' | 'datastructures'>('programming');
+  const { currentUser, challenge, cryptographyChallenge, dataStructuresChallenge, findErrorChallenge, submissions, timeRemaining } = useApp();
+  const [activeTab, setActiveTab] = useState<'programming' | 'cryptography' | 'datastructures' | 'finderror'>('programming');
 
   if (!currentUser) {
     return (
@@ -73,6 +73,13 @@ const DashboardPage: React.FC = () => {
           problems: dataStructuresChallenge.problems,
           icon: Database,
           description: 'Advanced data structure implementations and algorithms'
+        };
+      case 'finderror':
+        return {
+          challenge: findErrorChallenge,
+          problems: findErrorChallenge.problems,
+          icon: Bug,
+          description: 'Debug and fix common programming errors'
         };
       default:
         return {
@@ -184,6 +191,19 @@ const DashboardPage: React.FC = () => {
               <span>Data Structures</span>
               <span className="text-xs bg-green-400/20 px-2 py-1 rounded-full">{dataStructuresChallenge.problems.length}</span>
             </button>
+
+            <button
+              onClick={() => setActiveTab('finderror')}
+              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+                activeTab === 'finderror'
+                  ? 'bg-red-400/20 text-red-300 border border-red-400/30'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Bug size={16} />
+              <span>Find the Error</span>
+              <span className="text-xs bg-red-400/20 px-2 py-1 rounded-full">{findErrorChallenge.problems.length}</span>
+            </button>
           </div>
         </div>
 
@@ -224,6 +244,9 @@ const DashboardPage: React.FC = () => {
                       {activeTab === 'datastructures' && (
                         <Layers className="text-green-400" size={12} />
                       )}
+                      {activeTab === 'finderror' && (
+                        <Bug className="text-red-400" size={12} />
+                      )}
                       <h3 className="font-bold text-white text-sm group-hover:text-white transition-colors duration-300">
                         {problem.title}
                       </h3>
@@ -242,6 +265,8 @@ const DashboardPage: React.FC = () => {
                         ? 'bg-purple-400/20 text-purple-300 border border-purple-400/30'
                         : activeTab === 'datastructures'
                         ? 'bg-green-400/20 text-green-300 border border-green-400/30'
+                        : activeTab === 'finderror'
+                        ? 'bg-red-400/20 text-red-300 border border-red-400/30'
                         : 'bg-white/20 text-white border border-white/30'
                     }`}>
                       {problem.difficulty}
@@ -288,10 +313,11 @@ const DashboardPage: React.FC = () => {
             </h3>
             <div className="space-y-2">
               {submissions.slice(0, 5).map((submission) => {
-                const allProblems = [...challenge.problems, ...cryptographyChallenge.problems, ...dataStructuresChallenge.problems];
+                const allProblems = [...challenge.problems, ...cryptographyChallenge.problems, ...dataStructuresChallenge.problems, ...findErrorChallenge.problems];
                 const problem = allProblems.find(p => p.id === submission.problemId);
                 const isCrypto = cryptographyChallenge.problems.some(p => p.id === submission.problemId);
                 const isDataStructures = dataStructuresChallenge.problems.some(p => p.id === submission.problemId);
+                const isFindError = findErrorChallenge.problems.some(p => p.id === submission.problemId);
                 
                 return (
                   <div key={submission.id} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
@@ -299,6 +325,7 @@ const DashboardPage: React.FC = () => {
                       {getStatusIcon(submission.status)}
                       {isCrypto && <Shield className="text-purple-400" size={12} />}
                       {isDataStructures && <Database className="text-green-400" size={12} />}
+                      {isFindError && <Bug className="text-red-400" size={12} />}
                       <Link 
                         to={`/code/${submission.problemId}`}
                         className="text-white hover:text-white/80 font-medium text-xs transition-colors duration-300"

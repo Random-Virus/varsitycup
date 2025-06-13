@@ -446,6 +446,401 @@ Return the cache state after each operation for testing.`,
   }
 ];
 
+// FIND THE ERROR CHALLENGES - New category
+export const findErrorProblems: Problem[] = [
+  {
+    id: 'wrong-return-statement',
+    title: 'Wrong Return Statement',
+    description: `Find and fix the error in this function that should return the maximum of two numbers:
+
+\`\`\`python
+def find_max(a, b):
+    if a > b:
+        return a
+    else:
+        return a  # Error: should return b
+\`\`\`
+
+The function always returns the first parameter regardless of which is larger.
+
+**Your task:** Identify the bug and provide the corrected version of the function.`,
+    difficulty: 'Easy',
+    points: 50,
+    timeLimit: 1000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'find_max(5, 3)',
+        output: '5',
+        explanation: 'Should return 5 as it is larger than 3'
+      },
+      {
+        input: 'find_max(2, 8)',
+        output: '8',
+        explanation: 'Should return 8 as it is larger than 2'
+      }
+    ],
+    constraints: [
+      'Function should work with any two integers',
+      'Must handle negative numbers correctly',
+      'Should return the larger of the two inputs'
+    ]
+  },
+  {
+    id: 'off-by-one-error',
+    title: 'Off-by-One Error in Loop',
+    description: `Find and fix the off-by-one error in this function that should print numbers from 1 to n:
+
+\`\`\`python
+def print_numbers(n):
+    for i in range(1, n):  # Error: should be range(1, n+1)
+        print(i)
+\`\`\`
+
+The function prints numbers from 1 to n-1 instead of 1 to n.
+
+**Your task:** Identify the off-by-one error and provide the corrected version.`,
+    difficulty: 'Easy',
+    points: 55,
+    timeLimit: 1000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'print_numbers(5)',
+        output: '1, 2, 3, 4, 5',
+        explanation: 'Should print all numbers from 1 to 5 inclusive'
+      },
+      {
+        input: 'print_numbers(3)',
+        output: '1, 2, 3',
+        explanation: 'Should print all numbers from 1 to 3 inclusive'
+      }
+    ],
+    constraints: [
+      'Function should print numbers from 1 to n inclusive',
+      'n is always a positive integer',
+      'Each number should be printed on a new line'
+    ]
+  },
+  {
+    id: 'infinite-while-loop',
+    title: 'Infinite While Loop',
+    description: `Find and fix the infinite loop in this function that should count down from n to 1:
+
+\`\`\`python
+def countdown(n):
+    while n > 0:
+        print(n)
+        # Error: missing n -= 1 or n = n - 1
+    print("Done!")
+\`\`\`
+
+The function never decrements n, causing an infinite loop.
+
+**Your task:** Identify why the loop never terminates and fix it.`,
+    difficulty: 'Easy',
+    points: 60,
+    timeLimit: 1000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'countdown(3)',
+        output: '3, 2, 1, Done!',
+        explanation: 'Should count down from 3 to 1, then print Done!'
+      },
+      {
+        input: 'countdown(1)',
+        output: '1, Done!',
+        explanation: 'Should print 1, then Done!'
+      }
+    ],
+    constraints: [
+      'Function should count down from n to 1',
+      'Must print "Done!" after counting',
+      'Should not run infinitely'
+    ]
+  },
+  {
+    id: 'incorrect-palindrome-check',
+    title: 'Incorrect Palindrome Check',
+    description: `Find and fix the error in this palindrome checking function:
+
+\`\`\`python
+def is_palindrome(s):
+    return s == s[::-1].lower()  # Error: should convert s to lowercase first
+\`\`\`
+
+The function fails for strings with mixed case because it only converts the reversed string to lowercase.
+
+**Your task:** Fix the case sensitivity issue in the palindrome check.`,
+    difficulty: 'Easy',
+    points: 65,
+    timeLimit: 1000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'is_palindrome("Racecar")',
+        output: 'True',
+        explanation: 'Should return True as "Racecar" is a palindrome when case is ignored'
+      },
+      {
+        input: 'is_palindrome("hello")',
+        output: 'False',
+        explanation: 'Should return False as "hello" is not a palindrome'
+      }
+    ],
+    constraints: [
+      'Function should ignore case when checking palindromes',
+      'Should work with any string input',
+      'Empty string should be considered a palindrome'
+    ]
+  },
+  {
+    id: 'recursive-factorial-bug',
+    title: 'Recursive Factorial Bug',
+    description: `Find and fix the bug in this recursive factorial function:
+
+\`\`\`python
+def factorial(n):
+    if n == 1:  # Error: should be n <= 1 or n == 0
+        return 1
+    return n * factorial(n - 1)
+\`\`\`
+
+The function fails for factorial(0) and causes infinite recursion for negative numbers.
+
+**Your task:** Fix the base case to handle edge cases properly.`,
+    difficulty: 'Medium',
+    points: 70,
+    timeLimit: 1500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'factorial(0)',
+        output: '1',
+        explanation: 'factorial(0) should return 1 by mathematical definition'
+      },
+      {
+        input: 'factorial(5)',
+        output: '120',
+        explanation: 'factorial(5) = 5 * 4 * 3 * 2 * 1 = 120'
+      }
+    ],
+    constraints: [
+      'Function should handle factorial(0) = 1',
+      'Should work for positive integers',
+      'Should not cause infinite recursion'
+    ]
+  },
+  {
+    id: 'variable-scope-error',
+    title: 'Variable Scope Error',
+    description: `Find and fix the variable scope error in this function:
+
+\`\`\`python
+def calculate_total(prices):
+    total = 0
+    for price in prices:
+        if price > 10:
+            discount = 0.1
+            total += price * (1 - discount)
+        else:
+            total += price * (1 - discount)  # Error: discount not defined in this scope
+    return total
+\`\`\`
+
+The variable 'discount' is only defined inside the if block but used in the else block.
+
+**Your task:** Fix the scope issue so the function works correctly.`,
+    difficulty: 'Medium',
+    points: 75,
+    timeLimit: 1500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'calculate_total([15, 5, 20])',
+        output: '31.5',
+        explanation: '15*0.9 + 5 + 20*0.9 = 13.5 + 5 + 18 = 36.5 (if discount applies to items > 10)'
+      },
+      {
+        input: 'calculate_total([5, 8, 3])',
+        output: '16',
+        explanation: 'All items <= 10, so no discount applied: 5 + 8 + 3 = 16'
+      }
+    ],
+    constraints: [
+      'Items over $10 should get 10% discount',
+      'Items $10 or less should have no discount',
+      'Function should not have scope errors'
+    ]
+  },
+  {
+    id: 'swapped-min-max-logic',
+    title: 'Swapped Min/Max Logic',
+    description: `Find and fix the swapped logic in this function that should find the minimum and maximum values:
+
+\`\`\`python
+def find_min_max(numbers):
+    min_val = float('inf')
+    max_val = float('-inf')
+    
+    for num in numbers:
+        if num > min_val:  # Error: should be num < min_val
+            min_val = num
+        if num < max_val:  # Error: should be num > max_val
+            max_val = num
+    
+    return min_val, max_val
+\`\`\`
+
+The comparison operators are swapped, causing incorrect results.
+
+**Your task:** Fix the comparison logic to correctly find min and max values.`,
+    difficulty: 'Medium',
+    points: 80,
+    timeLimit: 1500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'find_min_max([3, 1, 4, 1, 5])',
+        output: '(1, 5)',
+        explanation: 'Minimum is 1, maximum is 5'
+      },
+      {
+        input: 'find_min_max([10, 20, 5])',
+        output: '(5, 20)',
+        explanation: 'Minimum is 5, maximum is 20'
+      }
+    ],
+    constraints: [
+      'Function should return (min, max) tuple',
+      'Should work with any list of numbers',
+      'List will always have at least one element'
+    ]
+  },
+  {
+    id: 'early-return-in-loop',
+    title: 'Early Return in Loop',
+    description: `Find and fix the early return error in this function that should check if all numbers are positive:
+
+\`\`\`python
+def all_positive(numbers):
+    for num in numbers:
+        if num > 0:
+            return True  # Error: should continue checking, not return immediately
+        else:
+            return False
+\`\`\`
+
+The function returns True as soon as it finds the first positive number, instead of checking all numbers.
+
+**Your task:** Fix the logic to properly check if ALL numbers are positive.`,
+    difficulty: 'Medium',
+    points: 85,
+    timeLimit: 1500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'all_positive([1, 2, 3, 4])',
+        output: 'True',
+        explanation: 'All numbers are positive'
+      },
+      {
+        input: 'all_positive([1, -2, 3])',
+        output: 'False',
+        explanation: 'Not all numbers are positive (-2 is negative)'
+      }
+    ],
+    constraints: [
+      'Function should return True only if ALL numbers are positive',
+      'Should return False if any number is negative or zero',
+      'Empty list should return True'
+    ]
+  },
+  {
+    id: 'missing-base-case-recursion',
+    title: 'Missing Base Case in Recursion',
+    description: `Find and fix the missing base case in this recursive function that should calculate the sum of digits:
+
+\`\`\`python
+def sum_of_digits(n):
+    # Error: missing base case for when n < 10
+    return (n % 10) + sum_of_digits(n // 10)
+\`\`\`
+
+The function lacks a base case, causing infinite recursion.
+
+**Your task:** Add the proper base case to stop the recursion.`,
+    difficulty: 'Medium',
+    points: 90,
+    timeLimit: 2000,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'sum_of_digits(123)',
+        output: '6',
+        explanation: '1 + 2 + 3 = 6'
+      },
+      {
+        input: 'sum_of_digits(9)',
+        output: '9',
+        explanation: 'Single digit returns itself'
+      }
+    ],
+    constraints: [
+      'Function should sum all digits of a positive integer',
+      'Should handle single-digit numbers',
+      'Must not cause infinite recursion'
+    ]
+  },
+  {
+    id: 'wrong-index-string-slicing',
+    title: 'Wrong Index in String Slicing',
+    description: `Find and fix the indexing error in this function that should get the last n characters of a string:
+
+\`\`\`python
+def get_last_n_chars(s, n):
+    return s[len(s) - n:]  # This is actually correct
+    # The error might be in usage: s[-n-1:] would be wrong
+    # Let's say the error is: return s[len(s) - n - 1:]  # Error: off by one
+\`\`\`
+
+Wait, let me provide a clearer example with an actual error:
+
+\`\`\`python
+def get_last_n_chars(s, n):
+    if n >= len(s):
+        return s
+    return s[len(s) - n - 1:]  # Error: should be s[len(s) - n:]
+\`\`\`
+
+The function includes one extra character due to the unnecessary -1.
+
+**Your task:** Fix the string slicing to get exactly the last n characters.`,
+    difficulty: 'Medium',
+    points: 95,
+    timeLimit: 1500,
+    memoryLimit: 256,
+    examples: [
+      {
+        input: 'get_last_n_chars("hello", 3)',
+        output: '"llo"',
+        explanation: 'Last 3 characters of "hello" are "llo"'
+      },
+      {
+        input: 'get_last_n_chars("world", 2)',
+        output: '"ld"',
+        explanation: 'Last 2 characters of "world" are "ld"'
+      }
+    ],
+    constraints: [
+      'Function should return last n characters of string',
+      'If n >= string length, return entire string',
+      'Should handle empty strings'
+    ]
+  }
+];
+
 export const mockChallenge: Challenge = {
   id: 'varsity-cup-2024',
   title: 'Varsity Code Cup 2024',
@@ -471,6 +866,15 @@ export const dataStructuresChallenge: Challenge = {
   startTime: '2024-03-15T09:00:00Z',
   endTime: '2024-03-15T12:00:00Z',
   problems: dataStructuresProblems
+};
+
+export const findErrorChallenge: Challenge = {
+  id: 'find-error-challenges-2024',
+  title: 'Find the Error Challenges',
+  description: 'Debug and fix common programming errors in code snippets. Test your ability to identify bugs, logic errors, and edge cases in various programming scenarios.',
+  startTime: '2024-03-15T09:00:00Z',
+  endTime: '2024-03-15T12:00:00Z',
+  problems: findErrorProblems
 };
 
 // Mock validation function
@@ -588,6 +992,23 @@ export const validateSubmission = (code: string, language: string, problemId: st
         details: (isValid && hasLRULogic)
           ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
           : ['Test case 1: Failed - Missing LRU cache logic', 'Test case 2: Passed', 'Test case 3: Failed']
+      }
+    };
+  }
+
+  // Special validation for find error challenges
+  if (findErrorProblems.some(p => p.id === problemId)) {
+    const hasFixLogic = code.includes('fix') || code.includes('correct') || code.includes('error') || 
+                       code.includes('return b') || code.includes('n+1') || code.includes('n -= 1') ||
+                       code.includes('lower()') || code.includes('n <= 1') || code.includes('discount = 0');
+    return {
+      status: (isValid && hasFixLogic) ? 'Accepted' : 'Wrong Answer' as const,
+      testResults: {
+        passed: (isValid && hasFixLogic) ? 3 : 1,
+        total: 3,
+        details: (isValid && hasFixLogic)
+          ? ['Test case 1: Passed', 'Test case 2: Passed', 'Test case 3: Passed']
+          : ['Test case 1: Failed - Error not properly fixed', 'Test case 2: Passed', 'Test case 3: Failed']
       }
     };
   }

@@ -63,10 +63,10 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
       
       console.log('  - Unique solved problems:', solvedProblems.size);
-      console.log('  - Total problems in competition:', 12); // 4 programming + 4 cryptography + 4 data structures
+      console.log('  - Total problems in competition:', 20); // 4 programming + 4 cryptography + 4 data structures + 10 find error
       
-      const meetsCondition = solvedProblems.size >= 12;
-      console.log('  - Meets condition (>=12):', meetsCondition);
+      const meetsCondition = solvedProblems.size >= 20;
+      console.log('  - Meets condition (>=20):', meetsCondition);
       
       return meetsCondition;
     }
@@ -151,6 +151,95 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       
       const meetsCondition = solvedDataStructuresProblems.size >= 4;
       console.log('  - Meets condition (>=4 data structures problems):', meetsCondition);
+      
+      return meetsCondition;
+    }
+  },
+  {
+    id: 'bug-hunter',
+    name: 'Bug Hunter',
+    description: 'Solved all find the error challenges',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'epic',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking BUG HUNTER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const findErrorProblems = [
+        'wrong-return-statement', 'off-by-one-error', 'infinite-while-loop', 'incorrect-palindrome-check',
+        'recursive-factorial-bug', 'variable-scope-error', 'swapped-min-max-logic', 'early-return-in-loop',
+        'missing-base-case-recursion', 'wrong-index-string-slicing'
+      ];
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedFindErrorProblems = new Set(
+        acceptedSubmissions
+          .filter(s => findErrorProblems.includes(s.problemId))
+          .map(s => s.problemId)
+      );
+      
+      console.log('  - Find error problems solved:', solvedFindErrorProblems.size);
+      console.log('  - Find error problem IDs solved:', Array.from(solvedFindErrorProblems));
+      
+      const meetsCondition = solvedFindErrorProblems.size >= 10;
+      console.log('  - Meets condition (>=10 find error problems):', meetsCondition);
+      
+      return meetsCondition;
+    }
+  },
+  {
+    id: 'debugger',
+    name: 'Debugger',
+    description: 'Fixed your first buggy code',
+    icon: '/pic.png',
+    category: 'milestone',
+    rarity: 'common',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking DEBUGGER badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const findErrorProblems = [
+        'wrong-return-statement', 'off-by-one-error', 'infinite-while-loop', 'incorrect-palindrome-check',
+        'recursive-factorial-bug', 'variable-scope-error', 'swapped-min-max-logic', 'early-return-in-loop',
+        'missing-base-case-recursion', 'wrong-index-string-slicing'
+      ];
+      
+      const hasFixedBug = submissions.some(s => 
+        findErrorProblems.includes(s.problemId) && s.status === 'Accepted'
+      );
+      
+      console.log('  - Has fixed a bug:', hasFixedBug);
+      return hasFixedBug;
+    }
+  },
+  {
+    id: 'syntax-sleuth',
+    name: 'Syntax Sleuth',
+    description: 'Fixed 5 different types of errors',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking SYNTAX SLEUTH badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const findErrorProblems = [
+        'wrong-return-statement', 'off-by-one-error', 'infinite-while-loop', 'incorrect-palindrome-check',
+        'recursive-factorial-bug', 'variable-scope-error', 'swapped-min-max-logic', 'early-return-in-loop',
+        'missing-base-case-recursion', 'wrong-index-string-slicing'
+      ];
+      
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedFindErrorProblems = new Set(
+        acceptedSubmissions
+          .filter(s => findErrorProblems.includes(s.problemId))
+          .map(s => s.problemId)
+      );
+      
+      console.log('  - Find error problems solved:', solvedFindErrorProblems.size);
+      
+      const meetsCondition = solvedFindErrorProblems.size >= 5;
+      console.log('  - Meets condition (>=5 find error problems):', meetsCondition);
       
       return meetsCondition;
     }
@@ -444,9 +533,9 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       console.log('  - Participant:', participant.name);
       console.log('  - Score:', participant.score);
       
-      // Updated threshold for expanded challenge set (12 problems total)
-      const meetsCondition = participant.score >= 800; // Increased from 500
-      console.log('  - Meets condition (>=800 points):', meetsCondition);
+      // Updated threshold for expanded challenge set (20 problems total)
+      const meetsCondition = participant.score >= 1000; // Increased from 800
+      console.log('  - Meets condition (>=1000 points):', meetsCondition);
       
       return meetsCondition;
     }
