@@ -29,11 +29,6 @@ const Navbar: React.FC = () => {
                   />
                 </div>
               </div>
-              <div>
-                <span className="text-sm font-bold modern-gradient-text">
-                  VARSITY CODE CUP
-                </span>
-              </div>
             </Link>
             
             <div className="hidden md:flex items-center space-x-1">
