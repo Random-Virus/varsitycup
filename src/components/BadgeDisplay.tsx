@@ -67,8 +67,8 @@ const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
         {badges.map((badge) => (
           <div
             key={badge.id}
-            className={`modern-card ${getContainerClasses()} hover-lift transition-all duration-300 group relative cursor-pointer ${getRarityColor(badge.rarity)} hover:scale-110`}
-            title={showTooltip ? `${badge.name}: ${badge.description}` : undefined}
+            className={`modern-card ${getContainerClasses()} hover-lift transition-all duration-300 group relative cursor-pointer ${getRarityColor(badge.rarity)} hover:scale-110 active:scale-95`}
+            title={showTooltip ? `Click to view ${badge.name}` : undefined}
             onClick={() => handleBadgeClick(badge)}
           >
             <img
@@ -77,26 +77,31 @@ const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
               className={`${getSizeClasses()} object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300`}
             />
             
+            {/* Rarity indicator dot */}
+            <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border border-black/20 ${
+              badge.rarity === 'common' ? 'bg-white/80' :
+              badge.rarity === 'rare' ? 'bg-blue-400' :
+              badge.rarity === 'epic' ? 'bg-purple-400' :
+              'bg-yellow-400'
+            }`}></div>
+
+            {/* Hover tooltip */}
             {showTooltip && (
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50">
                 <div className="font-semibold">{badge.name}</div>
                 <div className="text-white/80">{badge.description}</div>
                 <div className={`text-xs ${getRarityTextColor(badge.rarity)} capitalize`}>
-                  {badge.rarity}
-                </div>
-                <div className="text-white/60 text-xs">
-                  Click to view details
+                  {badge.rarity} • Click to view
                 </div>
               </div>
             )}
 
-            {/* Rarity indicator */}
-            <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
-              badge.rarity === 'common' ? 'bg-white/60' :
-              badge.rarity === 'rare' ? 'bg-blue-400' :
-              badge.rarity === 'epic' ? 'bg-purple-400' :
-              'bg-yellow-400'
-            } border border-black/20`}></div>
+            {/* Rarity glow effect for higher tier badges */}
+            {(badge.rarity === 'epic' || badge.rarity === 'legendary') && (
+              <div className={`absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded ${
+                badge.rarity === 'epic' ? 'bg-purple-400' : 'bg-yellow-400'
+              } blur-sm`}></div>
+            )}
           </div>
         ))}
       </div>
