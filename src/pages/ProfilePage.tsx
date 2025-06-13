@@ -18,13 +18,13 @@ const ProfilePage: React.FC = () => {
   if (!profileParticipant) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center modern-grid">
-        <div className="text-center modern-card p-8">
-          <User className="mx-auto mb-4 text-white" size={48} />
-          <h1 className="text-2xl font-bold text-white mb-2">PROFILE NOT FOUND</h1>
-          <p className="text-white/60 mb-4">The requested profile could not be found.</p>
+        <div className="text-center modern-card p-4">
+          <User className="mx-auto mb-2 text-white" size={24} />
+          <h1 className="text-lg font-bold text-white mb-1">PROFILE NOT FOUND</h1>
+          <p className="text-white/60 mb-2 text-sm">The requested profile could not be found.</p>
           <button
             onClick={() => navigate('/leaderboard')}
-            className="modern-button px-6 py-2"
+            className="modern-button px-3 py-1 text-xs"
           >
             Back to Leaderboard
           </button>
@@ -46,79 +46,79 @@ const ProfilePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black modern-grid">
-      <div className="container mx-auto px-6 py-6">
+      <div className="container mx-auto px-3 py-3">
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center mb-4">
+        <div className="mb-3">
+          <div className="flex items-center mb-2">
             <button
               onClick={() => navigate(-1)}
-              className="modern-button-secondary px-4 py-2 mr-4 flex items-center space-x-2"
+              className="modern-button-secondary px-2 py-1 mr-2 flex items-center space-x-1 text-xs"
             >
-              <ArrowLeft size={16} />
+              <ArrowLeft size={10} />
               <span>BACK</span>
             </button>
-            <h1 className="text-3xl font-bold modern-gradient-text">
+            <h1 className="text-xl font-bold modern-gradient-text">
               {isOwnProfile ? 'MY PROFILE' : 'PARTICIPANT PROFILE'}
             </h1>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           {/* Profile Info */}
           <div className="lg:col-span-1">
-            <div className="modern-card p-6 mb-6">
-              <div className="text-center mb-6">
-                <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <User className="text-white" size={48} />
+            <div className="modern-card p-3 mb-3">
+              <div className="text-center mb-3">
+                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <User className="text-white" size={24} />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">{profileParticipant.name}</h2>
-                <p className="text-white/60">{profileParticipant.university}</p>
+                <h2 className="text-lg font-bold text-white mb-1">{profileParticipant.name}</h2>
+                <p className="text-white/60 text-xs">{profileParticipant.university}</p>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Mail className="text-blue-400" size={20} />
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Mail className="text-white" size={12} />
                   <div>
-                    <p className="text-white/60 text-sm">Email</p>
-                    <p className="text-white">{profileParticipant.email}</p>
+                    <p className="text-white/60 text-xs">Email</p>
+                    <p className="text-white text-xs">{profileParticipant.email}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <Hash className="text-green-400" size={20} />
+                <div className="flex items-center space-x-2">
+                  <Hash className="text-white" size={12} />
                   <div>
-                    <p className="text-white/60 text-sm">Student Number</p>
-                    <p className="text-white font-mono">{profileParticipant.studentNumber}</p>
+                    <p className="text-white/60 text-xs">Student Number</p>
+                    <p className="text-white font-mono text-xs">{profileParticipant.studentNumber}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <University className="text-purple-400" size={20} />
+                <div className="flex items-center space-x-2">
+                  <University className="text-white" size={12} />
                   <div>
-                    <p className="text-white/60 text-sm">Institution</p>
-                    <p className="text-white">{profileParticipant.university}</p>
+                    <p className="text-white/60 text-xs">Institution</p>
+                    <p className="text-white text-xs">{profileParticipant.university}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <Calendar className="text-yellow-400" size={20} />
+                <div className="flex items-center space-x-2">
+                  <Calendar className="text-white" size={12} />
                   <div>
-                    <p className="text-white/60 text-sm">Joined</p>
-                    <p className="text-white">{new Date(profileParticipant.createdAt).toLocaleDateString()}</p>
+                    <p className="text-white/60 text-xs">Joined</p>
+                    <p className="text-white text-xs">{new Date(profileParticipant.createdAt).toLocaleDateString()}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Rank Card */}
-            <div className="modern-card p-6">
-              <h3 className="text-lg font-bold text-white mb-4 flex items-center">
-                <Trophy className="mr-2" size={20} />
+            <div className="modern-card p-3">
+              <h3 className="text-sm font-bold text-white mb-2 flex items-center">
+                <Trophy className="mr-1" size={12} />
                 Current Ranking
               </h3>
               <div className="text-center">
-                <div className="text-4xl font-bold text-white mb-2">#{participantRank}</div>
-                <p className="text-white/60">out of {participants.length} participants</p>
+                <div className="text-2xl font-bold text-white mb-1">#{participantRank}</div>
+                <p className="text-white/60 text-xs">out of {participants.length} participants</p>
               </div>
             </div>
           </div>
@@ -126,61 +126,61 @@ const ProfilePage: React.FC = () => {
           {/* Stats and Performance */}
           <div className="lg:col-span-2">
             {/* Performance Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <div className="modern-card p-4 text-center">
-                <div className="text-2xl font-bold text-blue-400 mb-1">{profileParticipant.score}</div>
-                <p className="text-white/60 text-sm">Total Score</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+              <div className="modern-card p-2 text-center">
+                <div className="text-lg font-bold text-white mb-1">{profileParticipant.score}</div>
+                <p className="text-white/60 text-xs">Total Score</p>
               </div>
               
-              <div className="modern-card p-4 text-center">
-                <div className="text-2xl font-bold text-green-400 mb-1">{profileParticipant.solvedProblems}</div>
-                <p className="text-white/60 text-sm">Problems Solved</p>
+              <div className="modern-card p-2 text-center">
+                <div className="text-lg font-bold text-white mb-1">{profileParticipant.solvedProblems}</div>
+                <p className="text-white/60 text-xs">Problems Solved</p>
               </div>
               
-              <div className="modern-card p-4 text-center">
-                <div className="text-2xl font-bold text-red-400 mb-1">{profileParticipant.penaltyTime}m</div>
-                <p className="text-white/60 text-sm">Penalty Time</p>
+              <div className="modern-card p-2 text-center">
+                <div className="text-lg font-bold text-white mb-1">{profileParticipant.penaltyTime}m</div>
+                <p className="text-white/60 text-xs">Penalty Time</p>
               </div>
               
               {isOwnProfile && (
-                <div className="modern-card p-4 text-center">
-                  <div className="text-2xl font-bold text-purple-400 mb-1">{successRate}%</div>
-                  <p className="text-white/60 text-sm">Success Rate</p>
+                <div className="modern-card p-2 text-center">
+                  <div className="text-lg font-bold text-white mb-1">{successRate}%</div>
+                  <p className="text-white/60 text-xs">Success Rate</p>
                 </div>
               )}
             </div>
 
             {/* Problem Progress */}
-            <div className="modern-card p-6 mb-6">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                <Code2 className="mr-2" size={20} />
+            <div className="modern-card p-3 mb-3">
+              <h3 className="text-sm font-bold text-white mb-2 flex items-center">
+                <Code2 className="mr-1" size={12} />
                 Problem Progress
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {challenge.problems.map((problem) => {
                   const solved = isOwnProfile 
                     ? participantSubmissions.some(s => s.problemId === problem.id && s.status === 'Accepted')
                     : false; // Can't see other users' detailed progress
                   
                   return (
-                    <div key={problem.id} className={`p-4 rounded-lg border transition-all duration-300 ${
+                    <div key={problem.id} className={`p-2 rounded border transition-all duration-300 ${
                       solved 
-                        ? 'bg-green-500/10 border-green-500/30' 
+                        ? 'bg-white/10 border-white/30' 
                         : 'bg-white/5 border-white/10'
                     }`}>
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold text-white">{problem.title}</h4>
-                        {solved && <Award className="text-green-400" size={16} />}
+                      <div className="flex justify-between items-start mb-1">
+                        <h4 className="font-semibold text-white text-xs">{problem.title}</h4>
+                        {solved && <Award className="text-white" size={10} />}
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                          problem.difficulty === 'Easy' ? 'bg-green-500/20 text-green-400' :
-                          problem.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-red-500/20 text-red-400'
+                        <span className={`px-1 py-0.5 rounded text-xs font-semibold ${
+                          problem.difficulty === 'Easy' ? 'bg-white/20 text-white' :
+                          problem.difficulty === 'Medium' ? 'bg-white/20 text-white' :
+                          'bg-white/20 text-white'
                         }`}>
                           {problem.difficulty}
                         </span>
-                        <span className="text-white/60 text-sm">{problem.points} pts</span>
+                        <span className="text-white/60 text-xs">{problem.points} pts</span>
                       </div>
                     </div>
                   );
@@ -190,38 +190,38 @@ const ProfilePage: React.FC = () => {
 
             {/* Recent Submissions (only for own profile) */}
             {isOwnProfile && participantSubmissions.length > 0 && (
-              <div className="modern-card p-6">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                  <Zap className="mr-2" size={20} />
+              <div className="modern-card p-3">
+                <h3 className="text-sm font-bold text-white mb-2 flex items-center">
+                  <Zap className="mr-1" size={12} />
                   Recent Submissions
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {participantSubmissions.slice(0, 10).map((submission) => {
                     const problem = challenge.problems.find(p => p.id === submission.problemId);
                     const getStatusClass = (status: string) => {
                       switch (status) {
                         case 'Accepted':
-                          return 'bg-green-500/20 text-green-400 border-green-500/30';
+                          return 'bg-white/20 text-white border-white/30';
                         case 'Wrong Answer':
                         case 'Runtime Error':
                         case 'Compilation Error':
-                          return 'bg-red-500/20 text-red-400 border-red-500/30';
+                          return 'bg-white/10 text-white border-white/20';
                         default:
-                          return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+                          return 'bg-white/10 text-white border-white/20';
                       }
                     };
 
                     return (
-                      <div key={submission.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
-                        <div className="flex items-center space-x-3">
-                          <span className="text-white font-medium">{problem?.title}</span>
-                          <span className="text-white/60 text-sm">{submission.language}</span>
+                      <div key={submission.id} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-white font-medium text-xs">{problem?.title}</span>
+                          <span className="text-white/60 text-xs">{submission.language}</span>
                         </div>
-                        <div className="flex items-center space-x-3">
-                          <span className={`px-3 py-1 rounded-lg text-sm font-semibold border ${getStatusClass(submission.status)}`}>
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-2 py-1 rounded text-xs font-semibold border ${getStatusClass(submission.status)}`}>
                             {submission.status}
                           </span>
-                          <span className="text-white/60 text-sm">
+                          <span className="text-white/60 text-xs">
                             {new Date(submission.timestamp).toLocaleString()}
                           </span>
                         </div>
@@ -234,10 +234,10 @@ const ProfilePage: React.FC = () => {
 
             {/* Message for other users' profiles */}
             {!isOwnProfile && (
-              <div className="modern-card p-6 text-center">
-                <User className="mx-auto mb-4 text-white/40" size={48} />
-                <h3 className="text-lg font-bold text-white mb-2">Limited Profile View</h3>
-                <p className="text-white/60">
+              <div className="modern-card p-3 text-center">
+                <User className="mx-auto mb-2 text-white/40" size={24} />
+                <h3 className="text-sm font-bold text-white mb-1">Limited Profile View</h3>
+                <p className="text-white/60 text-xs">
                   Detailed submission history and progress are only visible on your own profile.
                 </p>
               </div>

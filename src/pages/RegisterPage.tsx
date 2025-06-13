@@ -127,35 +127,35 @@ const RegisterPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden modern-grid">
         <div className="text-center relative z-10">
-          <div className="w-16 h-16 modern-spinner mx-auto mb-4"></div>
-          <p className="text-white font-semibold">Initializing system...</p>
+          <div className="w-8 h-8 modern-spinner mx-auto mb-2"></div>
+          <p className="text-white font-semibold text-sm">Initializing system...</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="min-h-screen bg-black py-12 relative overflow-hidden">
+    <div className="min-h-screen bg-black py-6 relative overflow-hidden">
       {/* Modern background */}
       <div className="absolute inset-0 modern-grid"></div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-2xl mx-auto">
+      <div className="container mx-auto px-3 relative z-10">
+        <div className="max-w-lg mx-auto">
           <div className="modern-card overflow-hidden animate-scaleIn shadow-2xl">
-            <div className="bg-black/90 p-8 border-b border-white/10">
-              <div className="flex items-center justify-center mb-6">
-                <div className="p-4 bg-white/10 rounded-lg mr-4">
+            <div className="bg-black/90 p-4 border-b border-white/10">
+              <div className="flex items-center justify-center mb-3">
+                <div className="p-2 bg-white/10 rounded mr-2">
                   {isLoginMode ? (
-                    <LogIn className="text-white" size={32} />
+                    <LogIn className="text-white" size={16} />
                   ) : (
-                    <UserPlus className="text-white" size={32} />
+                    <UserPlus className="text-white" size={16} />
                   )}
                 </div>
                 <div className="text-center">
-                  <h1 className="text-4xl font-bold modern-gradient-text mb-2 font-display">
+                  <h1 className="text-xl font-bold modern-gradient-text mb-1 font-display">
                     {isLoginMode ? 'SYSTEM ACCESS' : 'JOIN NETWORK'}
                   </h1>
-                  <p className="text-white/60 font-semibold">
+                  <p className="text-white/60 font-semibold text-xs">
                     {isLoginMode 
                       ? 'Authenticate to continue your coding journey' 
                       : 'Register for the Varsity Code Cup 2024'
@@ -164,84 +164,84 @@ const RegisterPage: React.FC = () => {
                 </div>
               </div>
               
-              <div className="flex items-center justify-center space-x-2 text-sm text-white/60">
-                <Shield size={16} className="text-white" />
+              <div className="flex items-center justify-center space-x-1 text-xs text-white/60">
+                <Shield size={10} className="text-white" />
                 <span className="font-semibold">Secure authentication powered by Firebase</span>
-                <Lock size={16} className="text-white" />
+                <Lock size={10} className="text-white" />
               </div>
             </div>
             
-            <form onSubmit={handleSubmit} className="p-8">
+            <form onSubmit={handleSubmit} className="p-4">
               {errors.general && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg animate-fadeIn">
+                <div className="mb-3 p-2 bg-white/10 border border-white/30 text-white rounded animate-fadeIn">
                   <div className="flex items-center">
-                    <Shield size={18} className="mr-2" />
-                    <span className="font-semibold">{errors.general}</span>
+                    <Shield size={12} className="mr-1" />
+                    <span className="font-semibold text-xs">{errors.general}</span>
                   </div>
                 </div>
               )}
 
               {!isLoginMode && (
-                <div className="mb-6">
-                  <label htmlFor="name" className="block text-white font-semibold mb-3">
+                <div className="mb-3">
+                  <label htmlFor="name" className="block text-white font-semibold mb-1 text-xs">
                     Full Name
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
-                      <User size={20} />
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-white/60">
+                      <User size={12} />
                     </span>
                     <input
                       type="text"
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className={`modern-input w-full pl-12 pr-4 py-3 ${
-                        errors.name ? 'border-red-500/50' : ''
+                      className={`modern-input w-full pl-6 pr-2 py-2 text-xs ${
+                        errors.name ? 'border-white/50' : ''
                       }`}
                       placeholder="Enter your full name"
                     />
                   </div>
-                  {errors.name && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.name}</p>}
+                  {errors.name && <p className="text-white text-xs mt-1 animate-fadeIn">{errors.name}</p>}
                 </div>
               )}
               
-              <div className="mb-6">
-                <label htmlFor="email" className="block text-white font-semibold mb-3">
+              <div className="mb-3">
+                <label htmlFor="email" className="block text-white font-semibold mb-1 text-xs">
                   Email Address
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
-                    <Mail size={20} />
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-white/60">
+                    <Mail size={12} />
                   </span>
                   <input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`modern-input w-full pl-12 pr-4 py-3 ${
-                      errors.email ? 'border-red-500/50' : ''
+                    className={`modern-input w-full pl-6 pr-2 py-2 text-xs ${
+                      errors.email ? 'border-white/50' : ''
                     }`}
                     placeholder="Enter your email address"
                   />
                 </div>
-                {errors.email && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.email}</p>}
+                {errors.email && <p className="text-white text-xs mt-1 animate-fadeIn">{errors.email}</p>}
               </div>
               
               {!isLoginMode && (
-                <div className="mb-6">
-                  <label htmlFor="university" className="block text-white font-semibold mb-3">
+                <div className="mb-3">
+                  <label htmlFor="university" className="block text-white font-semibold mb-1 text-xs">
                     University
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
-                      <University size={20} />
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-white/60">
+                      <University size={12} />
                     </span>
                     <select
                       id="university"
                       value={university}
                       onChange={(e) => setUniversity(e.target.value)}
-                      className={`modern-select w-full pl-12 pr-4 py-3 ${
-                        errors.university ? 'border-red-500/50' : ''
+                      className={`modern-select w-full pl-6 pr-2 py-2 text-xs ${
+                        errors.university ? 'border-white/50' : ''
                       }`}
                     >
                       <option value="">Select your university</option>
@@ -252,42 +252,42 @@ const RegisterPage: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  {errors.university && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.university}</p>}
+                  {errors.university && <p className="text-white text-xs mt-1 animate-fadeIn">{errors.university}</p>}
                 </div>
               )}
               
-              <div className="mb-8">
-                <label htmlFor="studentNumber" className="block text-white font-semibold mb-3">
+              <div className="mb-4">
+                <label htmlFor="studentNumber" className="block text-white font-semibold mb-1 text-xs">
                   Student Number
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-white/60">
-                    <Hash size={20} />
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-white/60">
+                    <Hash size={12} />
                   </span>
                   <input
                     type="text"
                     id="studentNumber"
                     value={studentNumber}
                     onChange={(e) => setStudentNumber(e.target.value)}
-                    className={`modern-input w-full pl-12 pr-4 py-3 ${
-                      errors.studentNumber ? 'border-red-500/50' : ''
+                    className={`modern-input w-full pl-6 pr-2 py-2 text-xs ${
+                      errors.studentNumber ? 'border-white/50' : ''
                     }`}
                     placeholder="Enter your student number"
                   />
                 </div>
-                {errors.studentNumber && <p className="text-red-400 text-sm mt-2 animate-fadeIn">{errors.studentNumber}</p>}
+                {errors.studentNumber && <p className="text-white text-xs mt-1 animate-fadeIn">{errors.studentNumber}</p>}
               </div>
               
-              <div className="mb-6">
+              <div className="mb-3">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`modern-button w-full py-3 text-lg font-semibold hover-lift ${
+                  className={`modern-button w-full py-2 text-sm font-semibold hover-lift ${
                     isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
                   <div className="flex items-center justify-center">
-                    <Terminal size={20} className="mr-2" />
+                    <Terminal size={12} className="mr-1" />
                     {isSubmitting 
                       ? (isLoginMode ? 'Authenticating...' : 'Registering...') 
                       : (isLoginMode ? 'Access System' : 'Join Network')
@@ -300,7 +300,7 @@ const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={toggleMode}
-                  className="text-white hover:text-white/80 font-semibold transition-colors duration-200 underline underline-offset-4"
+                  className="text-white hover:text-white/80 font-semibold transition-colors duration-200 underline underline-offset-4 text-xs"
                 >
                   {isLoginMode 
                     ? "Don't have an account? Register here" 

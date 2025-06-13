@@ -9,76 +9,76 @@ const LeaderboardPage: React.FC = () => {
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Crown className="text-yellow-400" size={20} />;
+        return <Crown className="text-white" size={14} />;
       case 2:
-        return <Medal className="text-gray-300" size={20} />;
+        return <Medal className="text-white" size={14} />;
       case 3:
-        return <Award className="text-orange-400" size={20} />;
+        return <Award className="text-white" size={14} />;
       default:
-        return <div className="w-5 h-5 flex items-center justify-center bg-white/10 rounded-full text-white font-bold text-xs">{rank}</div>;
+        return <div className="w-3 h-3 flex items-center justify-center bg-white/10 rounded-full text-white font-bold text-xs">{rank}</div>;
     }
   };
 
   const getRankClass = (rank: number) => {
     switch (rank) {
       case 1:
-        return 'border-l-4 border-yellow-400 bg-yellow-400/5 modern-glow-strong';
+        return 'border-l-2 border-white bg-white/5 modern-glow-strong';
       case 2:
-        return 'border-l-4 border-gray-300 bg-gray-300/5';
+        return 'border-l-2 border-white bg-white/5';
       case 3:
-        return 'border-l-4 border-orange-400 bg-orange-400/5';
+        return 'border-l-2 border-white bg-white/5';
       default:
-        return 'border-l-4 border-transparent hover:border-white/30 hover:bg-white/5';
+        return 'border-l-2 border-transparent hover:border-white/30 hover:bg-white/5';
     }
   };
 
   return (
     <div className="min-h-screen bg-black modern-grid">
-      <div className="container mx-auto px-6 py-6">
+      <div className="container mx-auto px-3 py-3">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold modern-gradient-text mb-2">
+        <div className="mb-4">
+          <h1 className="text-2xl font-bold modern-gradient-text mb-1">
             GLOBAL RANKINGS
           </h1>
-          <p className="text-white/60 text-lg">
+          <p className="text-white/60 text-sm">
             Elite coders competing for digital supremacy
           </p>
         </div>
 
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="modern-card p-6 hover-lift">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+          <div className="modern-card p-3 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm font-medium mb-1">Total Participants</p>
-                <p className="text-2xl font-bold text-white">{participants.length}</p>
+                <p className="text-white/60 text-xs font-medium mb-1">Total Participants</p>
+                <p className="text-lg font-bold text-white">{participants.length}</p>
               </div>
-              <div className="p-3 bg-blue-500/20 rounded-lg">
-                <User className="text-blue-400" size={24} />
+              <div className="p-2 bg-white/10 rounded">
+                <User className="text-white" size={16} />
               </div>
             </div>
           </div>
           
-          <div className="modern-card p-6 hover-lift">
+          <div className="modern-card p-3 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm font-medium mb-1">Problems Solved</p>
-                <p className="text-2xl font-bold text-white">{participants.reduce((sum, p) => sum + p.solvedProblems, 0)}</p>
+                <p className="text-white/60 text-xs font-medium mb-1">Problems Solved</p>
+                <p className="text-lg font-bold text-white">{participants.reduce((sum, p) => sum + p.solvedProblems, 0)}</p>
               </div>
-              <div className="p-3 bg-green-500/20 rounded-lg">
-                <Target className="text-green-400" size={24} />
+              <div className="p-2 bg-white/10 rounded">
+                <Target className="text-white" size={16} />
               </div>
             </div>
           </div>
           
-          <div className="modern-card p-6 hover-lift">
+          <div className="modern-card p-3 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm font-medium mb-1">Highest Score</p>
-                <p className="text-2xl font-bold text-white">{participants.length > 0 ? Math.max(...participants.map(p => p.score)) : 0}</p>
+                <p className="text-white/60 text-xs font-medium mb-1">Highest Score</p>
+                <p className="text-lg font-bold text-white">{participants.length > 0 ? Math.max(...participants.map(p => p.score)) : 0}</p>
               </div>
-              <div className="p-3 bg-yellow-500/20 rounded-lg">
-                <Star className="text-yellow-400" size={24} />
+              <div className="p-2 bg-white/10 rounded">
+                <Star className="text-white" size={16} />
               </div>
             </div>
           </div>
@@ -86,58 +86,58 @@ const LeaderboardPage: React.FC = () => {
 
         {/* Top 3 Podium */}
         {participants.length >= 3 && (
-          <div className="modern-card p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Top Performers</h2>
-            <div className="flex justify-center items-end space-x-8 max-w-4xl mx-auto">
+          <div className="modern-card p-4 mb-4">
+            <h2 className="text-lg font-bold text-white mb-3 text-center">Top Performers</h2>
+            <div className="flex justify-center items-end space-x-4 max-w-2xl mx-auto">
               {/* Second Place */}
               <Link 
                 to={`/profile/${participants[1].id}`}
-                className="modern-card p-6 text-center hover-lift border-l-4 border-gray-300 transition-all duration-300 hover:scale-105"
+                className="modern-card p-3 text-center hover-lift border-l-2 border-white transition-all duration-300 hover:scale-105"
               >
-                <div className="flex justify-center mb-4">
-                  <Medal className="text-gray-300" size={40} />
+                <div className="flex justify-center mb-2">
+                  <Medal className="text-white" size={20} />
                 </div>
-                <h3 className="font-bold text-gray-300 text-lg mb-1">{participants[1].name}</h3>
-                <p className="text-white/60 text-sm mb-2">{participants[1].university}</p>
-                <p className="text-2xl font-bold text-gray-300">{participants[1].score}</p>
-                <p className="text-white/60 text-sm">points</p>
+                <h3 className="font-bold text-white text-sm mb-1">{participants[1].name}</h3>
+                <p className="text-white/60 text-xs mb-1">{participants[1].university}</p>
+                <p className="text-lg font-bold text-white">{participants[1].score}</p>
+                <p className="text-white/60 text-xs">points</p>
               </Link>
 
               {/* First Place */}
               <Link 
                 to={`/profile/${participants[0].id}`}
-                className="modern-card p-8 text-center transform scale-110 hover-lift border-l-4 border-yellow-400 modern-glow-strong modern-shimmer transition-all duration-300 hover:scale-115"
+                className="modern-card p-4 text-center transform scale-110 hover-lift border-l-2 border-white modern-glow-strong modern-shimmer transition-all duration-300 hover:scale-115"
               >
-                <div className="flex justify-center mb-4">
-                  <Crown className="text-yellow-400" size={48} />
+                <div className="flex justify-center mb-2">
+                  <Crown className="text-white" size={24} />
                 </div>
-                <h3 className="font-bold text-yellow-400 text-xl mb-1">{participants[0].name}</h3>
-                <p className="text-white/60 mb-2">{participants[0].university}</p>
-                <p className="text-3xl font-bold text-yellow-400">{participants[0].score}</p>
-                <p className="text-white/60">points</p>
+                <h3 className="font-bold text-white text-base mb-1">{participants[0].name}</h3>
+                <p className="text-white/60 text-xs mb-1">{participants[0].university}</p>
+                <p className="text-xl font-bold text-white">{participants[0].score}</p>
+                <p className="text-white/60 text-xs">points</p>
               </Link>
 
               {/* Third Place */}
               <Link 
                 to={`/profile/${participants[2].id}`}
-                className="modern-card p-6 text-center hover-lift border-l-4 border-orange-400 transition-all duration-300 hover:scale-105"
+                className="modern-card p-3 text-center hover-lift border-l-2 border-white transition-all duration-300 hover:scale-105"
               >
-                <div className="flex justify-center mb-4">
-                  <Award className="text-orange-400" size={40} />
+                <div className="flex justify-center mb-2">
+                  <Award className="text-white" size={20} />
                 </div>
-                <h3 className="font-bold text-orange-400 text-lg mb-1">{participants[2].name}</h3>
-                <p className="text-white/60 text-sm mb-2">{participants[2].university}</p>
-                <p className="text-2xl font-bold text-orange-400">{participants[2].score}</p>
-                <p className="text-white/60 text-sm">points</p>
+                <h3 className="font-bold text-white text-sm mb-1">{participants[2].name}</h3>
+                <p className="text-white/60 text-xs mb-1">{participants[2].university}</p>
+                <p className="text-lg font-bold text-white">{participants[2].score}</p>
+                <p className="text-white/60 text-xs">points</p>
               </Link>
             </div>
           </div>
         )}
 
         {/* Full Leaderboard */}
-        <div className="modern-card p-6">
-          <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-            <Trophy className="mr-2" size={24} />
+        <div className="modern-card p-3">
+          <h2 className="text-lg font-bold text-white mb-3 flex items-center">
+            <Trophy className="mr-1" size={16} />
             Complete Rankings
           </h2>
           
@@ -145,12 +145,12 @@ const LeaderboardPage: React.FC = () => {
             <table className="w-full">
               <thead className="border-b border-white/10">
                 <tr>
-                  <th className="text-left py-4 px-4 font-semibold text-white">Rank</th>
-                  <th className="text-left py-4 px-4 font-semibold text-white">Participant</th>
-                  <th className="text-left py-4 px-4 font-semibold text-white">Institution</th>
-                  <th className="text-left py-4 px-4 font-semibold text-white">Score</th>
-                  <th className="text-left py-4 px-4 font-semibold text-white">Solved</th>
-                  <th className="text-left py-4 px-4 font-semibold text-white">Penalty</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Rank</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Participant</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Institution</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Score</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Solved</th>
+                  <th className="text-left py-2 px-2 font-semibold text-white text-xs">Penalty</th>
                 </tr>
               </thead>
               <tbody>
@@ -162,57 +162,57 @@ const LeaderboardPage: React.FC = () => {
                     <tr 
                       key={participant.id} 
                       className={`border-b border-white/10 transition-all duration-300 hover:bg-white/5 ${
-                        isCurrentUser ? 'bg-blue-500/10 border-blue-500/30' : ''
+                        isCurrentUser ? 'bg-white/10 border-white/30' : ''
                       } ${getRankClass(rank)}`}
                     >
-                      <td className="py-4 px-4">
-                        <div className="flex items-center space-x-3">
+                      <td className="py-2 px-2">
+                        <div className="flex items-center space-x-2">
                           {getRankIcon(rank)}
-                          <span className="font-mono text-white font-semibold">#{rank}</span>
+                          <span className="font-mono text-white font-semibold text-xs">#{rank}</span>
                         </div>
                       </td>
-                      <td className="py-4 px-4">
+                      <td className="py-2 px-2">
                         <Link 
                           to={`/profile/${participant.id}`}
-                          className="flex items-center space-x-3 hover:text-blue-400 transition-colors duration-300 group"
+                          className="flex items-center space-x-2 hover:text-white transition-colors duration-300 group"
                         >
-                          <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors duration-300">
-                            <User className="text-white" size={16} />
+                          <div className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors duration-300">
+                            <User className="text-white" size={10} />
                           </div>
                           <div>
-                            <p className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">
+                            <p className="font-semibold text-white group-hover:text-white transition-colors duration-300 text-xs">
                               {participant.name}
                               {isCurrentUser && (
-                                <span className="ml-2 px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full border border-blue-500/30">
+                                <span className="ml-1 px-1 py-0.5 bg-white/20 text-white text-xs rounded-full border border-white/30">
                                   YOU
                                 </span>
                               )}
                             </p>
-                            <p className="text-white/60 text-sm">ID: {participant.studentNumber}</p>
+                            <p className="text-white/60 text-xs">ID: {participant.studentNumber}</p>
                           </div>
                         </Link>
                       </td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-center space-x-2">
-                          <University className="text-white/60" size={16} />
-                          <span className="text-white text-sm">{participant.university}</span>
+                      <td className="py-2 px-2">
+                        <div className="flex items-center space-x-1">
+                          <University className="text-white/60" size={10} />
+                          <span className="text-white text-xs">{participant.university}</span>
                         </div>
                       </td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-center space-x-2">
-                          <Target className="text-blue-400" size={16} />
-                          <span className="text-xl font-bold text-blue-400 font-mono">
+                      <td className="py-2 px-2">
+                        <div className="flex items-center space-x-1">
+                          <Target className="text-white" size={10} />
+                          <span className="text-sm font-bold text-white font-mono">
                             {participant.score}
                           </span>
                         </div>
                       </td>
-                      <td className="py-4 px-4">
-                        <span className="text-green-400 font-bold font-mono text-lg">
+                      <td className="py-2 px-2">
+                        <span className="text-white font-bold font-mono text-sm">
                           {participant.solvedProblems}
                         </span>
                       </td>
-                      <td className="py-4 px-4">
-                        <span className="text-red-400 font-mono">
+                      <td className="py-2 px-2">
+                        <span className="text-white font-mono text-xs">
                           {participant.penaltyTime}m
                         </span>
                       </td>
@@ -224,9 +224,9 @@ const LeaderboardPage: React.FC = () => {
           </div>
           
           {participants.length === 0 && (
-            <div className="text-center py-12">
-              <Trophy className="text-white/40 mx-auto mb-4" size={48} />
-              <p className="text-white/60">No participants yet. Be the first to register!</p>
+            <div className="text-center py-6">
+              <Trophy className="text-white/40 mx-auto mb-2" size={24} />
+              <p className="text-white/60 text-sm">No participants yet. Be the first to register!</p>
             </div>
           )}
         </div>

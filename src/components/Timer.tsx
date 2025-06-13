@@ -21,36 +21,26 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
   
   const { hours, minutes, seconds } = formatTime(timeRemaining);
   
-  const getTimerColor = () => {
-    if (timeRemaining <= 1000 * 60 * 10) { // Less than 10 minutes
-      return 'text-red-400';
-    } else if (timeRemaining <= 1000 * 60 * 30) { // Less than 30 minutes
-      return 'text-yellow-400';
-    } else {
-      return 'text-green-400';
-    }
-  };
-  
   const getBgColor = () => {
     if (timeRemaining <= 1000 * 60 * 10) {
-      return 'bg-red-500/20 border-red-500/30 modern-glow';
+      return 'bg-white/20 border-white/30 modern-glow';
     } else if (timeRemaining <= 1000 * 60 * 30) {
-      return 'bg-yellow-500/20 border-yellow-500/30';
+      return 'bg-white/15 border-white/25';
     } else {
-      return 'bg-green-500/20 border-green-500/30';
+      return 'bg-white/10 border-white/20';
     }
   };
   
   return (
-    <div className={`modern-card px-4 py-3 border ${getBgColor()}`}>
-      <div className="flex items-center space-x-3">
+    <div className={`modern-card px-2 py-1 border ${getBgColor()}`}>
+      <div className="flex items-center space-x-2">
         <div className="flex items-center">
-          <Clock size={18} className={`${getTimerColor()}`} />
+          <Clock size={12} className="text-white" />
           {timeRemaining <= 1000 * 60 * 10 && (
-            <AlertTriangle size={16} className={`${getTimerColor()} ml-1 modern-pulse`} />
+            <AlertTriangle size={10} className="text-white ml-1 modern-pulse" />
           )}
         </div>
-        <div className={`font-mono text-xl font-bold ${getTimerColor()}`}>
+        <div className="font-mono text-sm font-bold text-white">
           {hours}:{minutes}:{seconds}
         </div>
       </div>
