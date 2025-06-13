@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, Medal, Award, User, University, Target, BarChart3, Code2, Crown, Star, Zap, Brain } from 'lucide-react';
+import { Trophy, Medal, Award, User, University, Target, BarChart3, Code2, Crown, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const LeaderboardPage: React.FC = () => {
@@ -8,26 +8,26 @@ const LeaderboardPage: React.FC = () => {
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Crown className="text-white" size={20} />;
+        return <Crown className="text-white" size={16} />;
       case 2:
-        return <Medal className="text-white" size={20} />;
+        return <Medal className="text-white" size={16} />;
       case 3:
-        return <Award className="text-white" size={20} />;
+        return <Award className="text-white" size={16} />;
       default:
-        return <div className="w-5 h-5 flex items-center justify-center bg-white/20 text-white font-bold text-xs font-display">{rank}</div>;
+        return <div className="w-4 h-4 flex items-center justify-center bg-white/20 text-white font-bold text-xs font-display">{rank}</div>;
     }
   };
 
   const getRankClass = (rank: number) => {
     switch (rank) {
       case 1:
-        return 'border-l-4 border-white neon-glow bg-white/5';
+        return 'border-l-2 border-white neon-glow bg-white/5';
       case 2:
-        return 'border-l-4 border-white/70 bg-white/3';
+        return 'border-l-2 border-white/70 bg-white/3';
       case 3:
-        return 'border-l-4 border-white/50 bg-white/2';
+        return 'border-l-2 border-white/50 bg-white/2';
       default:
-        return 'border-l-4 border-transparent hover:border-white/30 hover:bg-white/5';
+        return 'border-l-2 border-transparent hover:border-white/30 hover:bg-white/5';
     }
   };
 
@@ -37,41 +37,41 @@ const LeaderboardPage: React.FC = () => {
       <div className="absolute inset-0 matrix-bg"></div>
       <div className="absolute inset-0 scanlines"></div>
 
-      {/* VS Code-style layout */}
+      {/* Compact VS Code-style layout */}
       <div className="flex h-screen relative z-10">
-        {/* Activity Bar */}
-        <div className="activity-bar">
-          <div className="activity-bar-item">
-            <Code2 size={24} />
+        {/* Compact Activity Bar */}
+        <div className="bg-black/95 w-8 border-r border-white/10">
+          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer">
+            <Code2 size={16} />
           </div>
-          <div className="activity-bar-item active">
-            <BarChart3 size={24} />
+          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer border-l-2 border-white">
+            <BarChart3 size={16} />
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div className="sidebar">
-          <div className="sidebar-header">
+        {/* Compact Sidebar */}
+        <div className="bg-black/95 border-r border-white/10 w-48">
+          <div className="p-2 text-xs font-bold text-white/80 bg-black/90 border-b border-white/10 font-display tracking-wider">
             LEADERBOARD
           </div>
-          <div className="p-4">
-            <div className="vscode-card p-4 mb-4 neon-glow terminal">
-              <div className="pt-4">
-                <h3 className="text-white font-bold mb-3 flex items-center font-display tracking-wider">
-                  <Star className="mr-2" size={16} />
-                  STATISTICS
+          <div className="p-2">
+            <div className="vscode-card p-2 mb-2 neon-glow terminal">
+              <div className="pt-2">
+                <h3 className="text-white font-bold mb-2 flex items-center font-display tracking-wider text-xs">
+                  <Star className="mr-1" size={12} />
+                  STATS
                 </h3>
-                <div className="space-y-3 text-sm">
+                <div className="space-y-2 text-xs">
                   <div className="flex justify-between items-center">
-                    <span className="text-white/60 font-display tracking-wider">TOTAL PARTICIPANTS:</span>
+                    <span className="text-white/60 font-display tracking-wider">PARTICIPANTS:</span>
                     <span className="text-white font-bold font-mono">{participants.length}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white/60 font-display tracking-wider">PROBLEMS SOLVED:</span>
+                    <span className="text-white/60 font-display tracking-wider">SOLVED:</span>
                     <span className="text-white font-bold font-mono">{participants.reduce((sum, p) => sum + p.solvedProblems, 0)}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white/60 font-display tracking-wider">HIGHEST SCORE:</span>
+                    <span className="text-white/60 font-display tracking-wider">TOP SCORE:</span>
                     <span className="text-white font-bold font-mono">{participants.length > 0 ? Math.max(...participants.map(p => p.score)) : 0}</span>
                   </div>
                 </div>
@@ -82,89 +82,89 @@ const LeaderboardPage: React.FC = () => {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
-          {/* Header */}
-          <div className="bg-vscode-panel border-b border-vscode p-6">
-            <h1 className="text-3xl font-bold gradient-text mb-2 font-display">
+          {/* Compact Header */}
+          <div className="bg-black/90 border-b border-white/10 p-3">
+            <h1 className="text-xl font-bold gradient-text font-display">
               GLOBAL RANKINGS
             </h1>
-            <p className="text-white/60 font-bold font-display tracking-wider">
+            <p className="text-white/60 font-bold font-display tracking-wider text-xs">
               ELITE CODERS COMPETING FOR DIGITAL SUPREMACY
             </p>
           </div>
 
-          {/* Top 3 Podium */}
+          {/* Compact Top 3 Podium */}
           {participants.length >= 3 && (
-            <div className="bg-vscode-editor/50 border-b border-vscode p-8">
-              <div className="flex justify-center items-end space-x-8 max-w-4xl mx-auto">
+            <div className="bg-black/50 border-b border-white/10 p-4">
+              <div className="flex justify-center items-end space-x-4 max-w-3xl mx-auto">
                 {/* Second Place */}
-                <div className="vscode-card p-6 text-center hover-lift border-l-4 border-white/70 terminal">
-                  <div className="pt-4">
-                    <div className="flex justify-center mb-4">
-                      <Medal className="text-white" size={40} />
+                <div className="vscode-card p-3 text-center hover-lift border-l-2 border-white/70 terminal">
+                  <div className="pt-2">
+                    <div className="flex justify-center mb-2">
+                      <Medal className="text-white" size={24} />
                     </div>
-                    <h3 className="font-bold text-white mb-1 font-display tracking-wider">{participants[1].name.toUpperCase()}</h3>
-                    <p className="text-white/60 text-sm mb-2 font-display tracking-wider">{participants[1].university.toUpperCase()}</p>
-                    <p className="text-xl font-bold text-white font-mono">{participants[1].score}</p>
-                    <p className="text-white/60 text-sm font-display tracking-wider">POINTS</p>
+                    <h3 className="font-bold text-white text-xs font-display tracking-wider">{participants[1].name.toUpperCase()}</h3>
+                    <p className="text-white/60 text-xs font-display tracking-wider">{participants[1].university.split(' ')[0].toUpperCase()}</p>
+                    <p className="text-lg font-bold text-white font-mono">{participants[1].score}</p>
+                    <p className="text-white/60 text-xs font-display tracking-wider">PTS</p>
                   </div>
                 </div>
 
                 {/* First Place */}
-                <div className="vscode-card p-8 text-center transform scale-110 hover-lift border-l-4 border-white shadow-2xl neon-glow holographic terminal">
-                  <div className="pt-4">
-                    <div className="flex justify-center mb-4">
-                      <Crown className="text-white" size={48} />
+                <div className="vscode-card p-4 text-center transform scale-105 hover-lift border-l-2 border-white shadow-xl neon-glow holographic terminal">
+                  <div className="pt-2">
+                    <div className="flex justify-center mb-2">
+                      <Crown className="text-white" size={32} />
                     </div>
-                    <h3 className="font-bold text-white text-lg mb-1 font-display tracking-wider">{participants[0].name.toUpperCase()}</h3>
-                    <p className="text-white/60 mb-2 font-display tracking-wider">{participants[0].university.toUpperCase()}</p>
-                    <p className="text-2xl font-bold text-white font-mono neon-glow">{participants[0].score}</p>
-                    <p className="text-white/60 font-display tracking-wider">POINTS</p>
+                    <h3 className="font-bold text-white text-sm font-display tracking-wider">{participants[0].name.toUpperCase()}</h3>
+                    <p className="text-white/60 text-xs font-display tracking-wider">{participants[0].university.split(' ')[0].toUpperCase()}</p>
+                    <p className="text-xl font-bold text-white font-mono neon-glow">{participants[0].score}</p>
+                    <p className="text-white/60 text-xs font-display tracking-wider">PTS</p>
                   </div>
                 </div>
 
                 {/* Third Place */}
-                <div className="vscode-card p-6 text-center hover-lift border-l-4 border-white/50 terminal">
-                  <div className="pt-4">
-                    <div className="flex justify-center mb-4">
-                      <Award className="text-white" size={40} />
+                <div className="vscode-card p-3 text-center hover-lift border-l-2 border-white/50 terminal">
+                  <div className="pt-2">
+                    <div className="flex justify-center mb-2">
+                      <Award className="text-white" size={24} />
                     </div>
-                    <h3 className="font-bold text-white mb-1 font-display tracking-wider">{participants[2].name.toUpperCase()}</h3>
-                    <p className="text-white/60 text-sm mb-2 font-display tracking-wider">{participants[2].university.toUpperCase()}</p>
-                    <p className="text-xl font-bold text-white font-mono">{participants[2].score}</p>
-                    <p className="text-white/60 text-sm font-display tracking-wider">POINTS</p>
+                    <h3 className="font-bold text-white text-xs font-display tracking-wider">{participants[2].name.toUpperCase()}</h3>
+                    <p className="text-white/60 text-xs font-display tracking-wider">{participants[2].university.split(' ')[0].toUpperCase()}</p>
+                    <p className="text-lg font-bold text-white font-mono">{participants[2].score}</p>
+                    <p className="text-white/60 text-xs font-display tracking-wider">PTS</p>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Editor Tabs */}
-          <div className="editor-tabs">
-            <div className="editor-tab active">
-              <span className="font-display tracking-wider">RANKINGS.JSON</span>
+          {/* Compact Editor Tabs */}
+          <div className="bg-black/90 border-b border-white/10 flex px-2">
+            <div className="px-3 py-2 bg-black text-white text-xs font-display tracking-wider border-b-2 border-white">
+              RANKINGS.JSON
             </div>
           </div>
 
-          {/* Full Leaderboard */}
-          <div className="flex-1 bg-vscode-editor overflow-y-auto">
-            <div className="p-6">
-              <div className="vscode-card overflow-hidden shadow-2xl terminal">
-                <div className="bg-vscode-panel p-4 border-b border-vscode pt-8">
-                  <h2 className="text-xl font-bold text-white font-display tracking-wider">
+          {/* Compact Full Leaderboard */}
+          <div className="flex-1 bg-black overflow-y-auto">
+            <div className="p-3">
+              <div className="vscode-card overflow-hidden shadow-xl terminal">
+                <div className="bg-black/90 p-2 border-b border-white/10 pt-4">
+                  <h2 className="text-sm font-bold text-white font-display tracking-wider">
                     COMPLETE RANKINGS
                   </h2>
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-vscode-panel border-b border-vscode">
+                  <table className="w-full text-xs">
+                    <thead className="bg-black/90 border-b border-white/10">
                       <tr>
-                        <th className="text-left py-4 px-6 font-bold text-white font-display tracking-wider">RANK</th>
-                        <th className="text-left py-4 px-6 font-bold text-white font-display tracking-wider">PARTICIPANT</th>
-                        <th className="text-left py-4 px-6 font-bold text-white font-display tracking-wider">INSTITUTION</th>
-                        <th className="text-left py-4 px-6 font-bold text-white font-display tracking-wider">SCORE</th>
-                        <th className="text-left py-4 px-6 font-bold text-white font-display tracking-wider">SOLVED</th>
-                        <th className="text-left py-4 px-6 font-bold text-white font-display tracking-wider">PENALTY</th>
+                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">RANK</th>
+                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">PARTICIPANT</th>
+                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">INSTITUTION</th>
+                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">SCORE</th>
+                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">SOLVED</th>
+                        <th className="text-left py-2 px-3 font-bold text-white font-display tracking-wider">PENALTY</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -175,54 +175,54 @@ const LeaderboardPage: React.FC = () => {
                         return (
                           <tr 
                             key={participant.id} 
-                            className={`border-b border-vscode transition-all duration-200 hover:bg-white/5 ${
+                            className={`border-b border-white/10 transition-all duration-200 hover:bg-white/5 ${
                               isCurrentUser ? 'bg-white/10 neon-glow' : ''
                             } ${getRankClass(rank)}`}
                           >
-                            <td className="py-4 px-6">
-                              <div className="flex items-center space-x-3">
+                            <td className="py-2 px-3">
+                              <div className="flex items-center space-x-2">
                                 {getRankIcon(rank)}
                                 <span className="font-mono text-white font-bold">#{rank}</span>
                               </div>
                             </td>
-                            <td className="py-4 px-6">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-white/10 flex items-center justify-center">
-                                  <User className="text-white" size={18} />
+                            <td className="py-2 px-3">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-6 h-6 bg-white/10 flex items-center justify-center">
+                                  <User className="text-white" size={12} />
                                 </div>
                                 <div>
                                   <p className="font-bold text-white font-display tracking-wider">
                                     {participant.name.toUpperCase()}
                                     {isCurrentUser && (
-                                      <span className="ml-2 px-2 py-1 bg-white/20 text-white text-xs font-bold neon-glow font-display tracking-wider">
+                                      <span className="ml-1 px-1 py-0.5 bg-white/20 text-white text-xs font-bold neon-glow font-display tracking-wider">
                                         YOU
                                       </span>
                                     )}
                                   </p>
-                                  <p className="text-white/60 text-sm font-mono">ID: {participant.studentNumber}</p>
+                                  <p className="text-white/60 text-xs font-mono">ID: {participant.studentNumber}</p>
                                 </div>
                               </div>
                             </td>
-                            <td className="py-4 px-6">
-                              <div className="flex items-center space-x-2">
-                                <University className="text-white/60" size={16} />
-                                <span className="text-white text-sm font-bold font-display tracking-wider">{participant.university.toUpperCase()}</span>
+                            <td className="py-2 px-3">
+                              <div className="flex items-center space-x-1">
+                                <University className="text-white/60" size={12} />
+                                <span className="text-white font-bold font-display tracking-wider">{participant.university.split(' ')[0].toUpperCase()}</span>
                               </div>
                             </td>
-                            <td className="py-4 px-6">
-                              <div className="flex items-center space-x-2">
-                                <Target className="text-white" size={16} />
-                                <span className="text-lg font-bold text-white font-mono neon-glow">
+                            <td className="py-2 px-3">
+                              <div className="flex items-center space-x-1">
+                                <Target className="text-white" size={12} />
+                                <span className="text-sm font-bold text-white font-mono neon-glow">
                                   {participant.score}
                                 </span>
                               </div>
                             </td>
-                            <td className="py-4 px-6">
-                              <span className="text-white font-bold font-mono text-lg neon-glow">
+                            <td className="py-2 px-3">
+                              <span className="text-white font-bold font-mono neon-glow">
                                 {participant.solvedProblems}
                               </span>
                             </td>
-                            <td className="py-4 px-6">
+                            <td className="py-2 px-3">
                               <span className="text-white font-mono font-bold">
                                 {participant.penaltyTime}M
                               </span>
@@ -235,29 +235,23 @@ const LeaderboardPage: React.FC = () => {
                 </div>
                 
                 {participants.length === 0 && (
-                  <div className="text-center py-12">
-                    <Trophy className="text-white/60 mx-auto mb-4" size={48} />
-                    <p className="text-white/60 font-bold font-display tracking-wider">NO PARTICIPANTS YET. BE THE FIRST TO REGISTER!</p>
+                  <div className="text-center py-8">
+                    <Trophy className="text-white/60 mx-auto mb-2" size={32} />
+                    <p className="text-white/60 font-bold font-display tracking-wider text-xs">NO PARTICIPANTS YET</p>
                   </div>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Status Bar */}
-          <div className="status-bar">
-            <div className="flex items-center space-x-4">
-              <div className="status-bar-item">
-                <span>PARTICIPANTS: {participants.length}</span>
-              </div>
-              <div className="status-bar-item">
-                <span>JSON</span>
-              </div>
+          {/* Compact Status Bar */}
+          <div className="bg-white text-black h-6 text-xs flex items-center px-3 justify-between font-display tracking-wider">
+            <div className="flex items-center space-x-3">
+              <span>PARTICIPANTS: {participants.length}</span>
+              <span>JSON</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="status-bar-item">
-                <span>LAST UPDATED: {new Date().toLocaleTimeString()}</span>
-              </div>
+            <div className="flex items-center space-x-3">
+              <span>UPDATED: {new Date().toLocaleTimeString()}</span>
             </div>
           </div>
         </div>

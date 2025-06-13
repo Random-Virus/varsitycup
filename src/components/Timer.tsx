@@ -21,7 +21,6 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
   
   const { hours, minutes, seconds } = formatTime(timeRemaining);
   
-  // Determine color based on time remaining
   const getTimerColor = () => {
     return 'text-white';
   };
@@ -37,15 +36,15 @@ const Timer: React.FC<TimerProps> = ({ timeRemaining }) => {
   };
   
   return (
-    <div className={`vscode-card px-6 py-3 border ${getBgColor()} terminal`}>
-      <div className="flex items-center space-x-3 pt-4">
+    <div className={`vscode-card px-3 py-2 border ${getBgColor()} terminal`}>
+      <div className="flex items-center space-x-2 pt-2">
         <div className="flex items-center">
-          <Clock size={18} className={`${getTimerColor()}`} />
+          <Clock size={14} className={`${getTimerColor()}`} />
           {timeRemaining <= 1000 * 60 * 10 && (
-            <AlertTriangle size={16} className={`${getTimerColor()} ml-2 animate-pulse`} />
+            <AlertTriangle size={12} className={`${getTimerColor()} ml-1 animate-pulse`} />
           )}
         </div>
-        <div className={`font-mono text-xl font-bold ${getTimerColor()} font-display tracking-wider`}>
+        <div className={`font-mono text-sm font-bold ${getTimerColor()} font-display tracking-wider`}>
           {hours}:{minutes}:{seconds}
         </div>
       </div>

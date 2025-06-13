@@ -14,8 +14,8 @@ const DashboardPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4 font-display tracking-wider">ACCESS DENIED</h1>
-          <p className="text-white/60 font-display tracking-wider">AUTHENTICATION REQUIRED TO ACCESS DASHBOARD</p>
+          <h1 className="text-xl font-bold text-white mb-2 font-display tracking-wider">ACCESS DENIED</h1>
+          <p className="text-white/60 font-display tracking-wider text-sm">AUTHENTICATION REQUIRED</p>
         </div>
       </div>
     );
@@ -38,13 +38,13 @@ const DashboardPage: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'Accepted':
-        return <CheckCircle className="text-white" size={16} />;
+        return <CheckCircle className="text-white" size={12} />;
       case 'Wrong Answer':
       case 'Runtime Error':
       case 'Compilation Error':
-        return <XCircle className="text-white" size={16} />;
+        return <XCircle className="text-white" size={12} />;
       default:
-        return <AlertCircle className="text-white" size={16} />;
+        return <AlertCircle className="text-white" size={12} />;
     }
   };
 
@@ -67,43 +67,45 @@ const DashboardPage: React.FC = () => {
       <div className="absolute inset-0 matrix-bg"></div>
       <div className="absolute inset-0 scanlines"></div>
 
-      {/* VS Code-style layout */}
+      {/* Compact VS Code-style layout */}
       <div className="flex h-screen relative z-10">
-        {/* Activity Bar */}
-        <div className="activity-bar">
-          <div className="activity-bar-item active">
-            <Code2 size={24} />
+        {/* Compact Activity Bar */}
+        <div className="bg-black/95 w-8 border-r border-white/10">
+          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer border-l-2 border-white">
+            <Code2 size={16} />
           </div>
-          <div className="activity-bar-item">
-            <Trophy size={24} />
+          <div className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white cursor-pointer">
+            <Trophy size={16} />
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div className="sidebar">
-          <div className="sidebar-header">
-            PROBLEMS EXPLORER
+        {/* Compact Sidebar */}
+        <div className="bg-black/95 border-r border-white/10 w-48">
+          <div className="p-2 text-xs font-bold text-white/80 bg-black/90 border-b border-white/10 font-display tracking-wider">
+            PROBLEMS
           </div>
-          <div className="p-4">
+          <div className="p-2">
             {challenge.problems.map((problem) => (
               <div
                 key={problem.id}
                 onClick={() => setSelectedProblem(problem)}
-                className={`sidebar-item cursor-pointer mb-2 p-3 ${
-                  selectedProblem.id === problem.id ? 'active' : ''
+                className={`cursor-pointer mb-1 p-2 text-xs transition-all duration-200 ${
+                  selectedProblem.id === problem.id 
+                    ? 'bg-white/10 text-white border-l-2 border-white' 
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-bold text-sm font-display tracking-wider">{problem.title.toUpperCase()}</h3>
-                  <span className={`px-2 py-1 text-xs font-bold ${
+                <div className="flex justify-between items-center mb-1">
+                  <h3 className="font-bold font-display tracking-wider">{problem.title.toUpperCase()}</h3>
+                  <span className={`px-1 py-0.5 text-xs font-bold ${
                     problem.difficulty === 'Easy' ? 'difficulty-easy' :
                     problem.difficulty === 'Medium' ? 'difficulty-medium' :
                     'difficulty-hard'
                   }`}>
-                    {problem.difficulty.toUpperCase()}
+                    {problem.difficulty.charAt(0)}
                   </span>
                 </div>
-                <p className="text-white/60 text-xs font-display tracking-wider">{problem.points} POINTS</p>
+                <p className="text-white/60 text-xs font-display tracking-wider">{problem.points}PTS</p>
               </div>
             ))}
           </div>
@@ -111,171 +113,166 @@ const DashboardPage: React.FC = () => {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
-          {/* Header with stats */}
-          <div className="bg-vscode-panel border-b border-vscode p-4">
-            <div className="flex justify-between items-center mb-4">
+          {/* Compact Header */}
+          <div className="bg-black/90 border-b border-white/10 p-3">
+            <div className="flex justify-between items-center mb-2">
               <div>
-                <h1 className="text-2xl font-bold text-white font-display tracking-wider">
-                  DASHBOARD
-                </h1>
-                <p className="text-white/60 font-display tracking-wider">
-                  WELCOME BACK, <span className="text-white font-bold">{currentUser.name.toUpperCase()}</span>
+                <h1 className="text-lg font-bold text-white font-display tracking-wider">DASHBOARD</h1>
+                <p className="text-white/60 text-xs font-display tracking-wider">
+                  {currentUser.name.toUpperCase()}
                 </p>
               </div>
-              <Timer timeRemaining={timeRemaining} />
+              <div className="scale-75">
+                <Timer timeRemaining={timeRemaining} />
+              </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-4 gap-4">
-              <div className="vscode-card p-4 terminal">
-                <div className="pt-4">
+            {/* Compact Stats */}
+            <div className="grid grid-cols-4 gap-2">
+              <div className="vscode-card p-2 terminal">
+                <div className="pt-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-white/60 text-sm font-display tracking-wider">SCORE</p>
-                      <p className="text-xl font-bold text-white font-mono">{currentUser.score}</p>
+                      <p className="text-white/60 text-xs font-display tracking-wider">SCORE</p>
+                      <p className="text-sm font-bold text-white font-mono">{currentUser.score}</p>
                     </div>
-                    <Trophy className="text-white" size={24} />
+                    <Trophy className="text-white" size={16} />
                   </div>
                 </div>
               </div>
               
-              <div className="vscode-card p-4 terminal">
-                <div className="pt-4">
+              <div className="vscode-card p-2 terminal">
+                <div className="pt-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-white/60 text-sm font-display tracking-wider">SOLVED</p>
-                      <p className="text-xl font-bold text-white font-mono">{currentUser.solvedProblems}</p>
+                      <p className="text-white/60 text-xs font-display tracking-wider">SOLVED</p>
+                      <p className="text-sm font-bold text-white font-mono">{currentUser.solvedProblems}</p>
                     </div>
-                    <CheckCircle className="text-white" size={24} />
+                    <CheckCircle className="text-white" size={16} />
                   </div>
                 </div>
               </div>
               
-              <div className="vscode-card p-4 terminal">
-                <div className="pt-4">
+              <div className="vscode-card p-2 terminal">
+                <div className="pt-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-white/60 text-sm font-display tracking-wider">PENALTY</p>
-                      <p className="text-xl font-bold text-white font-mono">{currentUser.penaltyTime}M</p>
+                      <p className="text-white/60 text-xs font-display tracking-wider">PENALTY</p>
+                      <p className="text-sm font-bold text-white font-mono">{currentUser.penaltyTime}M</p>
                     </div>
-                    <Clock className="text-white" size={24} />
+                    <Clock className="text-white" size={16} />
                   </div>
                 </div>
               </div>
               
-              <div className="vscode-card p-4 terminal">
-                <div className="pt-4">
+              <div className="vscode-card p-2 terminal">
+                <div className="pt-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-white/60 text-sm font-display tracking-wider">SUBMISSIONS</p>
-                      <p className="text-xl font-bold text-white font-mono">{submissions.length}</p>
+                      <p className="text-white/60 text-xs font-display tracking-wider">SUBS</p>
+                      <p className="text-sm font-bold text-white font-mono">{submissions.length}</p>
                     </div>
-                    <Send className="text-white" size={24} />
+                    <Send className="text-white" size={16} />
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Editor Tabs */}
-          <div className="editor-tabs">
-            <div className="editor-tab active">
-              <span className="font-display tracking-wider">{selectedProblem.title.toUpperCase()}</span>
+          {/* Compact Editor Tabs */}
+          <div className="bg-black/90 border-b border-white/10 flex px-2">
+            <div className="px-3 py-2 bg-black text-white text-xs font-display tracking-wider border-b-2 border-white">
+              {selectedProblem.title.toUpperCase()}
             </div>
-            <div className="editor-tab">
-              <span className="font-display tracking-wider">SOLUTION.{language.toUpperCase()}</span>
+            <div className="px-3 py-2 text-white/60 text-xs font-display tracking-wider">
+              SOLUTION.{language.toUpperCase()}
             </div>
           </div>
 
-          {/* Main Editor Area */}
+          {/* Compact Main Editor Area */}
           <div className="flex-1 flex">
-            {/* Problem Description */}
-            <div className="w-1/2 bg-black border-r border-white/10 p-6 overflow-y-auto">
-              <div className="mb-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-2xl font-bold text-white font-display tracking-wider">{selectedProblem.title.toUpperCase()}</h2>
-                  <div className="flex items-center space-x-3">
-                    <span className={`px-3 py-1 text-sm font-bold ${
+            {/* Compact Problem Description */}
+            <div className="w-1/2 bg-black border-r border-white/10 p-3 overflow-y-auto text-sm">
+              <div className="mb-3">
+                <div className="flex justify-between items-start mb-2">
+                  <h2 className="text-lg font-bold text-white font-display tracking-wider">{selectedProblem.title.toUpperCase()}</h2>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-2 py-1 text-xs font-bold ${
                       selectedProblem.difficulty === 'Easy' ? 'difficulty-easy' :
                       selectedProblem.difficulty === 'Medium' ? 'difficulty-medium' :
                       'difficulty-hard'
                     }`}>
                       {selectedProblem.difficulty.toUpperCase()}
                     </span>
-                    <span className="text-white font-bold font-mono">{selectedProblem.points} PTS</span>
+                    <span className="text-white font-bold font-mono text-xs">{selectedProblem.points}PTS</span>
                   </div>
                 </div>
                 
                 <div className="prose max-w-none">
-                  <p className="text-white leading-relaxed mb-6">
+                  <p className="text-white leading-relaxed mb-3 text-sm">
                     {selectedProblem.description}
                   </p>
                   
-                  <h3 className="text-lg font-bold text-white mb-3 font-display tracking-wider">EXAMPLES:</h3>
-                  {selectedProblem.examples.map((example, index) => (
-                    <div key={index} className="mb-4 p-4 bg-white/5 border border-white/10">
-                      <p className="text-white mb-2">
-                        <strong className="text-white font-display tracking-wider">INPUT:</strong> <code className="syntax-string">{example.input}</code>
+                  <h3 className="text-sm font-bold text-white mb-2 font-display tracking-wider">EXAMPLES:</h3>
+                  {selectedProblem.examples.slice(0, 2).map((example, index) => (
+                    <div key={index} className="mb-2 p-2 bg-white/5 border border-white/10">
+                      <p className="text-white mb-1 text-xs">
+                        <strong className="text-white font-display tracking-wider">IN:</strong> <code>{example.input}</code>
                       </p>
-                      <p className="text-white mb-2">
-                        <strong className="text-white font-display tracking-wider">OUTPUT:</strong> <code className="syntax-string">{example.output}</code>
+                      <p className="text-white mb-1 text-xs">
+                        <strong className="text-white font-display tracking-wider">OUT:</strong> <code>{example.output}</code>
                       </p>
-                      {example.explanation && (
-                        <p className="text-white/60 text-sm">
-                          <strong className="font-display tracking-wider">EXPLANATION:</strong> {example.explanation}
-                        </p>
-                      )}
                     </div>
                   ))}
                   
-                  <h3 className="text-lg font-bold text-white mb-3 font-display tracking-wider">CONSTRAINTS:</h3>
-                  <ul className="list-disc list-inside text-white space-y-1">
-                    {selectedProblem.constraints.map((constraint, index) => (
-                      <li key={index}><code className="syntax-comment">{constraint}</code></li>
+                  <h3 className="text-sm font-bold text-white mb-2 font-display tracking-wider">CONSTRAINTS:</h3>
+                  <ul className="list-disc list-inside text-white space-y-1 text-xs">
+                    {selectedProblem.constraints.slice(0, 3).map((constraint, index) => (
+                      <li key={index}><code>{constraint}</code></li>
                     ))}
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* Code Editor */}
+            {/* Compact Code Editor */}
             <div className="w-1/2 bg-black flex flex-col">
-              <div className="flex justify-between items-center p-4 border-b border-white/10">
-                <h3 className="text-lg font-bold text-white font-display tracking-wider">CODE EDITOR</h3>
+              <div className="flex justify-between items-center p-2 border-b border-white/10">
+                <h3 className="text-sm font-bold text-white font-display tracking-wider">EDITOR</h3>
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="vscode-select"
+                  className="vscode-select text-xs"
                 >
-                  <option value="javascript">JAVASCRIPT</option>
-                  <option value="python">PYTHON</option>
+                  <option value="javascript">JS</option>
+                  <option value="python">PY</option>
                   <option value="java">JAVA</option>
                   <option value="cpp">C++</option>
                 </select>
               </div>
               
-              <div className="flex-1 p-4">
+              <div className="flex-1 p-2">
                 <textarea
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="vscode-textarea w-full h-full p-4"
+                  className="vscode-textarea w-full h-full p-2 text-sm"
                   placeholder="// WRITE YOUR SOLUTION HERE..."
                 />
               </div>
               
-              <div className="p-4 border-t border-white/10">
+              <div className="p-2 border-t border-white/10">
                 <div className="flex justify-between items-center">
-                  <div className="text-white/60 text-sm font-display tracking-wider">
-                    TIME: {selectedProblem.timeLimit}MS | MEMORY: {selectedProblem.memoryLimit}MB
+                  <div className="text-white/60 text-xs font-display tracking-wider">
+                    {selectedProblem.timeLimit}MS | {selectedProblem.memoryLimit}MB
                   </div>
                   <button
                     onClick={handleSubmit}
                     disabled={!code.trim() || isSubmitting}
-                    className={`vscode-button flex items-center ${
+                    className={`vscode-button flex items-center text-xs px-3 py-1 ${
                       !code.trim() || isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                   >
-                    <Play size={16} className="mr-2" />
+                    <Play size={12} className="mr-1" />
                     {isSubmitting ? 'SUBMITTING...' : 'SUBMIT'}
                   </button>
                 </div>
@@ -283,51 +280,40 @@ const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Status Bar */}
-          <div className="status-bar">
-            <div className="flex items-center space-x-4">
-              <div className="status-bar-item">
-                <span>LN 1, COL 1</span>
-              </div>
-              <div className="status-bar-item">
-                <span>UTF-8</span>
-              </div>
-              <div className="status-bar-item">
-                <span>{language.toUpperCase()}</span>
-              </div>
+          {/* Compact Status Bar */}
+          <div className="bg-white text-black h-6 text-xs flex items-center px-3 justify-between font-display tracking-wider">
+            <div className="flex items-center space-x-3">
+              <span>LN 1, COL 1</span>
+              <span>{language.toUpperCase()}</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="status-bar-item">
-                <span>PROBLEMS: {challenge.problems.length}</span>
-              </div>
-              <div className="status-bar-item">
-                <span>SOLVED: {currentUser.solvedProblems}</span>
-              </div>
+            <div className="flex items-center space-x-3">
+              <span>PROBLEMS: {challenge.problems.length}</span>
+              <span>SOLVED: {currentUser.solvedProblems}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Recent Submissions Panel */}
+      {/* Compact Recent Submissions */}
       {submissions.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-white/10 max-h-48 overflow-y-auto">
-          <div className="p-4">
-            <h3 className="text-lg font-bold text-white mb-3 font-display tracking-wider">RECENT SUBMISSIONS</h3>
-            <div className="space-y-2">
-              {submissions.slice(0, 5).map((submission) => {
+        <div className="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-white/10 max-h-32 overflow-y-auto">
+          <div className="p-2">
+            <h3 className="text-sm font-bold text-white mb-2 font-display tracking-wider">RECENT SUBMISSIONS</h3>
+            <div className="space-y-1">
+              {submissions.slice(0, 3).map((submission) => {
                 const problem = challenge.problems.find(p => p.id === submission.problemId);
                 return (
-                  <div key={submission.id} className="flex items-center justify-between p-2 bg-white/5 border border-white/10">
-                    <div className="flex items-center space-x-3">
+                  <div key={submission.id} className="flex items-center justify-between p-1 bg-white/5 border border-white/10 text-xs">
+                    <div className="flex items-center space-x-2">
                       {getStatusIcon(submission.status)}
-                      <span className="text-white text-sm font-display tracking-wider">{problem?.title.toUpperCase()}</span>
-                      <span className="text-white/60 text-sm font-display tracking-wider">{submission.language.toUpperCase()}</span>
+                      <span className="text-white font-display tracking-wider">{problem?.title.toUpperCase()}</span>
+                      <span className="text-white/60 font-display tracking-wider">{submission.language.toUpperCase()}</span>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <span className={`px-2 py-1 text-xs font-bold ${getStatusClass(submission.status)}`}>
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-1 py-0.5 text-xs font-bold ${getStatusClass(submission.status)}`}>
                         {submission.status.toUpperCase()}
                       </span>
-                      <span className="text-white/60 text-sm font-mono">
+                      <span className="text-white/60 font-mono">
                         {new Date(submission.timestamp).toLocaleTimeString()}
                       </span>
                     </div>
