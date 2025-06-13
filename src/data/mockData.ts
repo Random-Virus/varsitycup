@@ -800,15 +800,6 @@ The function lacks a base case, causing infinite recursion.
 
 \`\`\`python
 def get_last_n_chars(s, n):
-    return s[len(s) - n:]  # This is actually correct
-    # The error might be in usage: s[-n-1:] would be wrong
-    # Let's say the error is: return s[len(s) - n - 1:]  # Error: off by one
-\`\`\`
-
-Wait, let me provide a clearer example with an actual error:
-
-\`\`\`python
-def get_last_n_chars(s, n):
     if n >= len(s):
         return s
     return s[len(s) - n - 1:]  # Error: should be s[len(s) - n:]
