@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Code2, Trophy, Users, ArrowRight, Calendar, University, Award, Zap, Terminal, Cpu, Star, Clock } from 'lucide-react';
+import { Code2, Trophy, Users, ArrowRight, Calendar, University, Award, Zap, Terminal, Cpu, Star, Clock, Sparkles, Rocket, Shield } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const LandingPage: React.FC = () => {
@@ -19,11 +19,19 @@ const LandingPage: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-vscode-dark relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-blue-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-400/10 to-pink-600/10 rounded-full blur-3xl"></div>
+      </div>
+
       {/* Hero Section */}
-      <div className="container mx-auto px-6 py-20 text-center text-vscode-foreground relative z-10">
+      <div className="container mx-auto px-6 py-20 text-center relative z-10">
         <div className="flex justify-center mb-12 animate-scaleIn">
-          <div className="relative">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             <img 
               src="/pic.png"
               alt="Varsity Code Cup Logo" 
@@ -33,20 +41,20 @@ const LandingPage: React.FC = () => {
         </div>
         
         <div className="mb-8 animate-fadeIn">
-          <div className="inline-flex items-center space-x-2 vscode-card px-6 py-3 mb-6">
-            <Star size={16} className="text-vscode-yellow" />
-            <span className="text-vscode-blue font-medium">South Africa's Premier Coding Competition</span>
-            <Star size={16} className="text-vscode-yellow" />
+          <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-blue-200/50 px-6 py-3 rounded-full mb-6 shadow-lg">
+            <Sparkles size={16} className="text-blue-600" />
+            <span className="text-blue-600 font-semibold">South Africa's Premier Coding Competition</span>
+            <Sparkles size={16} className="text-blue-600" />
           </div>
         </div>
         
         <h1 className="text-6xl md:text-8xl font-bold mb-8 animate-fadeIn">
-          <span className="text-vscode-blue">VARSITY</span>
+          <span className="gradient-text">VARSITY</span>
           <br />
-          <span className="text-vscode-green">CODE CUP</span>
+          <span className="gradient-text">CODE CUP</span>
         </h1>
         
-        <p className="text-xl md:text-2xl mb-12 text-vscode-foreground max-w-4xl mx-auto leading-relaxed animate-fadeIn">
+        <p className="text-xl md:text-2xl mb-12 text-slate-700 max-w-4xl mx-auto leading-relaxed animate-fadeIn">
           Where the brightest minds in South African universities compete in algorithmic excellence. 
           Join the elite coding championship that defines the future of tech talent.
         </p>
@@ -55,28 +63,28 @@ const LandingPage: React.FC = () => {
           {currentUser ? (
             <Link 
               to="/dashboard" 
-              className="vscode-button px-8 py-4 flex items-center justify-center text-lg font-medium hover-lift"
+              className="btn-primary px-8 py-4 flex items-center justify-center text-lg font-semibold hover-lift group"
             >
-              <Terminal size={20} className="mr-2" />
+              <Rocket size={20} className="mr-2 group-hover:rotate-12 transition-transform duration-300" />
               Enter Competition
-              <ArrowRight size={20} className="ml-2" />
+              <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           ) : (
             <Link 
               to="/register" 
-              className="vscode-button px-8 py-4 flex items-center justify-center text-lg font-medium hover-lift"
+              className="btn-primary px-8 py-4 flex items-center justify-center text-lg font-semibold hover-lift group"
             >
-              <Users size={20} className="mr-2" />
+              <Users size={20} className="mr-2 group-hover:scale-110 transition-transform duration-300" />
               Join Competition
-              <ArrowRight size={20} className="ml-2" />
+              <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           )}
           
           <Link 
             to="/leaderboard" 
-            className="vscode-button-secondary px-8 py-4 flex items-center justify-center text-lg font-medium hover-lift"
+            className="btn-secondary px-8 py-4 flex items-center justify-center text-lg font-semibold hover-lift group"
           >
-            <Trophy size={20} className="mr-2" />
+            <Trophy size={20} className="mr-2 group-hover:rotate-12 transition-transform duration-300" />
             View Rankings
           </Link>
         </div>
@@ -84,54 +92,54 @@ const LandingPage: React.FC = () => {
         {/* Challenge Info */}
         <div className="vscode-card max-w-6xl mx-auto mb-20 p-8 animate-scaleIn hover-lift">
           <div className="flex items-center justify-center mb-8">
-            <div className="p-4 bg-vscode-blue/20 rounded mr-4">
-              <Cpu className="text-vscode-blue" size={40} />
+            <div className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-2xl mr-4">
+              <Cpu className="text-blue-600" size={40} />
             </div>
             <div>
-              <h2 className="text-4xl font-bold text-vscode-blue mb-2">
+              <h2 className="text-4xl font-bold gradient-text mb-2">
                 {challenge.title}
               </h2>
-              <p className="text-vscode-comment">Live Competition Event</p>
+              <p className="text-slate-600 font-medium">Live Competition Event</p>
             </div>
           </div>
           
-          <p className="mb-10 text-vscode-foreground text-lg leading-relaxed max-w-4xl mx-auto">
+          <p className="mb-10 text-slate-700 text-lg leading-relaxed max-w-4xl mx-auto">
             {challenge.description}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="vscode-card p-6 hover-lift border-l-4 border-vscode-green">
+            <div className="vscode-card p-6 hover-lift border-l-4 border-green-500 bg-gradient-to-br from-green-50/50 to-emerald-50/50">
               <div className="flex items-center mb-4">
-                <div className="p-3 bg-vscode-green/20 rounded mr-4">
-                  <Calendar size={24} className="text-vscode-green" />
+                <div className="p-3 bg-green-500/20 rounded-xl mr-4">
+                  <Calendar size={24} className="text-green-600" />
                 </div>
                 <div>
-                  <p className="font-semibold text-vscode-green text-lg">Competition Start</p>
-                  <p className="text-vscode-foreground">{formatDate(challenge.startTime)}</p>
+                  <p className="font-semibold text-green-600 text-lg">Competition Start</p>
+                  <p className="text-slate-700 font-medium">{formatDate(challenge.startTime)}</p>
                 </div>
               </div>
             </div>
             
-            <div className="vscode-card p-6 hover-lift border-l-4 border-vscode-red">
+            <div className="vscode-card p-6 hover-lift border-l-4 border-red-500 bg-gradient-to-br from-red-50/50 to-rose-50/50">
               <div className="flex items-center mb-4">
-                <div className="p-3 bg-vscode-red/20 rounded mr-4">
-                  <Clock size={24} className="text-vscode-red" />
+                <div className="p-3 bg-red-500/20 rounded-xl mr-4">
+                  <Clock size={24} className="text-red-600" />
                 </div>
                 <div>
-                  <p className="font-semibold text-vscode-red text-lg">Competition End</p>
-                  <p className="text-vscode-foreground">{formatDate(challenge.endTime)}</p>
+                  <p className="font-semibold text-red-600 text-lg">Competition End</p>
+                  <p className="text-slate-700 font-medium">{formatDate(challenge.endTime)}</p>
                 </div>
               </div>
             </div>
             
-            <div className="vscode-card p-6 hover-lift border-l-4 border-vscode-blue">
+            <div className="vscode-card p-6 hover-lift border-l-4 border-blue-500 bg-gradient-to-br from-blue-50/50 to-indigo-50/50">
               <div className="flex items-center mb-4">
-                <div className="p-3 bg-vscode-blue/20 rounded mr-4">
-                  <Code2 size={24} className="text-vscode-blue" />
+                <div className="p-3 bg-blue-500/20 rounded-xl mr-4">
+                  <Code2 size={24} className="text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-semibold text-vscode-blue text-lg">Total Problems</p>
-                  <p className="text-vscode-foreground">{challenge.problems.length} Challenges</p>
+                  <p className="font-semibold text-blue-600 text-lg">Total Problems</p>
+                  <p className="text-slate-700 font-medium">{challenge.problems.length} Challenges</p>
                 </div>
               </div>
             </div>
@@ -141,52 +149,52 @@ const LandingPage: React.FC = () => {
       
       {/* Features Section */}
       <div className="container mx-auto px-6 py-20 relative z-10">
-        <h2 className="text-5xl font-bold text-center text-vscode-blue mb-4">
+        <h2 className="text-5xl font-bold text-center gradient-text mb-4">
           Competition Features
         </h2>
-        <p className="text-center text-vscode-comment text-xl mb-16 max-w-3xl mx-auto">
+        <p className="text-center text-slate-600 text-xl mb-16 max-w-3xl mx-auto">
           Experience the most advanced competitive programming platform designed for South African universities
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="vscode-card p-8 text-center group hover-lift">
+          <div className="vscode-card p-8 text-center group hover-lift bg-gradient-to-br from-blue-50/50 to-indigo-50/50">
             <div className="flex justify-center mb-6">
-              <div className="p-6 bg-vscode-blue/20 rounded group-hover:scale-110 transition-all duration-300">
-                <University size={48} className="text-vscode-blue" />
+              <div className="p-6 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-2xl group-hover:scale-110 transition-all duration-300">
+                <University size={48} className="text-blue-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-semibold mb-4 text-vscode-blue">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-600">
               University Competition
             </h3>
-            <p className="text-vscode-foreground leading-relaxed">
+            <p className="text-slate-700 leading-relaxed">
               Represent your institution in this prestigious inter-university coding championship with individual rankings and recognition.
             </p>
           </div>
           
-          <div className="vscode-card p-8 text-center group hover-lift">
+          <div className="vscode-card p-8 text-center group hover-lift bg-gradient-to-br from-green-50/50 to-emerald-50/50">
             <div className="flex justify-center mb-6">
-              <div className="p-6 bg-vscode-green/20 rounded group-hover:scale-110 transition-all duration-300">
-                <Code2 size={48} className="text-vscode-green" />
+              <div className="p-6 bg-gradient-to-br from-green-500/20 to-emerald-600/20 rounded-2xl group-hover:scale-110 transition-all duration-300">
+                <Code2 size={48} className="text-green-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-semibold mb-4 text-vscode-green">
+            <h3 className="text-2xl font-semibold mb-4 text-green-600">
               Advanced Algorithms
             </h3>
-            <p className="text-vscode-foreground leading-relaxed">
+            <p className="text-slate-700 leading-relaxed">
               Tackle sophisticated programming challenges that test your problem-solving skills, algorithmic thinking, and coding efficiency.
             </p>
           </div>
           
-          <div className="vscode-card p-8 text-center group hover-lift">
+          <div className="vscode-card p-8 text-center group hover-lift bg-gradient-to-br from-yellow-50/50 to-orange-50/50">
             <div className="flex justify-center mb-6">
-              <div className="p-6 bg-vscode-yellow/20 rounded group-hover:scale-110 transition-all duration-300">
-                <Award size={48} className="text-vscode-yellow" />
+              <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-600/20 rounded-2xl group-hover:scale-110 transition-all duration-300">
+                <Award size={48} className="text-yellow-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-semibold mb-4 text-vscode-yellow">
+            <h3 className="text-2xl font-semibold mb-4 text-yellow-600">
               Recognition & Prizes
             </h3>
-            <p className="text-vscode-foreground leading-relaxed">
+            <p className="text-slate-700 leading-relaxed">
               Earn prestigious recognition, certificates, and prizes while gaining visibility from top technology companies and recruiters.
             </p>
           </div>
@@ -195,24 +203,24 @@ const LandingPage: React.FC = () => {
       
       {/* Stats Section */}
       <div className="container mx-auto px-6 py-20 relative z-10">
-        <div className="vscode-card p-12 hover-lift">
-          <h3 className="text-3xl font-bold text-center text-vscode-blue mb-12">Competition Statistics</h3>
+        <div className="vscode-card p-12 hover-lift bg-gradient-to-br from-slate-50/50 to-blue-50/50">
+          <h3 className="text-3xl font-bold text-center gradient-text mb-12">Competition Statistics</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="group">
-              <div className="text-5xl font-bold text-vscode-blue mb-3 group-hover:scale-110 transition-transform duration-300">24+</div>
-              <div className="text-vscode-comment font-medium">Universities</div>
+              <div className="text-5xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300">24+</div>
+              <div className="text-slate-600 font-semibold">Universities</div>
             </div>
             <div className="group">
-              <div className="text-5xl font-bold text-vscode-green mb-3 group-hover:scale-110 transition-transform duration-300">1000+</div>
-              <div className="text-vscode-comment font-medium">Participants</div>
+              <div className="text-5xl font-bold text-green-600 mb-3 group-hover:scale-110 transition-transform duration-300">1000+</div>
+              <div className="text-slate-600 font-semibold">Participants</div>
             </div>
             <div className="group">
-              <div className="text-5xl font-bold text-vscode-yellow mb-3 group-hover:scale-110 transition-transform duration-300">4</div>
-              <div className="text-vscode-comment font-medium">Challenges</div>
+              <div className="text-5xl font-bold text-yellow-600 mb-3 group-hover:scale-110 transition-transform duration-300">4</div>
+              <div className="text-slate-600 font-semibold">Challenges</div>
             </div>
             <div className="group">
-              <div className="text-5xl font-bold text-vscode-red mb-3 group-hover:scale-110 transition-transform duration-300">3H</div>
-              <div className="text-vscode-comment font-medium">Duration</div>
+              <div className="text-5xl font-bold text-red-600 mb-3 group-hover:scale-110 transition-transform duration-300">3H</div>
+              <div className="text-slate-600 font-semibold">Duration</div>
             </div>
           </div>
         </div>
