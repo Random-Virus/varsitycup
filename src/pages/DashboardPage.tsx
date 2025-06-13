@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertCircle, Play, Terminal, Zap, Target, Award, ArrowRight } from 'lucide-react';
+import { Code2, Trophy, User, Send, CheckCircle, XCircle, AlertTriangle, Play, Terminal, Zap, Target, Award, ArrowRight, Shield, Lock } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
 const DashboardPage: React.FC = () => {
-  const { currentUser, challenge, submissions, timeRemaining } = useApp();
+  const { currentUser, challenge, cryptographyChallenge, submissions, timeRemaining } = useApp();
+  const [activeTab, setActiveTab] = useState<'programming' | 'cryptography'>('programming');
 
   if (!currentUser) {
     return (
@@ -28,7 +29,7 @@ const DashboardPage: React.FC = () => {
       case 'Compilation Error':
         return <XCircle className="text-white" size={12} />;
       default:
-        return <AlertCircle className="text-white" size={12} />;
+        return <AlertTriangle className="text-white" size={12} />;
     }
   };
 
@@ -49,6 +50,8 @@ const DashboardPage: React.FC = () => {
   const isProblemSolved = (problemId: string) => {
     return submissions.some(s => s.problemId === problemId && s.status === 'Accepted');
   };
+
+  const currentChallengeProblems = activeTab === 'programming' ? challenge.problems : cryptographyChallenge.problems;
 
   return (
     <div className="min-h-screen bg-black modern-grid">
@@ -107,15 +110,64 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Challenge Category Tabs */}
+        <div className="mb-4">
+          <div className="flex space-x-1 bg-white/5 p-1 rounded-lg">
+            <button
+              onClick={() => setActiveTab('programming')}
+              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+                activeTab === 'programming'
+                  ? 'bg-white/20 text-white border border-white/30'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Code2 size={16} />
+              <span>Programming Challenges</span>
+              <span className="text-xs bg-white/20 px-2 py-1 rounded-full">{challenge.problems.length}</span>
+            </button>
+            
+            <button
+              onClick={() => setActiveTab('cryptography')}
+              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
+                activeTab === 'cryptography'
+                  ? 'bg-white/20 text-white border border-white/30'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Shield size={16} />
+              <span>Cryptography Challenges</span>
+              <span className="text-xs bg-white/20 px-2 py-1 rounded-full">{cryptographyChallenge.problems.length}</span>
+            </button>
+          </div>
+        </div>
+
         {/* Problems Grid */}
         <div className="mb-4">
-          <h2 className="text-lg font-bold text-white mb-3 flex items-center">
-            <Code2 className="mr-2" size={16} />
-            Programming Challenges
-          </h2>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-white flex items-center">
+              {activeTab === 'programming' ? (
+                <>
+                  <Code2 className="mr-2" size={16} />
+                  Programming Challenges
+                </>
+              ) : (
+                <>
+                  <Shield className="mr-2" size={16} />
+                  Cryptography Challenges
+                </>
+              )}
+            </h2>
+            
+            <div className="text-xs text-white/60">
+              {activeTab === 'programming' 
+                ? 'Algorithmic problem solving and data structures'
+                : 'Security, encryption, and cryptographic analysis'
+              }
+            </div>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {challenge.problems.map((problem) => {
+            {currentChallengeProblems.map((problem) => {
               const solved = isProblemSolved(problem.id);
               const problemSubmissions = submissions.filter(s => s.problemId === problem.id);
               const attempts = problemSubmissions.length;
@@ -132,6 +184,9 @@ const DashboardPage: React.FC = () => {
                 >
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center space-x-2">
+                      {activeTab === 'cryptography' && (
+                        <Lock className="text-white/60" size={12} />
+                      )}
                       <h3 className="font-bold text-white text-sm group-hover:text-white transition-colors duration-300">
                         {problem.title}
                       </h3>
@@ -145,7 +200,11 @@ const DashboardPage: React.FC = () => {
                   </p>
                   
                   <div className="flex justify-between items-center mb-3">
-                    <span className={`px-2 py-1 rounded text-xs font-semibold bg-white/20 text-white border border-white/30`}>
+                    <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                      activeTab === 'cryptography' 
+                        ? 'bg-purple-400/20 text-purple-300 border border-purple-400/30'
+                        : 'bg-white/20 text-white border border-white/30'
+                    }`}>
                       {problem.difficulty}
                     </span>
                     <span className="text-white font-bold text-sm">{problem.points} pts</span>
@@ -190,11 +249,15 @@ const DashboardPage: React.FC = () => {
             </h3>
             <div className="space-y-2">
               {submissions.slice(0, 5).map((submission) => {
-                const problem = challenge.problems.find(p => p.id === submission.problemId);
+                const allProblems = [...challenge.problems, ...cryptographyChallenge.problems];
+                const problem = allProblems.find(p => p.id === submission.problemId);
+                const isCrypto = cryptographyChallenge.problems.some(p => p.id === submission.problemId);
+                
                 return (
                   <div key={submission.id} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
                     <div className="flex items-center space-x-2">
                       {getStatusIcon(submission.status)}
+                      {isCrypto && <Shield className="text-purple-400" size={12} />}
                       <Link 
                         to={`/code/${submission.problemId}`}
                         className="text-white hover:text-white/80 font-medium text-xs transition-colors duration-300"

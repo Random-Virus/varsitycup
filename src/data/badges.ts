@@ -63,10 +63,38 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const solvedProblems = new Set(acceptedSubmissions.map(s => s.problemId));
       
       console.log('  - Unique solved problems:', solvedProblems.size);
-      console.log('  - Total problems in competition:', 8); // Updated from 4 to 8
+      console.log('  - Total problems in competition:', 8); // 4 programming + 4 cryptography
       
-      const meetsCondition = solvedProblems.size >= 8; // Updated from 4 to 8
+      const meetsCondition = solvedProblems.size >= 8;
       console.log('  - Meets condition (>=8):', meetsCondition);
+      
+      return meetsCondition;
+    }
+  },
+  {
+    id: 'programming-expert',
+    name: 'Programming Expert',
+    description: 'Solved all programming challenges',
+    icon: '/pic.png',
+    category: 'achievement',
+    rarity: 'rare',
+    condition: (participant, submissions) => {
+      console.log('🔍 Checking PROGRAMMING EXPERT badge condition:');
+      console.log('  - Participant:', participant.name);
+      
+      const programmingProblems = ['two-sum', 'reverse-string', 'palindrome-number', 'fibonacci-sequence'];
+      const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
+      const solvedProgrammingProblems = new Set(
+        acceptedSubmissions
+          .filter(s => programmingProblems.includes(s.problemId))
+          .map(s => s.problemId)
+      );
+      
+      console.log('  - Programming problems solved:', solvedProgrammingProblems.size);
+      console.log('  - Programming problem IDs solved:', Array.from(solvedProgrammingProblems));
+      
+      const meetsCondition = solvedProgrammingProblems.size >= 4;
+      console.log('  - Meets condition (>=4 programming problems):', meetsCondition);
       
       return meetsCondition;
     }
@@ -74,7 +102,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
   {
     id: 'security-expert',
     name: 'Security Expert',
-    description: 'Solved all security/cryptography challenges',
+    description: 'Solved all cryptography challenges',
     icon: '/pic.png',
     category: 'achievement',
     rarity: 'epic',
@@ -82,19 +110,19 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       console.log('🔍 Checking SECURITY EXPERT badge condition:');
       console.log('  - Participant:', participant.name);
       
-      const securityProblems = ['caesar-cipher-cracker', 'password-strength-analyzer', 'simple-rsa-keygen', 'hash-collision-finder'];
+      const cryptographyProblems = ['caesar-cipher-cracker', 'password-strength-analyzer', 'simple-rsa-keygen', 'hash-collision-finder'];
       const acceptedSubmissions = submissions.filter(s => s.status === 'Accepted');
-      const solvedSecurityProblems = new Set(
+      const solvedCryptographyProblems = new Set(
         acceptedSubmissions
-          .filter(s => securityProblems.includes(s.problemId))
+          .filter(s => cryptographyProblems.includes(s.problemId))
           .map(s => s.problemId)
       );
       
-      console.log('  - Security problems solved:', solvedSecurityProblems.size);
-      console.log('  - Security problem IDs solved:', Array.from(solvedSecurityProblems));
+      console.log('  - Cryptography problems solved:', solvedCryptographyProblems.size);
+      console.log('  - Cryptography problem IDs solved:', Array.from(solvedCryptographyProblems));
       
-      const meetsCondition = solvedSecurityProblems.size >= 4;
-      console.log('  - Meets condition (>=4 security problems):', meetsCondition);
+      const meetsCondition = solvedCryptographyProblems.size >= 4;
+      console.log('  - Meets condition (>=4 cryptography problems):', meetsCondition);
       
       return meetsCondition;
     }

@@ -121,8 +121,11 @@ Given n, calculate F(n).`,
     constraints: [
       '0 <= n <= 30'
     ]
-  },
-  // NEW SECURITY/CRYPTOGRAPHY CHALLENGES
+  }
+];
+
+// CRYPTOGRAPHY CHALLENGES - Separate category
+export const cryptographyProblems: Problem[] = [
   {
     id: 'caesar-cipher-cracker',
     title: 'Caesar Cipher Cracker',
@@ -281,10 +284,19 @@ Note: This is a deliberately weak hash function for educational purposes to demo
 export const mockChallenge: Challenge = {
   id: 'varsity-cup-2024',
   title: 'Varsity Code Cup 2024',
-  description: 'The ultimate coding competition for South African university students. Test your algorithmic skills, problem-solving abilities, and cybersecurity knowledge!',
+  description: 'The ultimate coding competition for South African university students. Test your algorithmic skills, problem-solving abilities, and cybersecurity knowledge across two distinct challenge categories!',
   startTime: '2024-03-15T09:00:00Z',
   endTime: '2024-03-15T12:00:00Z',
   problems: mockProblems
+};
+
+export const cryptographyChallenge: Challenge = {
+  id: 'cryptography-challenges-2024',
+  title: 'Cryptography Challenges',
+  description: 'Specialized cybersecurity and cryptography challenges designed to test your knowledge of encryption, security analysis, and cryptographic algorithms.',
+  startTime: '2024-03-15T09:00:00Z',
+  endTime: '2024-03-15T12:00:00Z',
+  problems: cryptographyProblems
 };
 
 // Mock validation function
@@ -292,7 +304,7 @@ export const validateSubmission = (code: string, language: string, problemId: st
   // Simple mock validation - in real implementation, this would run actual tests
   const isValid = code.length > 10 && (code.includes('function') || code.includes('def') || code.includes('public') || code.includes('class'));
   
-  // Special validation for security challenges
+  // Special validation for cryptography challenges
   if (problemId === 'caesar-cipher-cracker') {
     const hasShiftLogic = code.includes('shift') || code.includes('decrypt') || code.includes('cipher');
     return {

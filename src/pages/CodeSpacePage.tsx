@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Play, Clock, Target, Code2, Send, CheckCircle, XCircle, AlertCircle, Terminal, Zap, Award } from 'lucide-react';
+import { ArrowLeft, Play, Clock, Target, Code2, Send, CheckCircle, XCircle, AlertCircle, Terminal, Zap, Award, Shield, Lock } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import Timer from '../components/Timer';
 
 const CodeSpacePage: React.FC = () => {
   const { problemId } = useParams();
   const navigate = useNavigate();
-  const { currentUser, challenge, submissions, submitSolution, timeRemaining } = useApp();
+  const { currentUser, challenge, cryptographyChallenge, submissions, submitSolution, timeRemaining } = useApp();
   
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('javascript');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const problem = challenge.problems.find(p => p.id === problemId);
+  // Find problem in either challenge set
+  const allProblems = [...challenge.problems, ...cryptographyChallenge.problems];
+  const problem = allProblems.find(p => p.id === problemId);
+  const isCryptographyProblem = cryptographyChallenge.problems.some(p => p.id === problemId);
+  
   const problemSubmissions = submissions.filter(s => s.problemId === problemId);
   const isSolved = problemSubmissions.some(s => s.status === 'Accepted');
 
@@ -67,7 +71,7 @@ int main() {
     }
   };
 
-  // Initialize code template if empty - moved before conditional returns
+  // Initialize code template if empty
   React.useEffect(() => {
     if (!code.trim()) {
       setCode(getLanguageTemplate(language));
@@ -127,7 +131,7 @@ int main() {
       case 'Compilation Error':
         return <XCircle className="text-white" size={12} />;
       default:
-        return <AlertCircle className="text-white" size={12} />;
+        return <AlertTriangle className="text-white" size={12} />;
     }
   };
 
@@ -158,11 +162,12 @@ int main() {
               <span>DASHBOARD</span>
             </button>
             <div>
-              <h1 className="text-lg font-bold modern-gradient-text">
+              <h1 className="text-lg font-bold modern-gradient-text flex items-center">
+                {isCryptographyProblem && <Shield className="mr-2" size={16} />}
                 CODE SPACE
               </h1>
               <p className="text-white/60 text-xs">
-                Solve • Test • Submit
+                {isCryptographyProblem ? 'Cryptography Challenge' : 'Programming Challenge'} • Solve • Test • Submit
               </p>
             </div>
           </div>
@@ -175,14 +180,24 @@ int main() {
             <div className="flex justify-between items-start mb-3">
               <div>
                 <h2 className="text-lg font-bold text-white mb-1 flex items-center">
+                  {isCryptographyProblem && <Lock className="mr-2 text-purple-400" size={16} />}
                   {problem.title}
                   {isSolved && <Award className="ml-2 text-white" size={16} />}
                 </h2>
                 <div className="flex items-center space-x-2">
-                  <span className={`px-2 py-1 rounded text-xs font-semibold bg-white/20 text-white border border-white/30`}>
+                  <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                    isCryptographyProblem 
+                      ? 'bg-purple-400/20 text-purple-300 border border-purple-400/30'
+                      : 'bg-white/20 text-white border border-white/30'
+                  }`}>
                     {problem.difficulty}
                   </span>
                   <span className="text-white font-bold text-sm">{problem.points} points</span>
+                  {isCryptographyProblem && (
+                    <span className="px-2 py-1 rounded text-xs font-semibold bg-purple-400/10 text-purple-300 border border-purple-400/20">
+                      CRYPTOGRAPHY
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -246,6 +261,11 @@ int main() {
               <h3 className="text-sm font-bold text-white flex items-center">
                 <Terminal className="mr-1" size={14} />
                 Code Editor
+                {isCryptographyProblem && (
+                  <span className="ml-2 px-2 py-1 rounded text-xs font-semibold bg-purple-400/10 text-purple-300 border border-purple-400/20">
+                    SECURITY
+                  </span>
+                )}
               </h3>
               <select
                 value={language}
@@ -322,26 +342,64 @@ int main() {
               <Code2 className="mr-1" size={12} />
               Other Problems
             </h3>
-            <div className="flex flex-wrap gap-2">
-              {challenge.problems
-                .filter(p => p.id !== problemId)
-                .map((otherProblem) => {
-                  const otherSolved = submissions.some(s => s.problemId === otherProblem.id && s.status === 'Accepted');
-                  return (
-                    <Link
-                      key={otherProblem.id}
-                      to={`/code/${otherProblem.id}`}
-                      className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 border ${
-                        otherSolved 
-                          ? 'bg-white/20 text-white border-white/30 hover:bg-white/25' 
-                          : 'bg-white/10 text-white border-white/20 hover:bg-white/15'
-                      }`}
-                    >
-                      {otherProblem.title}
-                      {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
-                    </Link>
-                  );
-                })}
+            
+            {/* Programming Challenges */}
+            <div className="mb-3">
+              <h4 className="text-xs font-semibold text-white/80 mb-2 flex items-center">
+                <Code2 className="mr-1" size={10} />
+                Programming Challenges
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {challenge.problems
+                  .filter(p => p.id !== problemId)
+                  .map((otherProblem) => {
+                    const otherSolved = submissions.some(s => s.problemId === otherProblem.id && s.status === 'Accepted');
+                    return (
+                      <Link
+                        key={otherProblem.id}
+                        to={`/code/${otherProblem.id}`}
+                        className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 border ${
+                          otherSolved 
+                            ? 'bg-white/20 text-white border-white/30 hover:bg-white/25' 
+                            : 'bg-white/10 text-white border-white/20 hover:bg-white/15'
+                        }`}
+                      >
+                        {otherProblem.title}
+                        {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
+                      </Link>
+                    );
+                  })}
+              </div>
+            </div>
+
+            {/* Cryptography Challenges */}
+            <div>
+              <h4 className="text-xs font-semibold text-white/80 mb-2 flex items-center">
+                <Shield className="mr-1" size={10} />
+                Cryptography Challenges
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {cryptographyChallenge.problems
+                  .filter(p => p.id !== problemId)
+                  .map((otherProblem) => {
+                    const otherSolved = submissions.some(s => s.problemId === otherProblem.id && s.status === 'Accepted');
+                    return (
+                      <Link
+                        key={otherProblem.id}
+                        to={`/code/${otherProblem.id}`}
+                        className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 border ${
+                          otherSolved 
+                            ? 'bg-purple-400/20 text-purple-300 border-purple-400/30 hover:bg-purple-400/25' 
+                            : 'bg-purple-400/10 text-purple-300 border-purple-400/20 hover:bg-purple-400/15'
+                        }`}
+                      >
+                        <Lock className="inline mr-1" size={8} />
+                        {otherProblem.title}
+                        {otherSolved && <CheckCircle className="inline ml-1" size={10} />}
+                      </Link>
+                    );
+                  })}
+              </div>
             </div>
           </div>
         </div>
