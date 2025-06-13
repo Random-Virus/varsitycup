@@ -32,7 +32,7 @@ const LandingPage: React.FC = () => {
               <img 
                 src="/pic.png" 
                 alt="Varsity Code Cup" 
-                className="w-16 h-16 object-contain"
+                className="w-24 h-24 object-contain mx-auto"
               />
             </div>
           </div>

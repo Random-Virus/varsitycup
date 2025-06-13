@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
                   <img 
                     src="/pic.png" 
                     alt="Varsity Code Cup" 
-                    className="w-4 h-4 object-contain"
+                    className="w-6 h-6 object-contain"
                   />
                 </div>
               </div>
@@ -33,7 +33,6 @@ const Navbar: React.FC = () => {
                 <span className="text-sm font-bold modern-gradient-text">
                   VARSITY CODE CUP
                 </span>
-                <div className="text-xs text-white/60 font-semibold tracking-wider">2024 CHAMPIONSHIP</div>
               </div>
             </Link>
             
